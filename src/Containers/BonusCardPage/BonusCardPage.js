@@ -1,7 +1,8 @@
 import React from 'react';
-import {HeaderPage} from "../../Components/HeaderPage/HeaderPage";
+import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
-import {BonusCardEditItem} from "./BonusCardEditItem";
+import { BonusCardEditItem } from "./BonusCardEditItem";
+import { apiController } from "../../api/api";
 
 const CardsWrapper = styled.div`
   width: 100%;
@@ -10,57 +11,23 @@ const CardsWrapper = styled.div`
   gap: 43px 40px
 `;
 
-const dataCards = [
-    {
-        title: 'Бронзовая',
-        sum: 1233,
-        percent: 12,
-        desc: '',
-        id: '1'
-    },
-    {
-        title: 'Серебряная',
-        sum: 1233,
-        percent: 12,
-        desc: '',
-        id: '1'
-    },
-    {
-        title: 'Золотая',
-        sum: 1233,
-        percent: 12,
-        desc: '',
-        id: '1'
-    },
-    {
-        title: 'Платиновая',
-        sum: 1233,
-        percent: 12,
-        desc: '',
-        id: '1'
-    },
-    {
-        title: 'VIP',
-        sum: 1233,
-        percent: 12,
-        desc: '',
-        id: '1'
-    },
-]
-
 const BonusCardPage = () => {
+    const [statuses, setStatuses] = React.useState([])
+    React.useEffect(() => {
+        apiController.getCardStatuses().then(res => setStatuses(res.data))
+    }, [])
     return (
         <>
-            <div style={{backgroundColor: "#FFF", marginTop: -48, marginBottom: 24}}>
-                <HeaderPage title="Карты лояльности"/>
+            <div style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24 }}>
+                <HeaderPage title="Карты лояльности" />
             </div>
 
-        <CardsWrapper>
-            {dataCards.map((i, idx) => <BonusCardEditItem item={i} key={idx} />)}
-        </CardsWrapper>
+            <CardsWrapper>
+                {statuses.map((i, idx) => <BonusCardEditItem item={i} key={idx} />)}
+            </CardsWrapper>
 
         </>
     );
 };
 
-export {BonusCardPage};
+export { BonusCardPage };

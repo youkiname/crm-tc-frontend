@@ -1,110 +1,49 @@
 import React from 'react';
-import {Button, Col, Row, Table, Typography} from "antd";
+import { Button, Col, Row, Table, Typography } from "antd";
 import Search from "antd/es/input/Search";
-import {FileExcelOutlined, PlusOutlined} from "@ant-design/icons";
+import { FileExcelOutlined, PlusOutlined } from "@ant-design/icons";
+import { apiController } from "../../api/api";
 
-const {Title} = Typography
-
-const dataSource = [
-    {
-        key: '1',
-        num: '234',
-        fio: 'Примаков Андрей Андреевич',
-        countWeek: '14',
-        countMonth: '234',
-        takeWeek: '12 234₽',
-        takeMonth: '124 453₽',
-    },
-    {
-        key: '2',
-        num: '234',
-        fio: 'Примаков Андрей Андреевич',
-        countWeek: '14',
-        countMonth: '234',
-        takeWeek: '12 234₽',
-        takeMonth: '124 453₽',
-    },
-    {
-        key: '3',
-        num: '234',
-        fio: 'Примаков Андрей Андреевич',
-        countWeek: '14',
-        countMonth: '234',
-        takeWeek: '12 234₽',
-        takeMonth: '124 453₽',
-    },
-    {
-        key: '4',
-        num: '234',
-        fio: 'Примаков Андрей Андреевич',
-        countWeek: '14',
-        countMonth: '234',
-        takeWeek: '12 234₽',
-        takeMonth: '124 453₽',
-    },
-    {
-        key: '5',
-        num: '234',
-        fio: 'Примаков Андрей Андреевич',
-        countWeek: '14',
-        countMonth: '234',
-        takeWeek: '12 234₽',
-        takeMonth: '124 453₽',
-    },
-    {
-        key: '6',
-        num: '234',
-        fio: 'Примаков Андрей Андреевич',
-        countWeek: '14',
-        countMonth: '234',
-        takeWeek: '12 234₽',
-        takeMonth: '124 453₽',
-    },
-    {
-        key: '7',
-        num: '234',
-        fio: 'Примаков Андрей Андреевич',
-        countWeek: '14',
-        countMonth: '234',
-        takeWeek: '12 234₽',
-        takeMonth: '124 453₽',
-    },
-]
+const { Title } = Typography
 
 const columns = [
     {
         title: '#',
-        dataIndex: 'num',
-        key: 'num'
+        dataIndex: 'id',
+        key: 'id'
     },
     {
         title: 'Фамилия Имя Отчество',
-        dataIndex: 'fio',
-        key: 'fio'
+        dataIndex: 'renter_name',
+        key: 'renter_name'
     },
     {
         title: 'Кол-во сделок (неделя)',
-        dataIndex: 'countWeek',
-        key: 'countWeek'
+        dataIndex: 'transactions_per_week',
+        key: 'transactions_per_week'
     },
     {
         title: 'Кол-во сделок (месяц)',
-        dataIndex: 'countMonth',
-        key: 'countMonth'
+        dataIndex: 'transactions_per_month',
+        key: 'transactions_per_month'
     },
     {
         title: 'Выручка (неделя)',
-        dataIndex: 'takeWeek',
-        key: 'takeWeek'
+        dataIndex: 'income_per_week',
+        key: 'income_per_week'
     },
     {
         title: 'Выручка (месяц)',
-        dataIndex: 'takeMonth',
-        key: 'takeMonth'
+        dataIndex: 'income_per_month',
+        key: 'income_per_month'
     }
 ]
 
 const ArendatorsBaseTable = () => {
+    const [data, setData] = React.useState([])
+    React.useEffect(() => {
+        apiController.getShopsIncomeStatistics().then(res => setData(res.data))
+    }, [])
     return (
         <>
             <Row justify="space-between">
@@ -117,7 +56,7 @@ const ArendatorsBaseTable = () => {
                 }}>
                     <Search
                         placeholder="Найти"
-                        onSearch={() => {}}
+                        onSearch={() => { }}
                         style={{
                             width: 300,
                         }}
@@ -126,9 +65,9 @@ const ArendatorsBaseTable = () => {
                     <Button type="primary" icon={<PlusOutlined />}>Добавить арендатора</Button>
                 </Col>
             </Row>
-            <Table columns={columns} dataSource={dataSource} style={{marginTop: 30}} />
+            <Table columns={columns} dataSource={data} style={{ marginTop: 30 }} />
         </>
     );
 };
 
-export {ArendatorsBaseTable};
+export { ArendatorsBaseTable };

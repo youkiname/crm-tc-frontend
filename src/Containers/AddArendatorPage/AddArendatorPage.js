@@ -1,8 +1,8 @@
-import React from 'react';
+ import React from 'react';
 import {HeaderPage} from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
 import {Button, Col, Form, Input, Row, Select, Upload} from "antd";
-import {useAddArendator} from "../../Components/hooks/useAddArendator/useAddArendator";
+import {useAddArendator} from "../../hooks/useAddArendator/useAddArendator";
 import {UploadOutlined} from "@ant-design/icons";
 
 const {Option} = Select

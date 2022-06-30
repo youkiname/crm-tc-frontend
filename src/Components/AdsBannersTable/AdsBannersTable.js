@@ -1,11 +1,17 @@
 import React from 'react';
-import {Button, Table} from "antd";
+import { Button, Table, Badge } from "antd";
+import { apiController } from "../../api/api";
 
 const columns = [
     {
         title: 'Арендатор',
-        dataIndex: 'arendator',
-        key: 'arendator',
+        dataIndex: 'shop',
+        key: 'shop',
+        render: shop => {
+            return (
+                <div>{shop.name}</div>
+            )
+        }
     },
     {
         title: 'Имя',
@@ -19,84 +25,44 @@ const columns = [
     },
     {
         title: 'Статус',
-        dataIndex: 'status',
-        key: 'status',
+        dataIndex: 'is_active',
+        key: 'is_active',
+        render: is_active => {
+            return (
+                <Badge status={is_active ? 'success' : 'error'}
+                    text={is_active ? 'Активен' : 'Неактивен'}
+                />
+            )
+        }
     },
     {
         title: 'Дата создания',
-        dataIndex: 'date',
-        key: 'date',
+        dataIndex: 'created_at',
+        key: 'created_at',
     },
     {
         title: 'Действия',
-        dataIndex: 'action',
-        key: 'action',
-        render: () => (
+        dataIndex: 'is_active',
+        key: 'is_active',
+        render: (is_active) => (
             <>
                 <Button type="link">Редактировать</Button>
-                <Button danger type="link">Запустить</Button>
+                <Button danger type="link">{is_active ? 'Остановить' : 'Запустить'}</Button>
             </>
         )
     },
 ]
 
-const dataSource = [
-    {
-        key: 1,
-        arendator: 'Арендатор 1',
-        name: 'Наименование рекламного баннера',
-        comment: 'Комментарий к рекламному баннеру',
-        status: 'Опубликовано',
-        date: '12.12.2021',
-    },
-    {
-        key: 6,
-        arendator: 'Арендатор 1',
-        name: 'Наименование рекламного баннера',
-        comment: 'Комментарий к рекламному баннеру',
-        status: 'Опубликовано',
-        date: '12.12.2021',
-    },
-    {
-        key: 5,
-        arendator: 'Арендатор 1',
-        name: 'Наименование рекламного баннера',
-        comment: 'Комментарий к рекламному баннеру',
-        status: 'Опубликовано',
-        date: '12.12.2021',
-    },
-    {
-        key: 4,
-        arendator: 'Арендатор 1',
-        name: 'Наименование рекламного баннера',
-        comment: 'Комментарий к рекламному баннеру',
-        status: 'Опубликовано',
-        date: '12.12.2021',
-    },
-    {
-        key: 3,
-        arendator: 'Арендатор 1',
-        name: 'Наименование рекламного баннера',
-        comment: 'Комментарий к рекламному баннеру',
-        status: 'Опубликовано',
-        date: '12.12.2021',
-    },
-    {
-        key: 2,
-        arendator: 'Арендатор 1',
-        name: 'Наименование рекламного баннера',
-        comment: 'Комментарий к рекламному баннеру',
-        status: 'Опубликовано',
-        date: '12.12.2021',
-    },
-]
-
 const AdsBannersTable = () => {
+    const [banners, setBanners] = React.useState([])
+    React.useEffect(() => {
+        apiController.getBanners().then(res => setBanners(res.data))
+    }, [])
     return (
         <>
-            <Table columns={columns} dataSource={dataSource} />
+            <Table columns={columns} dataSource={banners} />
         </>
     );
 };
 
-export {AdsBannersTable};
+export { AdsBannersTable };
