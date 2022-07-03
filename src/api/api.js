@@ -68,7 +68,10 @@ export class ApiController extends BaseController {
             }
         })
 
+
+
     }
+
 
     getTransactionsSumGraph(startDate, endDate) {
         return this.instance.get(`statistic/transactions/average_sum/graph`, {

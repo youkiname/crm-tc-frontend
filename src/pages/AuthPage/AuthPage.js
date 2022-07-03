@@ -4,15 +4,19 @@ import {useFormik} from "formik";
 import {Form, Input, Button} from "antd"
 import {ValidationStatus} from "../../common/validationErrors";
 import {validationSchema} from "./validationSchema";
-import {Title, Text, Wrapper, WrapperForm, Logo, WrapperTitle} from "./style";
-import {LockOutlined} from "@ant-design/icons";
+import {Title, Text, Wrapper, WrapperForm, WrapperTitle} from "./style";
+import {authController} from "../../api";
 
 export const AuthPage = () => {
-    const {errors, handleChange, isValid} = useFormik({
+    const onSubmit = (values) => {
+        authController.getAuth(values).then(res => console.log(res.data))
+    }
+    const {errors, handleChange, isValid, handleSubmit} = useFormik({
         initialValues: {
             email: "",
             password: ""
         },
+        onSubmit,
         validationSchema,
         isInitialValid: false
     })
@@ -55,7 +59,7 @@ export const AuthPage = () => {
                     </Input>
                 </Form.Item>
                 <Form.Item label="">
-                    <Button style={{width:'100%'}} type="primary" disabled={!isValid} htmlType="submit">
+                    <Button onClick={handleSubmit} style={{width:'100%'}} type="primary" disabled={!isValid} htmlType="submit">
                         Войти
                     </Button>
                 </Form.Item>
