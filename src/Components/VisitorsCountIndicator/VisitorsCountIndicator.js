@@ -12,6 +12,7 @@ const VisitorsCountIndicator = () => {
     const [data, setData] = React.useState({})
     const [day, setDay] = React.useState("")
     const [visitors, setVisitors] = React.useState([])
+    const visitorAmounts = visitors.map(item=> item?.amount)
 
     React.useEffect(() => {
         apiController.getVisitorsCountIndicatorMounth().then(res => setData(res.data))
@@ -19,8 +20,6 @@ const VisitorsCountIndicator = () => {
         apiController.getStatisticUsersGraphMonth().then(res => setVisitors(res.data))
 
     }, [])
-    const visitorAmounts = visitors.map(item => item?.amount)
-
     return (
         <div>
             <Statistic title="Посетители за месяц" value={data?.amount}/>

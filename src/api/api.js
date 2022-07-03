@@ -71,13 +71,20 @@ class ApiController {
         return this.instance.get(`polls/`)
     }
 
-    getColumnPlot(dates) {
-        const [startDate, endDate] = dates;
-        console.log(dates[0]?.format())
+    getColumnPlot(startDate,endDate) {
         return this.instance.get(`statistic/visitors_graph/`, {
             params: {
-                "start_date": startDate?.format(),
-                "end_date": endDate?.format()
+                "start_date": startDate,
+                "end_date": endDate
+            }
+        })
+
+    }
+    getTransactionsSumGraph(startDate, endDate){
+        return this.instance.get(`statistic/transactions/average_sum/graph`, {
+            params: {
+                "start_date": startDate,
+                "end_date": endDate
             }
         })
 

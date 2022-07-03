@@ -12,6 +12,7 @@ import {VisitorsDashboardModule} from "../../Components/VisitorsDashboardModule/
 
 export const MainPageAD = () => {
     return (
+
         <>
             <Row justify="start" gutter={[24, 16]}>
                 <Col>

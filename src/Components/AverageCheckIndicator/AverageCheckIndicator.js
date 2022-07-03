@@ -12,17 +12,22 @@ const AverageCheckIndicator = () => {
     const [day, setDay] = React.useState("")
     const [average, setAverage] = React.useState([])
 
+
     React.useEffect(() => {
         apiController.getStatisticAverageSumMonth().then(res => setData(res.data))
         apiController.getStatisticAverageSumToday().then(res => setDay(res.data))
         apiController.getStatisticAverageGraph().then(res => setAverage(res.data))
     }, [])
 
-    const averageAmounts = average.map(item => item?.amount)
+    const averageAmounts = average.map(item => parseInt(item?.amount))
+
+    console.log(averageAmounts)
     return (
+
         <div>
             <Statistic title="Средний чек по ТЦ за месяц" value={`${data?.amount?.toFixed(0)} ₽`} />
             <TinyArea
+
                 height={69}
                 width={230}
                 smooth

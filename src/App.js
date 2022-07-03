@@ -21,6 +21,7 @@ const App = () => {
             <MainLayout>
                 {auth ?
                     <Routes>
+
                         <Route path="/" exact element={<MainPageAD/>}/>
                         <Route path="/ads" element={<AdsBannersPage/>}/>
                         <Route path="/polls" element={<AdsPollsPage/>}/>

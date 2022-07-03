@@ -6,6 +6,7 @@ import {menuData} from "../../../data/menu";
 import {Link} from "react-router-dom";
 import {QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 const {Header, Content, Sider} = Layout;
 const {Text} = Typography
@@ -16,6 +17,7 @@ export const MainLayout = ({children}) => {
 
     return (
         <Layout>
+            {/*<Navigate to="/LoginPage" />*/}
             <Header className="header mainLayout__header">
                 <div className="logo"><Logo/></div>
                 <div className='mainLayout__profile-wrap'>
