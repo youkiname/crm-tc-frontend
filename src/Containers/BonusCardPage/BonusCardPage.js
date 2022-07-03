@@ -2,7 +2,7 @@ import React from 'react';
 import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
 import { BonusCardEditItem } from "./BonusCardEditItem";
-import { apiController } from "../../api/api";
+import { apiController } from "../../api";
 
 const CardsWrapper = styled.div`
   width: 100%;

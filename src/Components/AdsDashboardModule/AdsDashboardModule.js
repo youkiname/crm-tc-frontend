@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Divider, Table, Badge } from "antd";
-import { apiController } from "../../api/api";
+import { apiController } from "../../api";
 
 const { Title } = Typography
 

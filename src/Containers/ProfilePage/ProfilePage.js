@@ -3,7 +3,7 @@ import {HeaderPage} from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
 import {Button, Col, Form, Input, Row, Select, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
-import {useAddArendator} from "../../hooks/useAddArendator/useAddArendator";
+import {useAddArendator} from "../../hooks/useAddArendator";
 
 const {Option} = Select
 

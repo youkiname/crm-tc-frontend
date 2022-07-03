@@ -1,7 +1,7 @@
 import React from 'react';
 import {message} from "antd";
 
-const useAddArendator = () => {
+export const useAddArendator = () => {
 
     const propsForLogo = {
         name: 'file',
@@ -38,4 +38,3 @@ const useAddArendator = () => {
     }
 };
 
-export {useAddArendator};

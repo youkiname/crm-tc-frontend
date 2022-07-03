@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Table, Tabs, Radio, Col, DatePicker, Typography, Divider} from "antd";
-import {apiController} from "../../api/api";
+import {apiController} from "../..//api";
 import {Column} from "@ant-design/plots";
 
 const {Text} = Typography
@@ -40,7 +40,6 @@ const radioButtons = [
     {
         type: "week",
         text: "Неделя",
-        graph: "average"
     },
     {
         type: "month",
@@ -73,29 +72,7 @@ export const DashboardTable = () => {
 
         }
     })
-    const onAverageChange = (activeTab) => {
-        const type = activeTab.target
-        const [startDate] = averageTable.dates
 
-        if (activeTab === "1"){
-            if (type === "week"){
-                apiController.getTransactionsSumGraph(startDate?.format().subtract(7, 'dates')).then(({data}) =>
-                    setAverageTable({...averageTable, data}))
-            }
-            if (type === "week"){
-                apiController.getTransactionsSumGraph(startDate?.format().subtract(7, 'dates')).then(({data}) =>
-                    setAverageTable({...averageTable, data}))
-            }
-            if (type === "week"){
-                apiController.getTransactionsSumGraph(startDate?.format().subtract(7, 'dates')).then(({data}) =>
-                    setAverageTable({...averageTable, data}))
-            }
-        }
-        if (type !== averageTable.type) {
-            setAverageTable(prev => ({...prev, type}))
-        }
-
-    }
     const onAverageChangeGraph = (dates) => {
         const [startDate, endDate] = dates;
         setAverageTable(prev => ({
@@ -115,20 +92,47 @@ export const DashboardTable = () => {
     }, [])
     const handleVisitorRadioButton = (event) => {
         const type = event.target.value
-        const [startDate] = visitorTable.dates
+        const current = new Date()
+        const week = new Date(current.setDate(current.getDate()-7))
+        const month = new Date(current.setDate(current.getDate()-30))
+        const year = new Date(current.setDate(current.getDate()-365))
+
         if ( type === "week"){
-            apiController.getColumnPlot(startDate?.format().subtract(7, 'dates')).then(({data}) =>
+            apiController.getColumnPlot(week).then(({data}) =>
                 setVisitorTable({...visitorTable, data}))
         }
         if ( type === "month"){
-            apiController.getColumnPlot(startDate?.format().subtract(30, 'dates')).then(({data}) =>
+            apiController.getColumnPlot(month).then(({data}) =>
                 setVisitorTable({...visitorTable, data}))
         }
         if ( type === "year"){
-            apiController.getColumnPlot(startDate?.format().subtract(365, 'dates')).then(({data}) =>
+            apiController.getColumnPlot(year).then(({data}) =>
                 setVisitorTable({...visitorTable, data}))
         }
+        if (type !== visitorTable.type) {
+            setVisitorTable(prev => ({...prev, type}))
+        }
 
+    }
+    const handleAverageRadioButton = (moment) => {
+        const type = moment.target.value
+        const current = new Date()
+        const week = new Date(current.setDate(current.getDate()-7))
+        const month = new Date(current.setDate(current.getDate()-30))
+        const year = new Date(current.setDate(current.getDate()-365))
+
+        if ( type === "week"){
+            apiController.getTransactionsSumGraph(week).then(({data}) =>
+                setVisitorTable({...visitorTable, data}))
+        }
+        if ( type === "month"){
+            apiController.getTransactionsSumGraph(month).then(({data}) =>
+                setVisitorTable({...visitorTable, data}))
+        }
+        if ( type === "year"){
+            apiController.getTransactionsSumGraph(year).then(({data}) =>
+                setVisitorTable({...visitorTable, data}))
+        }
         if (type !== visitorTable.type) {
             setVisitorTable(prev => ({...prev, type}))
         }
@@ -157,8 +161,8 @@ export const DashboardTable = () => {
     return (
         <Row style={{width: '100%'}} gutter={60} align={"top"}>
             <Col span={16}>
-                <Tabs defaultActiveKey="1" onChange={onAverageChange}>
-                    <TabPane tab="Посетители" key="1">
+                <Tabs defaultActiveKey="1" >
+                    <TabPane tab="Посетители" defaultActiveKey="1" >
                         <Row align="middle">
                             <Col span={16}>
                                 <Radio.Group defaultValue="week" style={{margin: 15}}>
@@ -214,7 +218,7 @@ export const DashboardTable = () => {
                                         radioButtons.map(radio => (
                                             <Radio.Button
                                                 key={radio.type}
-                                                onClick={handleVisitorRadioButton}
+                                                onClick={handleAverageRadioButton}
                                                 value={radio.type}>
                                                 {radio.text}
                                             </Radio.Button>

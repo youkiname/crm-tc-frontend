@@ -4,7 +4,7 @@ import { Button, Col, Row, Typography, Table, Badge } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { apiController } from "../../api/api";
+import { apiController } from "../../api";
 
 const { Title } = Typography
 

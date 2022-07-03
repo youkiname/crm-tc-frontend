@@ -2,27 +2,20 @@ import React from 'react';
 import {Divider, Statistic} from "antd";
 import {CaretUpOutlined} from "@ant-design/icons";
 import {Typography} from "antd";
-import {apiController} from "../../api/api";
 import {TinyArea} from '@ant-design/plots';
+import {useDispatch,useSelector} from "react-redux";
+import {getVisitorCountIndicator} from "../../store/slices";
+import {selectVisitorCountIndicator} from "./selectors";
 
 const {Text} = Typography
 
-const VisitorsCountIndicator = () => {
+export const VisitorsCountIndicator = () => {
+    const {day, month, visitors} = useSelector(selectVisitorCountIndicator)
 
-    const [data, setData] = React.useState({})
-    const [day, setDay] = React.useState("")
-    const [visitors, setVisitors] = React.useState([])
-    const visitorAmounts = visitors.map(item=> item?.amount)
 
-    React.useEffect(() => {
-        apiController.getVisitorsCountIndicatorMounth().then(res => setData(res.data))
-        apiController.getVisitorCountIndicatorToday().then(res => setDay(res.data))
-        apiController.getStatisticUsersGraphMonth().then(res => setVisitors(res.data))
-
-    }, [])
     return (
         <div>
-            <Statistic title="Посетители за месяц" value={data?.amount}/>
+            <Statistic title="Посетители за месяц" value={month?.amount}/>
             <TinyArea
                 height={60}
                 width={230}
@@ -30,7 +23,7 @@ const VisitorsCountIndicator = () => {
                 areaStyle={{fill: "#975FE4"}}
                 line={{color: '#975FE4'}}
                 autoFit={false}
-                data={visitorAmounts}/>
+                data={visitors}/>
             <Divider style={{margin: '8px 0'}}/>
             <div className="total-sales-ind__row">
                 <Text>Посетители сегодня {day?.amount} </Text>
@@ -40,4 +33,3 @@ const VisitorsCountIndicator = () => {
     );
 };
 
-export {VisitorsCountIndicator};

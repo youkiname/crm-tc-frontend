@@ -2,7 +2,7 @@ import React from 'react';
 import { TinyArea } from '@ant-design/plots';
 import { Divider, Statistic } from "antd";
 import { Typography } from "antd";
-import { apiController } from "../../api/api";
+import { apiController } from "../../api";
 
 
 const { Text } = Typography
@@ -21,7 +21,7 @@ const AverageCheckIndicator = () => {
 
     const averageAmounts = average.map(item => parseInt(item?.amount))
 
-    console.log(averageAmounts)
+
     return (
 
         <div>

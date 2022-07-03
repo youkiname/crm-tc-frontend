@@ -1,15 +1,7 @@
-import axios from "axios";
+import {BaseController} from "./baseController";
 
-class ApiController {
-    instance = axios.create({
-        baseURL: "https://api.top-sistem.ru/api/",
-        headers: {
-            get: {
-                Authorization: `Bearer 2|IRchrSlVZhblhqS5nUcz9cAQCM3vUS01rhMkA7fg`,
-                Accept: 'application/json',
-            }
-        }
-    })
+export class ApiController extends BaseController {
+
 
     getTransactSum() {
         return this.instance.get("statistic/transactions/sum")
@@ -63,15 +55,12 @@ class ApiController {
         return this.instance.get(`card_statuses/`)
     }
 
-    updateCardStatus(statusId, newData) {
-        return this.instance.put(`card_statuses/${statusId}`, {params: newData})
-    }
 
     getPolls() {
         return this.instance.get(`polls/`)
     }
 
-    getColumnPlot(startDate,endDate) {
+    getColumnPlot(startDate, endDate) {
         return this.instance.get(`statistic/visitors_graph/`, {
             params: {
                 "start_date": startDate,
@@ -80,7 +69,8 @@ class ApiController {
         })
 
     }
-    getTransactionsSumGraph(startDate, endDate){
+
+    getTransactionsSumGraph(startDate, endDate) {
         return this.instance.get(`statistic/transactions/average_sum/graph`, {
             params: {
                 "start_date": startDate,
@@ -91,4 +81,3 @@ class ApiController {
     }
 }
 
-export const apiController = new ApiController()

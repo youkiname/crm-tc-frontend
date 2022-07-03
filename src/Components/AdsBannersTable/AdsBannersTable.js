@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Table, Badge } from "antd";
-import { apiController } from "../../api/api";
+import { apiController } from "../../api";
 
 const columns = [
     {

@@ -2,7 +2,7 @@ import React from 'react';
 import {Divider, Statistic, Typography} from "antd";
 import '../../Containers/MainPageAD/MainPageAd.css'
 import {CaretDownFilled, CaretUpOutlined} from "@ant-design/icons";
-import {apiController} from "../../api/api";
+import {apiController} from "../../api";
 
 const {Text} = Typography
 
