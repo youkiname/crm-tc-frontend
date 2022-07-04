@@ -2,7 +2,7 @@ import React from 'react';
 import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
 import { Button, Col, Form, Input, Row, Select, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { authController } from "../../api";
 
 const { Option } = Select
 
@@ -12,6 +12,13 @@ const TableDiv = styled.div`
 `;
 
 const ProfilePage = () => {
+    const [currentUser, setCurrentUser] = React.useState()
+
+    React.useEffect(() => {
+        authController.getMe().then(res => {
+            setCurrentUser(res.data)
+        })
+    }, [])
 
     return (
         <>
@@ -57,7 +64,7 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="Иванов Иван Иванович" />
+                        <Input placeholder="Иванов Иван Иванович" value={currentUser?.first_name} />
                     </Form.Item>
 
                     <Form.Item

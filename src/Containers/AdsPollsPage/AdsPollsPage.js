@@ -45,6 +45,11 @@ const columns = [
         title: 'Дата создания',
         dataIndex: 'created_at',
         key: 'created_at',
+        render: created_at => {
+            return (
+                <div>{created_at.split('T')[0]}</div>
+            )
+        }
     },
     {
         title: 'Действия',

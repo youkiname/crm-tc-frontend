@@ -14,8 +14,6 @@ const TableDiv = styled.div`
 
 
 const AddArendatorPage = () => {
-    const [centers, setCenters] = React.useState([])
-    const [shoppingCenterId, setShoppingCenterId] = React.useState()
     const [categories, setCategories] = React.useState([])
     const [categoryId, setCategoryId] = React.useState()
     const [name, setName] = React.useState()
@@ -27,9 +25,6 @@ const AddArendatorPage = () => {
     React.useEffect(() => {
         apiController.getShopCategories().then(res => {
             setCategories(res.data)
-        })
-        apiController.getShoppingCenters().then(res => {
-            setCenters(res.data)
         })
     }, [])
 
@@ -56,7 +51,6 @@ const AddArendatorPage = () => {
 
         apiController.saveShop({
             name,
-            shopping_center_id: shoppingCenterId,
             category_id: categoryId,
             renter_name: renterName,
             renter_phone: renterPhone,
@@ -166,17 +160,6 @@ const AddArendatorPage = () => {
                             {
                                 categories.map(category => (
                                     <Option value={category.id} key={category.id}>{category.name}</Option>
-                                ))
-                            }
-                        </Select>
-                    </Form.Item>
-
-                    <Form.Item label="ТЦ">
-                        <Select value={shoppingCenterId}
-                            onChange={id => setShoppingCenterId(id)} >
-                            {
-                                centers.map(center => (
-                                    <Option value={center.id} key={center.id}>ТЦ {center.name}</Option>
                                 ))
                             }
                         </Select>

@@ -5,13 +5,19 @@ import { Form, Input, Button } from "antd"
 import { ValidationStatus } from "../../common/validationErrors";
 import { validationSchema } from "./validationSchema";
 import { Title, Text, Wrapper, WrapperForm, WrapperTitle } from "./style";
+
 import { authController } from "../../api";
 
 export const AuthPage = () => {
     const onSubmit = (values) => {
+        authController.applyCsrfCookie()
         authController.getAuth(values).then(res => {
             localStorage.setItem("auth", 1);
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("email", values.email);
+            localStorage.setItem("password", values.password);
+            localStorage.setItem("name", `${res.data.first_name} ${res.data.last_name}`);
+
             window.location.href = "/";
         })
     }

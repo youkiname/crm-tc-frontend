@@ -4,7 +4,6 @@ import './MainLayout.css'
 import { Logo } from "../../../Components/Logo/Logo";
 import { menuData } from "../../../data/menu";
 import { Link } from "react-router-dom";
-import { QuestionCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
@@ -15,9 +14,17 @@ export const MainLayout = ({ children }) => {
     const navigate = useNavigate()
 
     const logout = () => {
-        localStorage.removeItem("auth")
+        localStorage.clear();
         window.location.href = "/auth";
     }
+
+    const [currentUsername, setCurrentUsername] = React.useState('ShoppingCenter')
+    React.useEffect(() => {
+        if (localStorage.getItem('name')) {
+            setCurrentUsername(localStorage.getItem('name'))
+        }
+
+    }, [])
 
     return (
         <Layout>
@@ -25,16 +32,13 @@ export const MainLayout = ({ children }) => {
             <Header className="header mainLayout__header">
                 <div className="logo"><Logo /></div>
                 <div className='mainLayout__profile-wrap'>
-                    <Link to="/">
-                        <QuestionCircleOutlined style={{ color: 'white', width: 13, marginRight: 15 }} />
-                    </Link>
                     <Link to="/profile">
                         <Space direction="horizontal">
                             <Avatar src="https://joeschmoe.io/api/v1/random" />
-                            <Text style={{ color: '#fff' }}>Shopping Center</Text>
+                            <Text style={{ color: '#fff' }}>{currentUsername}</Text>
                         </Space>
                     </Link>
-                    <Button onClick={logout} type="primary">
+                    <Button onClick={logout} type="primary" style={{ marginLeft: '10px' }}>
                         Выйти
                     </Button>
                 </div>
