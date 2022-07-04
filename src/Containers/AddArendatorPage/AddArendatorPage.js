@@ -1,11 +1,11 @@
- import React from 'react';
-import {HeaderPage} from "../../Components/HeaderPage/HeaderPage";
+import React from 'react';
+import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
-import {Button, Col, Form, Input, Row, Select, Upload} from "antd";
-import {useAddArendator} from "../../hooks/useAddArendator";
-import {UploadOutlined} from "@ant-design/icons";
+import { Button, Col, Form, Input, Row, Select, Upload, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { apiController } from "../..//api";
 
-const {Option} = Select
+const { Option } = Select
 
 const TableDiv = styled.div`
   padding: 24px;
@@ -14,13 +14,64 @@ const TableDiv = styled.div`
 
 
 const AddArendatorPage = () => {
+    const [centers, setCenters] = React.useState([])
+    const [shoppingCenterId, setShoppingCenterId] = React.useState()
+    const [categories, setCategories] = React.useState([])
+    const [categoryId, setCategoryId] = React.useState()
+    const [name, setName] = React.useState()
+    const [renterName, setRenterName] = React.useState()
+    const [renterPhone, setRenterPhone] = React.useState()
+    const [renterEmail, setRenterEmail] = React.useState()
+    const [renterPassword, setRenterPassword] = React.useState()
+    const [avatar, setAvatar] = React.useState(null)
+    React.useEffect(() => {
+        apiController.getShopCategories().then(res => {
+            setCategories(res.data)
+        })
+        apiController.getShoppingCenters().then(res => {
+            setCenters(res.data)
+        })
+    }, [])
 
-    const {propsForLogo} = useAddArendator()
+    const propsUpload = {
+        name: 'image',
+        multiple: false,
+        onDrop(e) {
+            console.log('Dropped files', e.dataTransfer.files);
+        },
+        beforeUpload(file) {
+            const isAllowed = file.type === 'image/jpeg' || file.type === 'image/png';
+            if (!isAllowed) {
+                message.error('Вы можете загрузить только jpg или png файл.');
+                return false;
+            }
+            setAvatar(file)
+            return false;
+        }
+    };
+
+    const onSubmit = () => {
+        let imageForm = new FormData();
+        imageForm.append('avatar', avatar);
+
+        apiController.saveShop({
+            name,
+            shopping_center_id: shoppingCenterId,
+            category_id: categoryId,
+            renter_name: renterName,
+            renter_phone: renterPhone,
+            renter_email: renterEmail,
+            renter_password: renterPassword,
+        }, imageForm).then(res => {
+            window.location.href = "/base-tc";
+        });
+
+    }
 
     return (
         <>
-            <div style={{backgroundColor: "#FFF", marginTop: -48, marginBottom: 24}}>
-                <HeaderPage title="Добавить арендатора"/>
+            <div style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24 }}>
+                <HeaderPage title="Добавить арендатора" />
             </div>
 
             <TableDiv>
@@ -48,7 +99,10 @@ const AddArendatorPage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="ООО “Иванов”"/>
+                        <Input placeholder="ООО “Иванов”"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -61,7 +115,10 @@ const AddArendatorPage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="Иванов Иван Иванович"/>
+                        <Input placeholder="Иванов Иван Иванович"
+                            value={renterName}
+                            onChange={e => setRenterName(e.target.value)}
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -74,7 +131,10 @@ const AddArendatorPage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="+7 999 999 99 99"/>
+                        <Input placeholder="+7 999 999 99 99"
+                            value={renterPhone}
+                            onChange={e => setRenterPhone(e.target.value)}
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -87,8 +147,8 @@ const AddArendatorPage = () => {
                             },
                         ]}
                     >
-                        <Upload {...propsForLogo}>
-                            <Button icon={<UploadOutlined/>}>Добавить логотип</Button>
+                        <Upload {...propsUpload}>
+                            <Button icon={<UploadOutlined />}>Добавить логотип</Button>
                         </Upload>
                     </Form.Item>
 
@@ -97,16 +157,28 @@ const AddArendatorPage = () => {
                         name="category"
                     >
                         <Select
-                            defaultValue="lucy"
                             style={{
                                 width: 250,
                             }}
+                            value={categoryId}
+                            onChange={id => setCategoryId(id)}
                         >
-                            <Option value="jack">Электроника</Option>
-                            <Option value="lucy">Одежда</Option>
-                            <Option value="Yiminghe">Аксессуары</Option>
-                            <Option value="Yiminghe">Косметика</Option>
-                            <Option value="Yiminghe">Обувь</Option>
+                            {
+                                categories.map(category => (
+                                    <Option value={category.id} key={category.id}>{category.name}</Option>
+                                ))
+                            }
+                        </Select>
+                    </Form.Item>
+
+                    <Form.Item label="ТЦ">
+                        <Select value={shoppingCenterId}
+                            onChange={id => setShoppingCenterId(id)} >
+                            {
+                                centers.map(center => (
+                                    <Option value={center.id} key={center.id}>ТЦ {center.name}</Option>
+                                ))
+                            }
                         </Select>
                     </Form.Item>
 
@@ -120,7 +192,10 @@ const AddArendatorPage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="mail@mail.ru"/>
+                        <Input placeholder="mail@mail.ru"
+                            value={renterEmail}
+                            onChange={e => setRenterEmail(e.target.value)}
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -133,13 +208,15 @@ const AddArendatorPage = () => {
                             },
                         ]}
                     >
-                        <Input/>
+                        <Input.Password value={renterPassword}
+                            onChange={e => setRenterPassword(e.target.value)}
+                        />
                     </Form.Item>
 
                     <Row justify="center">
                         <Col span={24}>
-                            <Form.Item style={{margin: '0 auto'}}>
-                                <Button type="primary" htmlType="submit">
+                            <Form.Item style={{ margin: '0 auto' }}>
+                                <Button type="primary" htmlType="submit" onClick={onSubmit}>
                                     Создать арендатора
                                 </Button>
                             </Form.Item>
@@ -152,4 +229,4 @@ const AddArendatorPage = () => {
     );
 };
 
-export {AddArendatorPage};
+export { AddArendatorPage };

@@ -4,9 +4,12 @@ export class BaseController {
     instance = axios.create({
         baseURL: "https://api.top-sistem.ru/api/",
         headers: {
-            get: {
-                Authorization: `Bearer 2|IRchrSlVZhblhqS5nUcz9cAQCM3vUS01rhMkA7fg`,
+            common: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
                 Accept: 'application/json',
+                // enctype: "multipart/form-data",
+                // "Content-Type": "multipart/form-data"
+                // "Content-Type": "application/x-www-form-urlencoded"
             }
         }
     })

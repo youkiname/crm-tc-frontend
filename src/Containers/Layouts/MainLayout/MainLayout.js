@@ -1,35 +1,42 @@
-import {Avatar, Layout, Menu, Space, Typography} from 'antd';
+import { Avatar, Layout, Menu, Space, Typography, Button } from 'antd';
 import React from 'react';
 import './MainLayout.css'
-import {Logo} from "../../../Components/Logo/Logo";
-import {menuData} from "../../../data/menu";
-import {Link} from "react-router-dom";
-import {QuestionCircleOutlined} from "@ant-design/icons";
-import {useNavigate} from "react-router-dom";
-import {Navigate} from "react-router-dom";
+import { Logo } from "../../../Components/Logo/Logo";
+import { menuData } from "../../../data/menu";
+import { Link } from "react-router-dom";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
-const {Header, Content, Sider} = Layout;
-const {Text} = Typography
+const { Header, Content, Sider } = Layout;
+const { Text } = Typography
 
 
-export const MainLayout = ({children}) => {
+export const MainLayout = ({ children }) => {
     const navigate = useNavigate()
+
+    const logout = () => {
+        localStorage.removeItem("auth")
+        window.location.href = "/auth";
+    }
 
     return (
         <Layout>
             {/*<Navigate to="/LoginPage" />*/}
             <Header className="header mainLayout__header">
-                <div className="logo"><Logo/></div>
+                <div className="logo"><Logo /></div>
                 <div className='mainLayout__profile-wrap'>
                     <Link to="/">
-                        <QuestionCircleOutlined style={{color: 'white', width: 13, marginRight: 15}}/>
+                        <QuestionCircleOutlined style={{ color: 'white', width: 13, marginRight: 15 }} />
                     </Link>
                     <Link to="/profile">
                         <Space direction="horizontal">
-                            <Avatar src="https://joeschmoe.io/api/v1/random"/>
-                            <Text style={{color: '#fff'}}>Shopping Center</Text>
+                            <Avatar src="https://joeschmoe.io/api/v1/random" />
+                            <Text style={{ color: '#fff' }}>Shopping Center</Text>
                         </Space>
                     </Link>
+                    <Button onClick={logout} type="primary">
+                        Выйти
+                    </Button>
                 </div>
             </Header>
             <Layout>
@@ -44,7 +51,7 @@ export const MainLayout = ({children}) => {
                         }}
                         items={menuData}
                         onSelect={(item) => {
-                            navigate(item.item.props.path, {replace: true})
+                            navigate(item.item.props.path, { replace: true })
                         }}
                     />
                 </Sider>

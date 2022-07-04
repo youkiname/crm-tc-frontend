@@ -1,11 +1,10 @@
 import React from 'react';
-import {HeaderPage} from "../../Components/HeaderPage/HeaderPage";
+import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
-import {Button, Col, Form, Input, Row, Select, Upload} from "antd";
-import {UploadOutlined} from "@ant-design/icons";
-import {useAddArendator} from "../../hooks/useAddArendator";
+import { Button, Col, Form, Input, Row, Select, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
-const {Option} = Select
+const { Option } = Select
 
 const TableDiv = styled.div`
   padding: 24px;
@@ -14,12 +13,10 @@ const TableDiv = styled.div`
 
 const ProfilePage = () => {
 
-    const {propsForLogo} = useAddArendator()
-
     return (
         <>
-            <div style={{backgroundColor: "#FFF", marginTop: -48, marginBottom: 24}}>
-                <HeaderPage title="Настройки профиля"/>
+            <div style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24 }}>
+                <HeaderPage title="Настройки профиля" />
             </div>
 
             <TableDiv>
@@ -47,7 +44,7 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="ООО “Иванов”"/>
+                        <Input placeholder="ООО “Иванов”" />
                     </Form.Item>
 
                     <Form.Item
@@ -60,7 +57,7 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="Иванов Иван Иванович"/>
+                        <Input placeholder="Иванов Иван Иванович" />
                     </Form.Item>
 
                     <Form.Item
@@ -73,7 +70,7 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="+7 999 999 99 99"/>
+                        <Input placeholder="+7 999 999 99 99" />
                     </Form.Item>
 
                     <Form.Item
@@ -86,9 +83,9 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Upload {...propsForLogo}>
-                            <Button icon={<UploadOutlined/>}>Добавить логотип</Button>
-                        </Upload>
+                        {/* <Upload {...propsForLogo}>
+                            <Button icon={<UploadOutlined />}>Добавить логотип</Button>
+                        </Upload> */}
                     </Form.Item>
 
                     <Form.Item
@@ -119,7 +116,7 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="г. Москва, ул. Ленина, 123, корп. 2"/>
+                        <Input placeholder="г. Москва, ул. Ленина, 123, корп. 2" />
                     </Form.Item>
 
                     <Form.Item
@@ -132,12 +129,12 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input.TextArea rows={4}/>
+                        <Input.TextArea rows={4} />
                     </Form.Item>
 
                     <Row justify="center">
                         <Col span={24}>
-                            <Form.Item style={{margin: '0 auto'}}>
+                            <Form.Item style={{ margin: '0 auto' }}>
                                 <Button type="primary" htmlType="submit">
                                     Сохранить
                                 </Button>
@@ -151,4 +148,4 @@ const ProfilePage = () => {
     );
 };
 
-export {ProfilePage};
+export { ProfilePage };

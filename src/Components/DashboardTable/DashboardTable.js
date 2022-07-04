@@ -1,12 +1,12 @@
 import React from 'react';
-import {Row, Table, Tabs, Radio, Col, DatePicker, Typography, Divider} from "antd";
-import {apiController} from "../..//api";
-import {Column} from "@ant-design/plots";
+import { Row, Table, Tabs, Radio, Col, DatePicker, Typography, Divider } from "antd";
+import { apiController } from "../..//api";
+import { Column } from "@ant-design/plots";
 
-const {Text} = Typography
+const { Text } = Typography
 
-const {RangePicker} = DatePicker;
-const {TabPane} = Tabs;
+const { RangePicker } = DatePicker;
+const { TabPane } = Tabs;
 
 const transactionsColumns = [
     {
@@ -80,61 +80,64 @@ export const DashboardTable = () => {
             dates
         }))
         if (startDate || endDate) {
-            apiController.getTransactionsSumGraph(startDate?.format(), endDate?.format()).then(({data}) =>
-                setAverageTable({...averageTable, data}))
+            apiController.getTransactionsSumGraph(startDate?.format(), endDate?.format()).then(({ data }) =>
+                setAverageTable({ ...averageTable, data }))
         }
 
     }
 
     React.useEffect(() => {
         apiController.getLastTransaction(7).then(res => setData(res.data))
-
+        const current = new Date()
+        const month = new Date(current.setDate(current.getDate() - 30))
+        apiController.getColumnPlot(month).then(({ data }) =>
+            setVisitorTable({ ...visitorTable, data }))
     }, [])
     const handleVisitorRadioButton = (event) => {
         const type = event.target.value
         const current = new Date()
-        const week = new Date(current.setDate(current.getDate()-7))
-        const month = new Date(current.setDate(current.getDate()-30))
-        const year = new Date(current.setDate(current.getDate()-365))
+        const week = new Date(current.setDate(current.getDate() - 7))
+        const month = new Date(current.setDate(current.getDate() - 30))
+        const year = new Date(current.setDate(current.getDate() - 365))
 
-        if ( type === "week"){
-            apiController.getColumnPlot(week).then(({data}) =>
-                setVisitorTable({...visitorTable, data}))
+        if (type === "week") {
+            apiController.getColumnPlot(week).then(({ data }) =>
+                setVisitorTable({ ...visitorTable, data }))
         }
-        if ( type === "month"){
-            apiController.getColumnPlot(month).then(({data}) =>
-                setVisitorTable({...visitorTable, data}))
+        if (type === "month") {
+            apiController.getColumnPlot(month).then(({ data }) =>
+                setVisitorTable({ ...visitorTable, data }))
         }
-        if ( type === "year"){
-            apiController.getColumnPlot(year).then(({data}) =>
-                setVisitorTable({...visitorTable, data}))
+        if (type === "year") {
+            apiController.getColumnPlot(year).then(({ data }) =>
+                setVisitorTable({ ...visitorTable, data }))
         }
         if (type !== visitorTable.type) {
-            setVisitorTable(prev => ({...prev, type}))
+            setVisitorTable(prev => ({ ...prev, type }))
         }
 
     }
     const handleAverageRadioButton = (moment) => {
         const type = moment.target.value
         const current = new Date()
-        const week = new Date(current.setDate(current.getDate()-7))
-        const month = new Date(current.setDate(current.getDate()-30))
-        const year = new Date(current.setDate(current.getDate()-365))
+        const week = new Date(current.setDate(current.getDate() - 7))
+        const month = new Date(current.setDate(current.getDate() - 30))
+        const year = new Date(current.setDate(current.getDate() - 365))
 
-        if ( type === "week"){
-            apiController.getTransactionsSumGraph(week).then(({data}) =>
-                setVisitorTable({...visitorTable, data}))
+        if (type === "week") {
+            apiController.getTransactionsSumGraph(week).then(({ data }) =>
+                setVisitorTable({ ...visitorTable, data }))
         }
-        if ( type === "month"){
-            apiController.getTransactionsSumGraph(month).then(({data}) =>
-                setVisitorTable({...visitorTable, data}))
+        if (type === "month") {
+            apiController.getTransactionsSumGraph(month).then(({ data }) =>
+                setVisitorTable({ ...visitorTable, data }))
         }
-        if ( type === "year"){
-            apiController.getTransactionsSumGraph(year).then(({data}) =>
-                setVisitorTable({...visitorTable, data}))
+        if (type === "year") {
+            apiController.getTransactionsSumGraph(year).then(({ data }) =>
+                setVisitorTable({ ...visitorTable, data }))
         }
         if (type !== visitorTable.type) {
-            setVisitorTable(prev => ({...prev, type}))
+            setVisitorTable(prev => ({ ...prev, type }))
         }
 
     }
@@ -145,11 +148,11 @@ export const DashboardTable = () => {
             dates
         }))
         if (startDate || endDate) {
-            apiController.getColumnPlot(startDate?.format(), endDate?.format()).then(({data}) =>
-                setVisitorTable({...visitorTable, data}))
+            apiController.getColumnPlot(startDate?.format(), endDate?.format()).then(({ data }) =>
+                setVisitorTable({ ...visitorTable, data }))
         }
 
-        }
+    }
     const visitorsColumns = visitorTable?.data?.map(item => {
         const date = new Date(item?.date)
         return {
@@ -159,13 +162,13 @@ export const DashboardTable = () => {
         }
     })
     return (
-        <Row style={{width: '100%'}} gutter={60} align={"top"}>
+        <Row style={{ width: '100%' }} gutter={60} align={"top"}>
             <Col span={16}>
                 <Tabs defaultActiveKey="1" >
                     <TabPane tab="Посетители" defaultActiveKey="1" >
                         <Row align="middle">
                             <Col span={16}>
-                                <Radio.Group defaultValue="week" style={{margin: 15}}>
+                                <Radio.Group defaultValue="week" style={{ margin: 15 }}>
                                     {
                                         radioButtons.map(radio => (
                                             <Radio.Button
@@ -181,39 +184,39 @@ export const DashboardTable = () => {
                             </Col>
                             <Col span={8}>
                                 <RangePicker value={visitorTable?.dates}
-                                             onChange={onCalendarChange}/>
+                                    onChange={onCalendarChange} />
                             </Col>
                         </Row>
                         <Column data={visitorsColumns}
-                                xField="type"
-                                yField="sales"
-                                label={{
-                                    position: 'middle',
-                                    style: {
-                                        fill: '#FFFFFF',
-                                        opacity: 0.6,
-                                    },
-                                }}
-                                xAxis={{
-                                    label: {
-                                        autoHide: true,
-                                        autoRotate: false,
-                                    },
-                                }}
-                                meta={{
-                                    type: {
-                                        alias: 'Количество посетителей',
-                                    },
-                                    sales: {
-                                        alias: 'Посетители',
-                                    },
-                                }}
+                            xField="type"
+                            yField="sales"
+                            label={{
+                                position: 'middle',
+                                style: {
+                                    fill: '#FFFFFF',
+                                    opacity: 0.6,
+                                },
+                            }}
+                            xAxis={{
+                                label: {
+                                    autoHide: true,
+                                    autoRotate: false,
+                                },
+                            }}
+                            meta={{
+                                type: {
+                                    alias: 'Количество посетителей',
+                                },
+                                sales: {
+                                    alias: 'Посетители',
+                                },
+                            }}
                         />
                     </TabPane>
                     <TabPane tab="Средняя выручка" key="2">
                         <Row align="middle">
                             <Col span={16}>
-                                <Radio.Group defaultValue="graph" style={{margin: 15}}>
+                                <Radio.Group defaultValue="graph" style={{ margin: 15 }}>
                                     {
                                         radioButtons.map(radio => (
                                             <Radio.Button
@@ -228,42 +231,42 @@ export const DashboardTable = () => {
                             </Col>
                             <Col span={8}>
                                 <RangePicker value={averageTable?.dates}
-                                             onChange={onAverageChangeGraph}/>
+                                    onChange={onAverageChangeGraph} />
                             </Col>
                         </Row>
                         <Column data={averageColumns}
-                                xField="type"
-                                yField="sales"
-                                label={{
-                                    position: 'middle',
-                                    style: {
-                                        fill: '#FFFFFF',
-                                        opacity: 0.6,
-                                    },
-                                }}
-                                xAxis={{
-                                    label: {
-                                        autoHide: true,
-                                        autoRotate: false,
-                                    },
-                                }}
-                                meta={{
-                                    type: {
-                                        alias: 'Количество посетителей',
-                                    },
-                                    sales: {
-                                        alias: 'Посетители',
-                                    },
-                                }}
+                            xField="type"
+                            yField="sales"
+                            label={{
+                                position: 'middle',
+                                style: {
+                                    fill: '#FFFFFF',
+                                    opacity: 0.6,
+                                },
+                            }}
+                            xAxis={{
+                                label: {
+                                    autoHide: true,
+                                    autoRotate: false,
+                                },
+                            }}
+                            meta={{
+                                type: {
+                                    alias: 'Количество посетителей',
+                                },
+                                sales: {
+                                    alias: 'Выручка',
+                                },
+                            }}
                         />
                     </TabPane>
                 </Tabs>
             </Col>
             <Col span={8}>
                 <Text>Последние транзакции</Text>
-                <Divider/>
+                <Divider />
                 <Table pagination={false} showHeader={false} columns={transactionsColumns}
-                       dataSource={data}/>
+                    dataSource={data} />
             </Col>
         </Row>
     );

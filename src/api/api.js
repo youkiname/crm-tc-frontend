@@ -1,4 +1,4 @@
-import {BaseController} from "./baseController";
+import { BaseController } from "./baseController";
 
 export class ApiController extends BaseController {
 
@@ -67,11 +67,7 @@ export class ApiController extends BaseController {
                 "end_date": endDate
             }
         })
-
-
-
     }
-
 
     getTransactionsSumGraph(startDate, endDate) {
         return this.instance.get(`statistic/transactions/average_sum/graph`, {
@@ -81,6 +77,40 @@ export class ApiController extends BaseController {
             }
         })
 
+    }
+
+    getVisitorsAgePlot(range = 'week') {
+        return this.instance.get(`statistic/visitors/age_plot/${range}`)
+    }
+
+    getShoppingCenters() {
+        return this.instance.get(`shopping_centers`)
+    }
+
+    getShops() {
+        return this.instance.get(`shops`)
+    }
+
+    getShopCategories() {
+        return this.instance.get(`shops/categories`)
+    }
+
+    saveNewBanner(data, imageForm) {
+        return this.instance.post(`banners`, imageForm, {
+            params: data
+        })
+    }
+
+    savePoll(data) {
+        return this.instance.post(`polls`, null, {
+            params: data
+        })
+    }
+
+    saveShop(data, avatarForm) {
+        return this.instance.post(`shops`, avatarForm, {
+            params: data
+        })
     }
 }
 

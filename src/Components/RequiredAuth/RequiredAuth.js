@@ -1,7 +1,7 @@
-import {Navigate, useLocation} from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 export function RequireAuth({ children }) {
-    const auth = false
+    const auth = localStorage.getItem("auth")
     let location = useLocation();
 
     if (!auth) {

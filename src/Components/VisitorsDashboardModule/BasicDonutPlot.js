@@ -1,38 +1,12 @@
 import React from 'react';
 import { Pie } from '@ant-design/plots';
 
-export const BasicDonutPlot = () => {
-    const data = [
-        {
-            type: '18-24',
-            value: 27,
-        },
-        {
-            type: '25-30',
-            value: 25,
-        },
-        {
-            type: '31-35',
-            value: 18,
-        },
-        {
-            type: '36-40',
-            value: 15,
-        },
-        {
-            type: '41-45',
-            value: 10,
-        },
-        {
-            type: '46-50',
-            value: 5,
-        },
-    ];
+export const BasicDonutPlot = ({ data }) => {
     const config = {
         appendPadding: 10,
         data,
-        angleField: 'value',
-        colorField: 'type',
+        angleField: 'amount',
+        colorField: 'group',
         radius: 1,
         innerRadius: 0.6,
         label: {
