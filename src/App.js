@@ -10,7 +10,9 @@ import {
     BaseTCPage,
     BonusCardPage,
     NotFoundPage,
-    ProfilePage, AuthPage
+    ProfilePage, AuthPage,
+    RedPollPage,
+    EditAdsPoll,
 } from "./Containers";
 import './App.css'
 import {BrowserRouter, Routes, Route,} from "react-router-dom";
@@ -61,6 +63,16 @@ export const App = () => {
                     <Route path="/add-polls" element={
                         <RequireAuth>
                             <AddPollPage/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/edit-polls" element={
+                        <RequireAuth>
+                            <RedPollPage/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/editAds/:id" element={
+                        <RequireAuth>
+                            <EditAdsPoll/>
                         </RequireAuth>
                     }/>
                     <Route path="/auth" element={<AuthPage/>}/>

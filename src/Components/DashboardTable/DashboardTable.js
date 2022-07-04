@@ -109,7 +109,7 @@ export const DashboardTable = () => {
                 setVisitorTable({ ...visitorTable, data }))
         }
         if (type === "year") {
-            apiController.getColumnPlot(year).then(({ data }) =>
+            apiController.getColumnPlnot(year).then(({ data }) =>
                 setVisitorTable({ ...visitorTable, data }))
         }
         if (type !== visitorTable.type) {

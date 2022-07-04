@@ -47,6 +47,21 @@ export class ApiController extends BaseController {
         return this.instance.get(`banners/`)
     }
 
+    getBanner(id){
+        return this.instance.get(`banners/${id}`)
+    }
+    editBanner(id, data, ImageForm){
+        return this.instance.put(`banners/${id}`,ImageForm,{
+            params: data
+
+
+        })
+    }
+    saveNewBanner(data, imageForm) {
+        return this.instance.post(`banners`, imageForm, {
+            params: data
+        })
+    }
     getCustomerStatistics() {
         return this.instance.get(`statistic/customers`)
     }
@@ -95,11 +110,7 @@ export class ApiController extends BaseController {
         return this.instance.get(`shops/categories`)
     }
 
-    saveNewBanner(data, imageForm) {
-        return this.instance.post(`banners`, imageForm, {
-            params: data
-        })
-    }
+
 
     savePoll(data) {
         return this.instance.post(`polls`, null, {

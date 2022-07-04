@@ -33,6 +33,8 @@ const columns = [
         title: 'Статус',
         dataIndex: 'is_active',
         key: 'is_active',
+        width: '15%',
+
         render: is_active => {
             return (
                 <Badge status={is_active ? 'success' : 'error'}
@@ -55,14 +57,17 @@ const columns = [
         title: 'Действия',
         dataIndex: 'is_active',
         key: 'is_active',
-        render: (is_active) => (
+        width: '10%',
+
+        render: (is_active,banner) => (
             <>
-                <Button type="link">Редактировать</Button>
+                <Link to={`../edit-polls/${banner.id}`} type="link">Редактировать</Link>
                 <Button danger type="link">{is_active ? 'Остановить' : 'Запустить'}</Button>
             </>
         )
     },
 ]
+
 
 const AdsPollsPage = () => {
     const [polls, setPolls] = React.useState([])
@@ -81,6 +86,7 @@ const AdsPollsPage = () => {
                     </Col>
                     <Col>
                         <Link to="/add-polls">
+
                             <Button type="primary" icon={<PlusOutlined />}>Создать</Button>
                         </Link>
                     </Col>

@@ -12,11 +12,13 @@ import {
     Typography,
     InputNumber,
     Upload,
-    message, Badge
+    message, Checkbox
 } from "antd";
 import styled from "styled-components";
 import { InboxOutlined } from "@ant-design/icons";
 import { apiController } from "../..//api";
+import {useParams} from "react-router-dom";
+import moment from "moment";
 
 const { Dragger } = Upload;
 const { Text, Title } = Typography
@@ -28,21 +30,24 @@ const TableDiv = styled.div`
   background-color: #fff;
 `;
 
-const AddBannerPage = () => {
+const EditAdsPoll = () => {
     const [form] = Form.useForm();
-    const [shops, setShops] = React.useState([])
     const [name, setName] = React.useState('')
-    const [selectedShopId, setSelectedShopId] = React.useState()
     const [dateRange, setDateRange] = React.useState()
     const [gender, setGender] = React.useState('male')
     const [ageRange, setAgeRange] = React.useState('18-24')
     const [minBalance, setMinBalance] = React.useState()
     const [selectedImage, setSelectedImage] = React.useState(null)
-
-
+    const [active, setActive] = React.useState()
+    let { id } = useParams();
     React.useEffect(() => {
-        apiController.getShops().then(res => {
-            setShops(res.data)
+        apiController.getBanner(id).then(res => {
+            setName(res.data.name)
+            setGender(res.data.gender)
+            setAgeRange(res.data.ageRange)
+            setMinBalance(res.data.min_balance)
+            setDateRange([moment(res.data.start_date), moment(res.data.end_date)])
+            setActive(res.data.is_active)
         })
     }, [])
 
@@ -68,9 +73,8 @@ const AddBannerPage = () => {
         let imageForm = new FormData();
         imageForm.append('image', selectedImage);
 
-        apiController.saveNewBanner({
+        apiController.editBanner({
             name: name,
-            shop_id: selectedShopId,
             start_date: startDate.toISOString().split('T')[0],
             end_date: endDate.toISOString().split('T')[0],
             min_age: ageRange.split('-')[0],
@@ -83,9 +87,7 @@ const AddBannerPage = () => {
         <>
             <div
                 style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24, paddingBottom: 24, paddingLeft: 24 }}>
-                <HeaderPage title="Создать рекламный баннер" />
-                <Text>Для того, чтобы создать рекламный баннер вам потребуется картинка формата .png и размером 205х108
-                    пикселей</Text>
+                <HeaderPage title="Редактировать рекламный баннер" />
             </div>
 
             <TableDiv style={{ marginTop: 24 }}>
@@ -93,36 +95,30 @@ const AddBannerPage = () => {
                 <Divider />
                 <Form layout="vertical" form={form}>
                     <Row gutter={24}>
-                        <Col span={8}>
-                            <Form.Item label="Арендатор">
-                                <Select value={selectedShopId} onChange={shopId => setSelectedShopId(shopId)} >
-                                    {
-                                        shops.map(shop => (
-                                            <Option value={shop.id} key={shop.id}>{shop.name}</Option>
-                                        ))
-                                    }
-                                </Select>
-                            </Form.Item>
-                        </Col>
+
                         <Col span={8}>
                             <Form.Item label="Наименование рекламного баннера">
                                 <Input placeholder="Наименование" value={name} onChange={e => setName(e.target.value)} />
                             </Form.Item>
                         </Col>
-
                         <Col span={8}>
                             <Form.Item label="Комментарий">
                                 <Input placeholder="Комментарий" />
                             </Form.Item>
                         </Col>
+
                     </Row>
                     <Row>
                         <Col span={8}>
                             <Form.Item label="Период публикации">
                                 <RangePicker value={dateRange}
-                                    onChange={dates => setDateRange(dates)} />
+                                             onChange={dates => setDateRange(dates)} />
                             </Form.Item>
+                            <Col span={16}>
+                                <Checkbox checked={active} onChange={e => setActive(e)}> Активен</Checkbox>
+                            </Col>
                         </Col>
+
                     </Row>
                 </Form>
             </TableDiv>
@@ -161,11 +157,12 @@ const AddBannerPage = () => {
                         <Col span={8}>
                             <Form.Item label="Баланс">
                                 <InputNumber style={{ width: '100%' }} min={0} addonBefore="от" placeholder="1000"
-                                    value={minBalance}
-                                    onInput={e => setMinBalance(e)}
+                                             value={minBalance}
+                                             onInput={e => setMinBalance(e)}
                                 />
                             </Form.Item>
                         </Col>
+
                     </Row>
                 </Form>
             </TableDiv>
@@ -202,7 +199,7 @@ const AddBannerPage = () => {
             <Row justify="center" style={{ marginTop: 24 }}>
                 <Col>
                     <Button type="primary" onClick={onSubmit}>
-                        Создать
+                        Редактировать
                     </Button>
                 </Col>
             </Row>
@@ -210,4 +207,4 @@ const AddBannerPage = () => {
     );
 };
 
-export { AddBannerPage };
+export {EditAdsPoll };
