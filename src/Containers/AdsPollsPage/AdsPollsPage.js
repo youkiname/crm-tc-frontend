@@ -85,7 +85,7 @@ const AdsPollsPage = () => {
 
             render: (is_active, poll) => (
                 <>
-                    <Link to={`../edit-polls/${poll.id}`} type="link">Редактировать</Link>
+                    <Link to={`../edit-poll/${poll.id}`} type="link">Редактировать</Link>
                     <Button danger type="link"
                         onClick={() => handleActivateButton(poll)}
                     >{is_active ? 'Остановить' : 'Запустить'}</Button>

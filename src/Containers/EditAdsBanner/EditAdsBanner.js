@@ -17,7 +17,7 @@ import {
 import styled from "styled-components";
 import { InboxOutlined } from "@ant-design/icons";
 import { apiController } from "../../api";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from "moment";
 
 const { Dragger } = Upload;
@@ -30,7 +30,7 @@ const TableDiv = styled.div`
   backgroun1d-color: #fff;
 `;
 
-const EditAdsPoll = () => {
+const EditAdsBanner = () => {
     const [form] = Form.useForm();
     const [name, setName] = React.useState('')
     const [dateRange, setDateRange] = React.useState()
@@ -57,10 +57,10 @@ const EditAdsPoll = () => {
         onDrop(e) {
             console.log('Dropped files', e.dataTransfer.files);
         },
-       async beforeUpload(file) {
+        async beforeUpload(file) {
             const isAllowed = file.type === 'image/jpeg' || file.type === 'image/png';
             if (!isAllowed) {
-               await message.error('Вы можете загрузить только jpg или png файл.');
+                await message.error('Вы можете загрузить только jpg или png файл.');
                 return false;
             }
             setSelectedImage(file)
@@ -112,7 +112,7 @@ const EditAdsPoll = () => {
                         <Col span={8}>
                             <Form.Item label="Период публикации">
                                 <RangePicker value={dateRange}
-                                             onChange={dates => setDateRange(dates)} />
+                                    onChange={dates => setDateRange(dates)} />
                             </Form.Item>
                             <Col span={16}>
                                 <Checkbox checked={active} onChange={e => setActive(e)}> Активен</Checkbox>
@@ -157,8 +157,8 @@ const EditAdsPoll = () => {
                         <Col span={8}>
                             <Form.Item label="Баланс">
                                 <InputNumber style={{ width: '100%' }} min={0} addonBefore="от" placeholder="1000"
-                                             value={minBalance}
-                                             onInput={e => setMinBalance(e)}
+                                    value={minBalance}
+                                    onInput={e => setMinBalance(e)}
                                 />
                             </Form.Item>
                         </Col>
@@ -207,4 +207,4 @@ const EditAdsPoll = () => {
     );
 };
 
-export {EditAdsPoll };
+export { EditAdsBanner };

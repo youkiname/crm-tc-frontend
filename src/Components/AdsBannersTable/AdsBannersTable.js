@@ -80,7 +80,7 @@ const AdsBannersTable = () => {
             width: '10%',
             render: (is_active, banner) => {
                 return (<>
-                    <Link to={`../editAds/${banner.id}`} type="link">Редактировать</Link>
+                    <Link to={`../edit-banner/${banner.id}`} type="link">Редактировать</Link>
                     <Button danger type="link"
                         onClick={() => handleActivateButton(banner)}
                     >{is_active ? 'Остановить' : 'Запустить'}</Button>

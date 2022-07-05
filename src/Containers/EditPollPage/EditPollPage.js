@@ -12,7 +12,7 @@ import {
 import styled from "styled-components";
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { apiController } from "../../api";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const { Title } = Typography
 
@@ -21,7 +21,7 @@ const TableDiv = styled.div`
   background-color: #fff;
 `;
 
-const RedPollPage = () => {
+const EditPollPage = () => {
     const [form] = Form.useForm();
     const [shoppingCenterId] = React.useState()
     const [title, setTitle] = React.useState('')
@@ -60,7 +60,7 @@ const RedPollPage = () => {
     }
 
     const onSubmit = async () => {
-       await apiController.savePoll({
+        await apiController.savePoll({
             title,
             description,
             shopping_center_id: shoppingCenterId,
@@ -83,8 +83,8 @@ const RedPollPage = () => {
                         <Col span={12}>
                             <Form.Item label="Заголовок опроса">
                                 <Input placeholder="Заголовок опроса"
-                                       value={title}
-                                       onChange={e => setTitle(e.target.value)}
+                                    value={title}
+                                    onChange={e => setTitle(e.target.value)}
                                 />
                             </Form.Item>
                         </Col>
@@ -92,8 +92,8 @@ const RedPollPage = () => {
                         <Col span={12}>
                             <Form.Item label="Описание">
                                 <Input placeholder="Описание"
-                                       value={description}
-                                       onChange={e => setDescription(e.target.value)}
+                                    value={description}
+                                    onChange={e => setDescription(e.target.value)}
                                 />
                             </Form.Item>
                         </Col>
@@ -173,4 +173,4 @@ const RedPollPage = () => {
         ;
 };
 
-export { RedPollPage };
+export { EditPollPage };

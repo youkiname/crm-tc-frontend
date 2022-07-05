@@ -11,12 +11,12 @@ import {
     BonusCardPage,
     NotFoundPage,
     ProfilePage, AuthPage,
-    RedPollPage,
-    EditAdsPoll,
+    EditPollPage,
+    EditAdsBanner,
 } from "./Containers";
 import './App.css'
-import {BrowserRouter, Routes, Route,} from "react-router-dom";
-import {RequireAuth} from "./Components";
+import { BrowserRouter, Routes, Route, } from "react-router-dom";
+import { RequireAuth } from "./Components";
 
 export const App = () => {
 
@@ -26,57 +26,57 @@ export const App = () => {
                 <Routes>
                     <Route path="/" exact element={
                         <RequireAuth>
-                            <MainPageAD/>
+                            <MainPageAD />
                         </RequireAuth>
-                    }/>
+                    } />
                     <Route path="/ads" element={<RequireAuth>
-                        <AdsBannersPage/>
-                    </RequireAuth>}/>
+                        <AdsBannersPage />
+                    </RequireAuth>} />
                     <Route path="/polls" element={
                         <RequireAuth>
-                        <AdsPollsPage/>
-                    </RequireAuth>
-                    }/>
+                            <AdsPollsPage />
+                        </RequireAuth>
+                    } />
                     <Route path="/base-tc" element={
                         <RequireAuth>
-                        <BaseTCPage/>
-                    </RequireAuth>
-                    }/>
+                            <BaseTCPage />
+                        </RequireAuth>
+                    } />
                     <Route path="/bonus-card" element={
                         <RequireAuth>
-                            <BonusCardPage/>
+                            <BonusCardPage />
                         </RequireAuth>
-                    }/>
+                    } />
                     <Route path="/add-arendator" element={<RequireAuth>
-                        <AddArendatorPage/>
-                    </RequireAuth>}/>
+                        <AddArendatorPage />
+                    </RequireAuth>} />
                     <Route path="/profile" element={
                         <RequireAuth>
-                            <ProfilePage/>
+                            <ProfilePage />
                         </RequireAuth>
-                    }/>
+                    } />
                     <Route path="/add-banner" element={
                         <RequireAuth>
-                            <AddBannerPage/>
+                            <AddBannerPage />
                         </RequireAuth>
-                    }/>
+                    } />
                     <Route path="/add-polls" element={
                         <RequireAuth>
-                            <AddPollPage/>
+                            <AddPollPage />
                         </RequireAuth>
-                    }/>
-                    <Route path="/edit-polls" element={
+                    } />
+                    <Route path="/edit-poll/:id" element={
                         <RequireAuth>
-                            <RedPollPage/>
+                            <EditPollPage />
                         </RequireAuth>
-                    }/>
-                    <Route path="/editAds/:id" element={
+                    } />
+                    <Route path="/edit-banner/:id" element={
                         <RequireAuth>
-                            <EditAdsPoll/>
+                            <EditAdsBanner />
                         </RequireAuth>
-                    }/>
-                    <Route path="/auth" element={<AuthPage/>}/>
-                    <Route path="*" element={<NotFoundPage/>}/>
+                    } />
+                    <Route path="/auth" element={<AuthPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </MainLayout>
         </BrowserRouter>
