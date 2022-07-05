@@ -1,8 +1,6 @@
 import { BaseController } from "./baseController";
 
 export class ApiController extends BaseController {
-
-
     getTransactSum() {
         return this.instance.get("statistic/transactions/sum")
     }
@@ -56,15 +54,16 @@ export class ApiController extends BaseController {
             params: data
         })
     }
-    getPoll(){
+    getPoll(id) {
         return this.instance.get(`polls/${id}`)
-    
     }
-    editPollPage(){
-        return this.instance.put(`polls/${id}`,{
+
+    editPollPage(id, data) {
+        return this.instance.put(`polls/${id}`, {
             params: data
         })
     }
+
     saveNewBanner(data, imageForm) {
         return this.instance.post(`banners`, imageForm, {
             params: data
@@ -116,7 +115,6 @@ export class ApiController extends BaseController {
                 "end_date": endDate
             }
         })
-
     }
 
     getVisitorsAgePlot(range = 'week') {

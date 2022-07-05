@@ -15,8 +15,8 @@ export const axiosInstance = axios.create({
     headers: {
         common: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
-            // email: `${localStorage.getItem('email')}`,
-            // password: `${localStorage.getItem('password')}`,
+            email: `${localStorage.getItem('email')}`,
+            password: `${localStorage.getItem('password')}`,
             // "X-XSRF-TOKEN": `${getCookie('XSRF-TOKEN')}`,
             // "X-Requested-With": 'XMLHttpRequest',
             Accept: 'application/json',
