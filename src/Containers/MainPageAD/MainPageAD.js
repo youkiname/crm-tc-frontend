@@ -8,9 +8,18 @@ import {DashboardTable} from "../../Components/DashboardTable/DashboardTable";
 import {RevenueTenant} from "../../Components/RevenueTenant/RevenueTenant";
 import {AdsDashboardModule} from "../../Components/AdsDashboardModule/AdsDashboardModule";
 import {VisitorsDashboardModule} from "../../Components/VisitorsDashboardModule/VisitorsDashboardModule";
+import {useDispatch, useSelector} from "react-redux";
+import {selectLoading} from "./selectors";
+import {getVisitorCountIndicator} from "../../store/slices";
 
 
 export const MainPageAD = () => {
+    const loading = useSelector(selectLoading)
+    const dispatch = useDispatch()
+
+    React.useEffect(() => {
+        dispatch(getVisitorCountIndicator())
+    }, [dispatch])
     return (
         <>
             <Row justify="start" gutter={[24, 16]}>
@@ -30,18 +39,16 @@ export const MainPageAD = () => {
                     </BlockModule>
                 </Col>
             </Row>
-
             <Row style={{marginTop: 24}}>
                 <Col span={24}>
-                    <BlockModule fullWidth={true}>
+                    <BlockModule fullWidth>
                         <DashboardTable/>
                     </BlockModule>
                 </Col>
             </Row>
-
             <Row style={{marginTop: 24}} gutter={[24, 60]}>
                 <Col span={12}>
-                    <BlockModule fullWidth={true}>
+                    <BlockModule fullWidth>
                         <RevenueTenant/>
                     </BlockModule>
                 </Col>
@@ -51,10 +58,9 @@ export const MainPageAD = () => {
                     </BlockModule>
                 </Col>
             </Row>
-
             <Row style={{marginTop: 24}} gutter={[24, 60]}>
                 <Col span={12}>
-                    <BlockModule fullWidth={true} style={{marginTop: 24}}>
+                    <BlockModule fullWidth style={{marginTop: 24}}>
                         <VisitorsDashboardModule/>
                     </BlockModule>
                 </Col>

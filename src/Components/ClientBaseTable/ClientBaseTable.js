@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Col, Row, Button, Table } from "antd";
 import Search from "antd/es/input/Search";
 import { FileExcelOutlined } from "@ant-design/icons";
-import { apiController } from "../../api/api";
+import { apiController } from "../../api";
 
 const { Title } = Typography
 

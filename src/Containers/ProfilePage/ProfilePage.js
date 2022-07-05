@@ -1,11 +1,11 @@
 import React from 'react';
-import {HeaderPage} from "../../Components/HeaderPage/HeaderPage";
+import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
-import {Button, Col, Form, Input, Row, Select, Upload} from "antd";
-import {UploadOutlined} from "@ant-design/icons";
-import {useAddArendator} from "../../hooks/useAddArendator/useAddArendator";
+import { Button, Col, Form, Input, Row, Select, Upload, message } from "antd";
+import { authController } from "../../api";
+import { apiController } from "../../api";
 
-const {Option} = Select
+const { Option } = Select
 
 const TableDiv = styled.div`
   padding: 24px;
@@ -13,13 +13,37 @@ const TableDiv = styled.div`
 `;
 
 const ProfilePage = () => {
+    const [currentUser, setCurrentUser] = React.useState({})
+    const [cities, setCities] = React.useState([])
+    const [shoppingCenterName, setShoppingCenterName] = React.useState('')
+    const [address, setAddress] = React.useState('')
+    const [description, setDescription] = React.useState('')
 
-    const {propsForLogo} = useAddArendator()
+    React.useEffect(() => {
+        apiController.getCities().then(res => {
+            setCities(res.data)
+        })
+        authController.getMe().then(res => {
+            setCurrentUser(res.data)
+        })
+    }, [])
+
+    const onSubmit = () => {
+        apiController.updateProfile({
+            first_name: currentUser.first_name,
+            phone: currentUser.phone,
+            shopping_center_name: shoppingCenterName,
+            address: address,
+            description: description,
+        }).then(res => {
+            message.success('Данные успешно обновлены.');
+        })
+    }
 
     return (
         <>
-            <div style={{backgroundColor: "#FFF", marginTop: -48, marginBottom: 24}}>
-                <HeaderPage title="Настройки профиля"/>
+            <div style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24 }}>
+                <HeaderPage title="Настройки профиля" />
             </div>
 
             <TableDiv>
@@ -47,7 +71,7 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="ООО “Иванов”"/>
+                        <Input placeholder="ООО “Иванов”" value={shoppingCenterName} onChange={e => setShoppingCenterName(e.target.value)} />
                     </Form.Item>
 
                     <Form.Item
@@ -60,7 +84,7 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="Иванов Иван Иванович"/>
+                        <Input placeholder="Иванов Иван Иванович" value={currentUser.first_name} onChange={e => setCurrentUser({ ...currentUser, first_name: e.target.value })} />
                     </Form.Item>
 
                     <Form.Item
@@ -73,10 +97,10 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="+7 999 999 99 99"/>
+                        <Input placeholder="+7 999 999 99 99" value={currentUser.phone} onChange={e => setCurrentUser({ ...currentUser, phone: e.target.value })} />
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="Логотип"
                         name="logo"
                         rules={[
@@ -87,25 +111,22 @@ const ProfilePage = () => {
                         ]}
                     >
                         <Upload {...propsForLogo}>
-                            <Button icon={<UploadOutlined/>}>Добавить логотип</Button>
+                            <Button icon={<UploadOutlined />}>Добавить логотип</Button>
                         </Upload>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item
                         label="Город"
                         name="city"
                     >
                         <Select
-                            defaultValue="lucy"
-                            style={{
-                                width: 250,
-                            }}
+                            style={{ width: 250 }}
                         >
-                            <Option value="jack">Москва</Option>
-                            <Option value="lucy">Тверь</Option>
-                            <Option value="Yiminghe">Санкт-Петербург</Option>
-                            <Option value="Yiminghe">Воронеж</Option>
-                            <Option value="Yiminghe">Волгоград</Option>
+                            {
+                                cities.map(city => (
+                                    <Option value={city.id} key={city.id}>{city.name}</Option>
+                                ))
+                            }
                         </Select>
                     </Form.Item>
 
@@ -119,7 +140,9 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="г. Москва, ул. Ленина, 123, корп. 2"/>
+                        <Input placeholder="г. Москва, ул. Ленина, 123, корп. 2"
+                            value={address}
+                            onChange={e => setAddress(e.target.value)} />
                     </Form.Item>
 
                     <Form.Item
@@ -132,13 +155,18 @@ const ProfilePage = () => {
                             },
                         ]}
                     >
-                        <Input.TextArea rows={4}/>
+                        <Input.TextArea rows={4}
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
+                        />
                     </Form.Item>
 
                     <Row justify="center">
                         <Col span={24}>
-                            <Form.Item style={{margin: '0 auto'}}>
-                                <Button type="primary" htmlType="submit">
+                            <Form.Item style={{ margin: '0 auto' }}>
+                                <Button type="primary" htmlType="submit"
+                                    onClick={onSubmit}
+                                >
                                     Сохранить
                                 </Button>
                             </Form.Item>
@@ -151,4 +179,4 @@ const ProfilePage = () => {
     );
 };
 
-export {ProfilePage};
+export { ProfilePage };

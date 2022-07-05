@@ -1,42 +1,86 @@
 import React from 'react';
-import {MainLayout} from "./Containers/Layouts/MainLayout/MainLayout";
+import {
+    MainLayout,
+    MainPageAD,
+    AddArendatorPage,
+    AddBannerPage,
+    AddPollPage,
+    AdsBannersPage,
+    AdsPollsPage,
+    BaseTCPage,
+    BonusCardPage,
+    NotFoundPage,
+    ProfilePage, AuthPage,
+    RedPollPage,
+    EditAdsPoll,
+} from "./Containers";
 import './App.css'
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {MainPageAD} from "./Containers/MainPageAD/MainPageAD";
-import {AdsBannersPage} from "./Containers/AdsBannersPage/AdsBannersPage";
-import {AdsPollsPage} from "./Containers/AdsPollsPage/AdsPollsPage";
-import {BaseTCPage} from "./Containers/BaseTCPage/BaseTCPage";
-import {BonusCardPage} from "./Containers/BonusCardPage/BonusCardPage";
-import {AddArendatorPage} from "./Containers/AddArendatorPage/AddArendatorPage";
-import {ProfilePage} from "./Containers/ProfilePage/ProfilePage";
-import {NotFoundPage} from "./Containers/NotFoundPage/NotFoundPage";
-import {AddBannerPage} from "./Containers/AddBannerPage/AddBannerPage";
-import {AddPollPage} from "./Containers/AddPollPage/AddPollPage";
-import {AuthPage} from "./Containers/AuthPage/AuthPage";
+import {BrowserRouter, Routes, Route,} from "react-router-dom";
+import {RequireAuth} from "./Components";
 
-const App = () => {
-    const auth = true
+export const App = () => {
+
     return (
         <BrowserRouter>
             <MainLayout>
-                {auth ?
-                    <Routes>
-                        <Route path="/" exact element={<MainPageAD/>}/>
-                        <Route path="/ads" element={<AdsBannersPage/>}/>
-                        <Route path="/polls" element={<AdsPollsPage/>}/>
-                        <Route path="/base-tc" element={<BaseTCPage/>}/>
-                        <Route path="/bonus-card" element={<BonusCardPage/>}/>
-                        <Route path="/add-arendator" element={<AddArendatorPage/>}/>
-                        <Route path="/profile" element={<ProfilePage/>}/>
-                        <Route path="/add-banner" element={<AddBannerPage/>}/>
-                        <Route path="/add-polls" element={<AddPollPage/>}/>
-                        <Route path="*" element={<NotFoundPage/>}/>
-                    </Routes>
-                    : <Route path="*" element={<AuthPage />} />
-                    }
+                <Routes>
+                    <Route path="/" exact element={
+                        <RequireAuth>
+                            <MainPageAD/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/ads" element={<RequireAuth>
+                        <AdsBannersPage/>
+                    </RequireAuth>}/>
+                    <Route path="/polls" element={
+                        <RequireAuth>
+                        <AdsPollsPage/>
+                    </RequireAuth>
+                    }/>
+                    <Route path="/base-tc" element={
+                        <RequireAuth>
+                        <BaseTCPage/>
+                    </RequireAuth>
+                    }/>
+                    <Route path="/bonus-card" element={
+                        <RequireAuth>
+                            <BonusCardPage/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/add-arendator" element={<RequireAuth>
+                        <AddArendatorPage/>
+                    </RequireAuth>}/>
+                    <Route path="/profile" element={
+                        <RequireAuth>
+                            <ProfilePage/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/add-banner" element={
+                        <RequireAuth>
+                            <AddBannerPage/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/add-polls" element={
+                        <RequireAuth>
+                            <AddPollPage/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/edit-polls" element={
+                        <RequireAuth>
+                            <RedPollPage/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/editAds/:id" element={
+                        <RequireAuth>
+                            <EditAdsPoll/>
+                        </RequireAuth>
+                    }/>
+                    <Route path="/auth" element={<AuthPage/>}/>
+                    <Route path="*" element={<NotFoundPage/>}/>
+                </Routes>
             </MainLayout>
         </BrowserRouter>
     );
 };
 
-export {App};
+;

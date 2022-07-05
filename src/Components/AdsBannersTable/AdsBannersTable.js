@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Table, Badge } from "antd";
-import { apiController } from "../../api/api";
+import { apiController } from "../../api";
+import { Link } from "react-router-dom";
 
 const columns = [
     {
@@ -27,6 +28,7 @@ const columns = [
         title: 'Статус',
         dataIndex: 'is_active',
         key: 'is_active',
+        width: '15%',
         render: is_active => {
             return (
                 <Badge status={is_active ? 'success' : 'error'}
@@ -39,15 +41,23 @@ const columns = [
         title: 'Дата создания',
         dataIndex: 'created_at',
         key: 'created_at',
+        render: created_at => {
+            return (
+                <div>{created_at.split('T')[0]}</div>
+            )
+        }
     },
     {
         title: 'Действия',
         dataIndex: 'is_active',
         key: 'is_active',
-        render: (is_active) => (
+        width: '10%',
+        render: (is_active, banner) => (
             <>
-                <Button type="link">Редактировать</Button>
-                <Button danger type="link">{is_active ? 'Остановить' : 'Запустить'}</Button>
+                <Link to={`../editAds/${banner.id}`} type="link">Редактировать</Link>
+                <Button danger type="link"
+                    onClick={() => apiController.toggleActiveBannerState(banner.id, is_active)}
+                >{is_active ? 'Остановить' : 'Запустить'}</Button>
             </>
         )
     },

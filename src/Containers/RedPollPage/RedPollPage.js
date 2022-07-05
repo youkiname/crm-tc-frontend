@@ -15,17 +15,16 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { apiController } from "../..//api";
 
 const { Title } = Typography
-const { Option } = Select
 
 const TableDiv = styled.div`
   padding: 24px;
   background-color: #fff;
 `;
 
-const AddPollPage = () => {
+const RedPollPage = () => {
     const [form] = Form.useForm();
-    const [centers, setCenters] = React.useState([])
-    const [shoppingCenterId, setShoppingCenterId] = React.useState()
+    const [setCenters] = React.useState([])
+    const [shoppingCenterId] = React.useState()
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
     const [choices, setChoices] = React.useState([])
@@ -70,7 +69,7 @@ const AddPollPage = () => {
         <>
             <div
                 style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24, paddingBottom: 24, paddingLeft: 24 }}>
-                <HeaderPage title="Создать опрос" />
+                <HeaderPage title="Редактировать опрос" />
             </div>
 
             <TableDiv style={{ marginTop: 24, paddingBottom: 24 }}>
@@ -78,24 +77,11 @@ const AddPollPage = () => {
                 <Divider />
                 <Form form={form} layout="vertical">
                     <Row gutter={24}>
-
-                        <Col span={12}>
-                            <Form.Item label="ТЦ">
-                                <Select value={shoppingCenterId} onChange={id => setShoppingCenterId(id)} >
-                                    {
-                                        centers.map(center => (
-                                            <Option value={center.id} key={center.id}>ТЦ {center.name}</Option>
-                                        ))
-                                    }
-                                </Select>
-                            </Form.Item>
-                        </Col>
-
                         <Col span={12}>
                             <Form.Item label="Заголовок опроса">
                                 <Input placeholder="Заголовок опроса"
-                                    value={title}
-                                    onChange={e => setTitle(e.target.value)}
+                                       value={title}
+                                       onChange={e => setTitle(e.target.value)}
                                 />
                             </Form.Item>
                         </Col>
@@ -103,8 +89,8 @@ const AddPollPage = () => {
                         <Col span={12}>
                             <Form.Item label="Описание">
                                 <Input placeholder="Описание"
-                                    value={description}
-                                    onChange={e => setDescription(e.target.value)}
+                                       value={description}
+                                       onChange={e => setDescription(e.target.value)}
                                 />
                             </Form.Item>
                         </Col>
@@ -162,19 +148,7 @@ const AddPollPage = () => {
                                                     ) : null}
                                                 </Form.Item>
                                             ))}
-                                            <Form.Item>
-                                                <Button
-                                                    type="dashed"
-                                                    onClick={() => add()}
-                                                    style={{
-                                                        width: '60%',
-                                                    }}
-                                                    icon={<PlusOutlined />}
-                                                >
-                                                    Добавить вариант ответа
-                                                </Button>
-                                                <Form.ErrorList errors={errors} />
-                                            </Form.Item>
+
                                         </>
                                     )}
                                 </Form.List>
@@ -187,7 +161,7 @@ const AddPollPage = () => {
             <Row justify="center" style={{ marginTop: 24 }}>
                 <Col>
                     <Button type="primary" onClick={onSubmit}>
-                        Создать
+                        Редактировать
                     </Button>
                 </Col>
             </Row>
@@ -196,4 +170,4 @@ const AddPollPage = () => {
         ;
 };
 
-export { AddPollPage };
+export { RedPollPage };
