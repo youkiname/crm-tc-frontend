@@ -16,7 +16,7 @@ import {
 } from "antd";
 import styled from "styled-components";
 import { InboxOutlined } from "@ant-design/icons";
-import { apiController } from "../..//api";
+import { apiController } from "../../api";
 import {useParams} from "react-router-dom";
 import moment from "moment";
 
@@ -27,7 +27,7 @@ const { Option } = Select
 
 const TableDiv = styled.div`
   padding: 24px;
-  background-color: #fff;
+  backgroun1d-color: #fff;
 `;
 
 const EditAdsPoll = () => {
@@ -49,7 +49,7 @@ const EditAdsPoll = () => {
             setDateRange([moment(res.data.start_date), moment(res.data.end_date)])
             setActive(res.data.is_active)
         })
-    }, [])
+    }, [id])
 
     const propsUpload = {
         name: 'image',
@@ -57,10 +57,10 @@ const EditAdsPoll = () => {
         onDrop(e) {
             console.log('Dropped files', e.dataTransfer.files);
         },
-        beforeUpload(file) {
+       async beforeUpload(file) {
             const isAllowed = file.type === 'image/jpeg' || file.type === 'image/png';
             if (!isAllowed) {
-                message.error('Вы можете загрузить только jpg или png файл.');
+               await message.error('Вы можете загрузить только jpg или png файл.');
                 return false;
             }
             setSelectedImage(file)
