@@ -399,13 +399,13 @@
   dependencies:
     "@antv/util" "^2.0.7"
 
-"@antv/l7-component@2.8.47":
-  "integrity" "sha512-fUtdRRGQMVZc8KUdo+ZR/epLo/X7BZ/bNu7SJLL4gO3Ua2aRvvbJ99Q8b9PZyO3c258jHVm0sGRXO7BptjiqRg=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-component/-/l7-component-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-component@2.9.10":
+  "integrity" "sha512-6IL2MYJ8en74jQ4wLQyxZGs2FDUBmmN5WzrepY6vg6KmqeWFJ3oFu+aU1nFO/zTueBcqROXU+gyCDLfkpkPiKw=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-component/-/l7-component-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
-    "@antv/l7-core" "2.8.47"
-    "@antv/l7-utils" "2.8.47"
+    "@antv/l7-core" "2.9.10"
+    "@antv/l7-utils" "2.9.10"
     "@babel/runtime" "^7.7.7"
     "eventemitter3" "^4.0.0"
     "inversify" "^5.0.1"
@@ -413,13 +413,13 @@
     "reflect-metadata" "^0.1.13"
     "supercluster" "^7.0.0"
 
-"@antv/l7-core@2.8.47":
-  "integrity" "sha512-CFFFx7Vg1zB6CqxblpZBFtbOVVQWanlmKB2rkI/b0/lJcD8PurUTVFqppniduZYB8arNXRNhzex+6aZpql7eRQ=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-core/-/l7-core-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-core@2.9.10":
+  "integrity" "sha512-E7snITz7d//Mdr3+qoueH10g324FBCX7FRRKX7FcCwZ7AH/77uSjQwYxaqtP51oDTdiXUXKiNjEHdrfMTV91PA=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-core/-/l7-core-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
     "@antv/async-hook" "^2.1.0"
-    "@antv/l7-utils" "2.8.47"
+    "@antv/l7-utils" "2.9.10"
     "@babel/runtime" "^7.7.7"
     "ajv" "^6.10.2"
     "element-resize-event" "^3.0.3"
@@ -433,20 +433,22 @@
     "reflect-metadata" "^0.1.13"
     "viewport-mercator-project" "^6.2.1"
 
-"@antv/l7-layers@2.8.47":
-  "integrity" "sha512-2JqsFrH+9VuxpS9oSyZGgN/G6X/c+3aAHqm1Bi0jrfXnb8/cNNYifNQwCXR7ngJHsDS9lDCXs1V6fS0Wd45xVw=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-layers/-/l7-layers-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-layers@2.9.10":
+  "integrity" "sha512-hgyL6G2Ioz1KFGyLh3EOZCefM2bCbm799ivql3OLSlKkpd81jAN69uVY6Xaegg8thvAwamWGHGgfSrfLkxyDIQ=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-layers/-/l7-layers-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
-    "@antv/l7-core" "2.8.47"
-    "@antv/l7-source" "2.8.47"
-    "@antv/l7-utils" "2.8.47"
+    "@antv/l7-core" "2.9.10"
+    "@antv/l7-source" "2.9.10"
+    "@antv/l7-utils" "2.9.10"
     "@babel/runtime" "^7.7.7"
     "@mapbox/martini" "^0.2.0"
+    "@turf/helpers" "^6.1.4"
     "@turf/meta" "^6.0.2"
+    "@turf/union" "^6.5.0"
     "d3-array" "1"
     "d3-color" "^1.4.0"
-    "d3-interpolate" "1.4.0"
+    "d3-interpolate" "1.0.0"
     "d3-scale" "2"
     "earcut" "^2.2.1"
     "eventemitter3" "^4.0.0"
@@ -459,27 +461,27 @@
     "polyline-miter-util" "^1.0.1"
     "reflect-metadata" "^0.1.13"
 
-"@antv/l7-map@2.8.47":
-  "integrity" "sha512-9yA5BNDgb15XmQQr/ChGGk3Q23pgNY9oxNNdxJnmtRMK59Ead30s7xVn8ZIRqItjp0yGIXUTujxwsTw2hBR3Ow=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-map/-/l7-map-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-map@2.9.10":
+  "integrity" "sha512-UxtgF8jArO1UqPl/YK3VYnzrGmnrH24eX3fs0U97pN2rzPPf0MQr06HpSFfksr76JsGMjcbKBxBFN71Wyu0LXQ=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-map/-/l7-map-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
-    "@antv/l7-utils" "2.8.47"
+    "@antv/l7-utils" "2.9.10"
     "@babel/runtime" "^7.7.7"
     "@mapbox/point-geometry" "^0.1.0"
     "@mapbox/unitbezier" "^0.0.0"
     "eventemitter3" "^4.0.4"
     "lodash" "^4.17.15"
 
-"@antv/l7-maps@2.8.47":
-  "integrity" "sha512-UeUbrxOPMckheJhG9G0zS/8stZMsUQIZz5QXpivmrZkF4OwGT4q1tF0hdnzlzrLDu8Y5lg5YQqgquPosf+CX7w=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-maps/-/l7-maps-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-maps@2.9.10":
+  "integrity" "sha512-M9n0BsyuhQ1v/MHJjZUPgRlLt0bg7w2PxRKGvoHHQOgTj/JOUdJ2Ok/7FLHmqKjuDDbaxJevgFmgaSUIinlBug=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-maps/-/l7-maps-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
     "@amap/amap-jsapi-loader" "^0.0.3"
-    "@antv/l7-core" "2.8.47"
-    "@antv/l7-map" "2.8.47"
-    "@antv/l7-utils" "2.8.47"
+    "@antv/l7-core" "2.9.10"
+    "@antv/l7-map" "2.9.10"
+    "@antv/l7-utils" "2.9.10"
     "@babel/runtime" "^7.7.7"
     "@types/amap-js-api" "^1.4.6"
     "@types/mapbox-gl" "^1.11.2"
@@ -489,44 +491,45 @@
     "reflect-metadata" "^0.1.13"
     "viewport-mercator-project" "^6.2.1"
 
-"@antv/l7-renderer@2.8.47":
-  "integrity" "sha512-EfaltMTYH6pl8B6r2RAYgD2i3cXzpG/+EYcHJPxKp4sl40FEQGxfP9wPegltsZNkeasCL3+f/vseHttRnuwR8A=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-renderer/-/l7-renderer-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-renderer@2.9.10":
+  "integrity" "sha512-PbD8SODlQHxPJmKGLx46vczeYkX2Iz3C14egv9rMVTX4Xfp+TQ5u0JyuL+QxXDv6LO7anVphTO3sv9XEfzdm1w=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-renderer/-/l7-renderer-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
-    "@antv/l7-core" "2.8.47"
+    "@antv/l7-core" "2.9.10"
     "@babel/runtime" "^7.7.7"
     "inversify" "^5.0.1"
     "l7regl" "^0.0.20"
     "lodash" "^4.17.15"
     "reflect-metadata" "^0.1.13"
 
-"@antv/l7-scene@2.8.47":
-  "integrity" "sha512-StsPRSlVnDNUxFY5ezo31qLkLs3ISewae167lFgQycByAjGSJ06D6dqVVaz8+vtVhO5YHjqrpwykQLmnPY5lAA=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-scene/-/l7-scene-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-scene@2.9.10":
+  "integrity" "sha512-CoILRb5yqgS/TNRur5PiIrwNcKs5ceN2tZc4dNM3mcdjFr6UjLipyVAPiyGMOPB+Z+p5uuDw95QzeFs88Mh6bw=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-scene/-/l7-scene-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
-    "@antv/l7-component" "2.8.47"
-    "@antv/l7-core" "2.8.47"
-    "@antv/l7-layers" "2.8.47"
-    "@antv/l7-maps" "2.8.47"
-    "@antv/l7-renderer" "2.8.47"
-    "@antv/l7-utils" "2.8.47"
+    "@antv/l7-component" "2.9.10"
+    "@antv/l7-core" "2.9.10"
+    "@antv/l7-layers" "2.9.10"
+    "@antv/l7-maps" "2.9.10"
+    "@antv/l7-renderer" "2.9.10"
+    "@antv/l7-utils" "2.9.10"
     "@babel/runtime" "^7.7.7"
     "inversify" "^5.0.1"
     "mapbox-gl" "^1.2.1"
     "reflect-metadata" "^0.1.13"
 
-"@antv/l7-source@2.8.47":
-  "integrity" "sha512-AhV7r8DLdX5/OIpFSmyNhcqVMxUnWnX80M0y/k2BvOVplGkuqra78hhqJObaV2MZ+/zpWG0sY20+3u5J1jrCAw=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-source/-/l7-source-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-source@2.9.10":
+  "integrity" "sha512-4UMjw2hu2ZN3sh8Ay4FTtCWbdZHx0FFi0EIcYCBm/heJP/H9dLgXv/kOAXMDBJtJ7V9/R9actcyZlNYaS/JIgg=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-source/-/l7-source-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
     "@antv/async-hook" "^2.1.0"
-    "@antv/l7-core" "2.8.47"
-    "@antv/l7-utils" "2.8.47"
+    "@antv/l7-core" "2.9.10"
+    "@antv/l7-utils" "2.9.10"
     "@babel/runtime" "^7.7.7"
     "@mapbox/geojson-rewind" "^0.4.0"
+    "@mapbox/vector-tile" "^1.3.1"
     "@turf/helpers" "^6.1.4"
     "@turf/invariant" "^6.1.2"
     "@turf/meta" "^6.0.2"
@@ -535,13 +538,14 @@
     "eventemitter3" "^4.0.0"
     "inversify" "^5.0.1"
     "lodash" "^4.17.15"
+    "pbf" "^3.2.1"
     "reflect-metadata" "^0.1.13"
     "supercluster" "^7.0.0"
 
-"@antv/l7-utils@2.8.47":
-  "integrity" "sha512-FKABBQIGExOjLAYYa2YXJMOq+5St0bQNrJtLKca0j/43oNcGEDrZtdyGWq31x7PMsCX3UT2gON4a13HVc+BXdA=="
-  "resolved" "https://registry.npmjs.org/@antv/l7-utils/-/l7-utils-2.8.47.tgz"
-  "version" "2.8.47"
+"@antv/l7-utils@2.9.10":
+  "integrity" "sha512-n8iCOHnB51ou83JHymeiHQpJQUffbKJYR1z97BaJlsHMgsDzre+K/8KO1xuq9PA012wR+j5HgE3wPCqvBYWtTg=="
+  "resolved" "https://registry.npmjs.org/@antv/l7-utils/-/l7-utils-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
     "@babel/runtime" "^7.7.7"
     "@turf/bbox-polygon" "^6.5.0"
@@ -549,17 +553,17 @@
     "d3-color" "^1.4.0"
 
 "@antv/l7@^2.6.25":
-  "integrity" "sha512-mRigtrVOW11jTiT0h4ofcGQLf2Tv6dE16tMraBHe0fXpUgIoOZ+RoyApSbs/9uwsORxpVpArc54pFiYqCtrj3Q=="
-  "resolved" "https://registry.npmjs.org/@antv/l7/-/l7-2.8.47.tgz"
-  "version" "2.8.47"
+  "integrity" "sha512-GNe0GpsW+vTMIfOGYFwRWlODbIc2POx4+mLoEzOuqdAcuIm0Ve9DBUq162twAteB6ItLSR/XBBKHsCGJR2DZMw=="
+  "resolved" "https://registry.npmjs.org/@antv/l7/-/l7-2.9.10.tgz"
+  "version" "2.9.10"
   dependencies:
-    "@antv/l7-component" "2.8.47"
-    "@antv/l7-core" "2.8.47"
-    "@antv/l7-layers" "2.8.47"
-    "@antv/l7-maps" "2.8.47"
-    "@antv/l7-scene" "2.8.47"
-    "@antv/l7-source" "2.8.47"
-    "@antv/l7-utils" "2.8.47"
+    "@antv/l7-component" "2.9.10"
+    "@antv/l7-core" "2.9.10"
+    "@antv/l7-layers" "2.9.10"
+    "@antv/l7-maps" "2.9.10"
+    "@antv/l7-scene" "2.9.10"
+    "@antv/l7-source" "2.9.10"
+    "@antv/l7-utils" "2.9.10"
     "@babel/runtime" "^7.7.7"
 
 "@antv/l7plot-component@^0.0.3-alpha.5":
@@ -3060,7 +3064,7 @@
   "resolved" "https://registry.npmjs.org/@turf/helpers/-/helpers-6.5.0.tgz"
   "version" "6.5.0"
 
-"@turf/invariant@^6.1.2":
+"@turf/invariant@^6.1.2", "@turf/invariant@^6.5.0":
   "integrity" "sha512-Wv8PRNCtPD31UVbdJE/KVAWKe7l6US+lJItRR/HOEW3eh+U/JwRCSUl/KZ7bmjM/C+zLNoreM2TU6OoLACs4eg=="
   "resolved" "https://registry.npmjs.org/@turf/invariant/-/invariant-6.5.0.tgz"
   "version" "6.5.0"
@@ -3073,6 +3077,15 @@
   "version" "6.5.0"
   dependencies:
     "@turf/helpers" "^6.5.0"
+
+"@turf/union@^6.5.0":
+  "integrity" "sha512-igYWCwP/f0RFHIlC2c0SKDuM/ObBaqSljI3IdV/x71805QbIvY/BYGcJdyNcgEA6cylIGl/0VSlIbpJHZ9ldhw=="
+  "resolved" "https://registry.npmjs.org/@turf/union/-/union-6.5.0.tgz"
+  "version" "6.5.0"
+  dependencies:
+    "@turf/helpers" "^6.5.0"
+    "@turf/invariant" "^6.5.0"
+    "polygon-clipping" "^0.15.3"
 
 "@types/acorn@^4.0.5":
   "integrity" "sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ=="
@@ -5314,10 +5327,17 @@
   "resolved" "https://registry.npmjs.org/d3-hierarchy/-/d3-hierarchy-2.0.0.tgz"
   "version" "2.0.0"
 
-"d3-interpolate@^1.3.2", "d3-interpolate@1", "d3-interpolate@1.4.0":
+"d3-interpolate@^1.3.2", "d3-interpolate@1":
   "integrity" "sha512-V9znK0zc3jOPV4VD2zZn0sDhZU3WAE2bmlxdIwwQPPzPjvyLkd8B3JUVdS1IDUFDkWZ72c9qnv1GK2ZagTZ8EA=="
   "resolved" "https://registry.npmjs.org/d3-interpolate/-/d3-interpolate-1.4.0.tgz"
   "version" "1.4.0"
+  dependencies:
+    "d3-color" "1"
+
+"d3-interpolate@1.0.0":
+  "integrity" "sha512-ru9ADy0391n5EVWdXqBE4U7aG+ObsEryRbl0xSlLJwrEB36KwFp3/+xFyXtVQODox61e8oAog+r+VgjPjc3tqg=="
+  "resolved" "https://registry.npmjs.org/d3-interpolate/-/d3-interpolate-1.0.0.tgz"
+  "version" "1.0.0"
   dependencies:
     "d3-color" "1"
 
@@ -6665,11 +6685,6 @@
   "integrity" "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
-
-"fsevents@^2.3.2", "fsevents@~2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
@@ -9422,6 +9437,13 @@
   "resolved" "https://registry.npmjs.org/pluralize/-/pluralize-8.0.0.tgz"
   "version" "8.0.0"
 
+"polygon-clipping@^0.15.3":
+  "integrity" "sha512-ho0Xx5DLkgxRx/+n4O74XyJ67DcyN3Tu9bGYKsnTukGAW6ssnuak6Mwcyb1wHy9MZc9xsUWqIoiazkZB5weECg=="
+  "resolved" "https://registry.npmjs.org/polygon-clipping/-/polygon-clipping-0.15.3.tgz"
+  "version" "0.15.3"
+  dependencies:
+    "splaytree" "^3.1.0"
+
 "polyline-miter-util@^1.0.1":
   "integrity" "sha512-/3u91zz6mBerBZo6qnOJOTjv7EfPhKtsV028jMyj86YpzLRNmCCFfrX7IO9tCEQ2W4x45yc+vKOezjf7u2Nd6Q=="
   "resolved" "https://registry.npmjs.org/polyline-miter-util/-/polyline-miter-util-1.0.1.tgz"
@@ -11838,6 +11860,11 @@
     "http-deceiver" "^1.2.7"
     "select-hose" "^2.0.0"
     "spdy-transport" "^3.0.0"
+
+"splaytree@^3.1.0":
+  "integrity" "sha512-9FaQ18FF0+sZc/ieEeXHt+Jw2eSpUgUtTLDYB/HXKWvhYVyOc7h1hzkn5MMO3GPib9MmXG1go8+OsBBzs/NMww=="
+  "resolved" "https://registry.npmjs.org/splaytree/-/splaytree-3.1.1.tgz"
+  "version" "3.1.1"
 
 "split@~0.2.10":
   "integrity" "sha512-e0pKq+UUH2Xq/sXbYpZBZc3BawsfDZ7dgv+JtRTUPNcvF5CMR4Y9cvJqkMY0MoxWzTHvZuz1beg6pNEKlszPiQ=="

@@ -5,10 +5,12 @@ import { Form, Input, Button } from "antd"
 import { ValidationStatus } from "../../common/validationErrors";
 import { validationSchema } from "./validationSchema";
 import { Title, Text, Wrapper, WrapperForm, WrapperTitle } from "./style";
-
+import { useNavigate } from 'react-router-dom';
 import { authController } from "../../api";
 
 export const AuthPage = () => {
+    const navigate = useNavigate();
+
     const onSubmit = (values) => {
         authController.applyCsrfCookie()
         authController.getAuth(values).then(res => {
@@ -18,7 +20,7 @@ export const AuthPage = () => {
             localStorage.setItem("password", values.password);
             localStorage.setItem("name", `${res.data.first_name} ${res.data.last_name}`);
 
-            window.location.href = "/";
+            navigate('/');
         })
     }
     const { errors, handleChange, isValid, handleSubmit } = useFormik({

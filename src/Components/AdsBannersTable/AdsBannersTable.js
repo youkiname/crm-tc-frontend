@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Table, Badge } from "antd";
 import { apiController } from "../../api";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const columns = [
     {
@@ -28,7 +28,7 @@ const columns = [
         title: 'Статус',
         dataIndex: 'is_active',
         key: 'is_active',
-        width : '15%',
+        width: '15%',
         render: is_active => {
             return (
                 <Badge status={is_active ? 'success' : 'error'}
@@ -55,7 +55,9 @@ const columns = [
         render: (is_active, banner) => (
             <>
                 <Link to={`../editAds/${banner.id}`} type="link">Редактировать</Link>
-                <Button danger type="link">{is_active ? 'Остановить' : 'Запустить'}</Button>
+                <Button danger type="link"
+                    onClick={() => apiController.toggleActiveBannerState(banner.id, is_active)}
+                >{is_active ? 'Остановить' : 'Запустить'}</Button>
             </>
         )
     },

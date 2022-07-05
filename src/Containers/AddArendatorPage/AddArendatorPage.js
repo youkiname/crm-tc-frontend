@@ -3,6 +3,7 @@ import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
 import { Button, Col, Form, Input, Row, Select, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import { apiController } from "../..//api";
 
 const { Option } = Select
@@ -14,6 +15,8 @@ const TableDiv = styled.div`
 
 
 const AddArendatorPage = () => {
+    const navigate = useNavigate()
+
     const [categories, setCategories] = React.useState([])
     const [categoryId, setCategoryId] = React.useState()
     const [name, setName] = React.useState()
@@ -57,7 +60,7 @@ const AddArendatorPage = () => {
             renter_email: renterEmail,
             renter_password: renterPassword,
         }, imageForm).then(res => {
-            window.location.href = "/base-tc";
+            navigate("/base-tc")
         });
 
     }
