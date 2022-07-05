@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Row, Table, Typography } from "antd";
+import { Button, Col, Row, Table, Typography, Spin } from "antd";
 import Search from "antd/es/input/Search";
 import { FileExcelOutlined, PlusOutlined } from "@ant-design/icons";
 import { apiController } from "../../api";
@@ -40,9 +40,13 @@ const columns = [
 ]
 
 const ArendatorsBaseTable = () => {
+    const [loading, setLoading] = React.useState(true)
     const [data, setData] = React.useState([])
     React.useEffect(() => {
-        apiController.getShopsIncomeStatistics().then(res => setData(res.data))
+        apiController.getShopsIncomeStatistics().then(res => {
+            setData(res.data)
+            setLoading(false)
+        })
     }, [])
     return (
         <>
@@ -65,7 +69,9 @@ const ArendatorsBaseTable = () => {
                     <Button type="primary" icon={<PlusOutlined />}>Добавить арендатора</Button>
                 </Col>
             </Row>
-            <Table columns={columns} dataSource={data} style={{ marginTop: 30 }} />
+            <Spin spinning={loading}>
+                <Table columns={columns} dataSource={data} style={{ marginTop: 30 }} />
+            </Spin>
         </>
     );
 };
