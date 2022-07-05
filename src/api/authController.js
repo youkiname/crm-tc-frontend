@@ -1,9 +1,10 @@
-import axios from "axios";
 import { BaseController } from "./baseController";
 
 export class AuthController extends BaseController {
-    applyCsrfCookie() {
-        return axios.get('https://api.top-sistem.ru/sanctum/csrf-cookie')
+    getVerifyCode(params) {
+        return this.instance.get('auth/verify',{
+            params
+        })
     }
     getAuth(params) {
         return this.instance.get(`auth/admin`, { params })

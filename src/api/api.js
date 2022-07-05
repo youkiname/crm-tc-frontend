@@ -57,6 +57,15 @@ export class ApiController extends BaseController {
 
         })
     }
+    // getPoll(){
+    //     return this.instance.get(`polls/${id}`)
+    //
+    // }
+    // editPollPage(){
+    //     return this.instance.put(`polls/${id}`,{
+    //         params: data
+    //     })
+    // }
     saveNewBanner(data, imageForm) {
         return this.instance.post(`banners`, imageForm, {
             params: data

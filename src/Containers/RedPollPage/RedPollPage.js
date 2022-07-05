@@ -1,7 +1,6 @@
 import React from 'react';
 import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import {
-    Select,
     Button,
     Col,
     Divider,
@@ -11,8 +10,9 @@ import {
     Typography,
 } from "antd";
 import styled from "styled-components";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { apiController } from "../..//api";
+import { MinusCircleOutlined } from "@ant-design/icons";
+import { apiController } from "../../api";
+import {useParams} from "react-router-dom";
 
 const { Title } = Typography
 
@@ -23,19 +23,22 @@ const TableDiv = styled.div`
 
 const RedPollPage = () => {
     const [form] = Form.useForm();
-    const [setCenters] = React.useState([])
     const [shoppingCenterId] = React.useState()
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
     const [choices, setChoices] = React.useState([])
+    let { id } = useParams();
     React.useEffect(() => {
-        apiController.getShoppingCenters().then(res => {
-            setCenters(res.data)
+        apiController.getPolls(id).then(res => {
+            setTitle(res.data.title)
+            setDescription(res.data.description)
+            setChoices(res.data.choices)
+
         })
-    }, [])
+    }, [id])
 
     const removeChoice = (index) => {
-        setChoices(choices.filter((el, i) => i != index))
+        setChoices(choices.filter((el, i) => i !== index))
     }
 
     const addChoice = (value) => {
@@ -48,7 +51,7 @@ const RedPollPage = () => {
             return addChoice(value)
         }
         setChoices(choices.map((el, i) => {
-            if (i != index) {
+            if (i !== index) {
                 return el
             }
             return value
@@ -56,8 +59,8 @@ const RedPollPage = () => {
 
     }
 
-    const onSubmit = () => {
-        apiController.savePoll({
+    const onSubmit = async () => {
+       await apiController.savePoll({
             title,
             description,
             shopping_center_id: shoppingCenterId,
