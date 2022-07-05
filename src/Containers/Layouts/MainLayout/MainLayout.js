@@ -5,6 +5,7 @@ import { Logo } from "../../../Components/Logo/Logo";
 import { menuData } from "../../../data/menu";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { authController } from "../../../api";
 
 const { Header, Content, Sider } = Layout;
 const { Text } = Typography
@@ -14,8 +15,9 @@ export const MainLayout = ({ children }) => {
     const navigate = useNavigate()
 
     const logout = () => {
-        localStorage.clear();
-        window.location.href = "/auth";
+        localStorage.removeItem('auth');
+        authController.logout();
+        navigate('/auth');
     }
 
     const [currentUsername, setCurrentUsername] = React.useState('ShoppingCenter')

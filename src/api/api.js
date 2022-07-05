@@ -47,30 +47,46 @@ export class ApiController extends BaseController {
         return this.instance.get(`banners/`)
     }
 
-    getBanner(id){
+    getBanner(id) {
         return this.instance.get(`banners/${id}`)
     }
-    editBanner(id, data, ImageForm){
-        return this.instance.put(`banners/${id}`,ImageForm,{
+
+    editBanner(id, data, ImageForm) {
+        return this.instance.put(`banners/${id}`, ImageForm, {
             params: data
-
-
         })
     }
-    // getPoll(){
-    //     return this.instance.get(`polls/${id}`)
-    //
-    // }
-    // editPollPage(){
-    //     return this.instance.put(`polls/${id}`,{
-    //         params: data
-    //     })
-    // }
+    getPoll(){
+        return this.instance.get(`polls/${id}`)
+    
+    }
+    editPollPage(){
+        return this.instance.put(`polls/${id}`,{
+            params: data
+        })
+    }
     saveNewBanner(data, imageForm) {
         return this.instance.post(`banners`, imageForm, {
             params: data
         })
     }
+
+    toggleActiveBannerState(id, is_active) {
+        let route = 'banners/activate'
+        if (is_active) {
+            route = 'banners/deactivate'
+        }
+        return this.instance.put(`${route}/${id}`)
+    }
+
+    toggleActivePollState(id, is_active) {
+        let route = 'polls/activate'
+        if (is_active) {
+            route = 'polls/deactivate'
+        }
+        return this.instance.put(`${route}/${id}`)
+    }
+
     getCustomerStatistics() {
         return this.instance.get(`statistic/customers`)
     }
@@ -119,7 +135,9 @@ export class ApiController extends BaseController {
         return this.instance.get(`shops/categories`)
     }
 
-
+    getCities() {
+        return this.instance.get(`cities`)
+    }
 
     savePoll(data) {
         return this.instance.post(`polls`, null, {
@@ -129,6 +147,12 @@ export class ApiController extends BaseController {
 
     saveShop(data, avatarForm) {
         return this.instance.post(`shops`, avatarForm, {
+            params: data
+        })
+    }
+
+    updateProfile(data, avatarForm) {
+        return this.instance.put(`admins/update_profile`, avatarForm, {
             params: data
         })
     }

@@ -5,19 +5,38 @@ import {ValidationStatus} from "../../common/validationErrors";
 import {validationSchema} from "./validationSchema";
 import {Title, Text, Wrapper, WrapperForm, WrapperTitle} from "./style";
 
+import { IllustrationsForAuthPage } from "./IllustrationsForAuthPage";
+import { useFormik } from "formik";
+import { Form, Input, Button } from "antd"
+import { ValidationStatus } from "../../common/validationErrors";
+import { validationSchema } from "./validationSchema";
+import { Title, Text, Wrapper, WrapperForm, WrapperTitle } from "./style";
+import { useNavigate } from 'react-router-dom';
+import { authController } from "../../api";
+
 import {authController} from "../../api";
 import img1 from "../../images/login-page-1.svg";
 import img2 from "../../images/login-page-2.svg";
 import img4 from "../../images/login-page-4.svg";
 
 export const AuthPage = () => {
+    const navigate = useNavigate();
     const [showVerify, setShowVerify] = React.useState(false);
-
-
+    
     const onSubmit = (values, formik) => {
         authController.getVerifyCode({email: values.email, password: values.password}).then(res => {
             formik.setValues({...values, code: res.data})
             console.log(res.data)
+        }
+        authController.applyCsrfCookie()
+        authController.getAuth(values).then(res => {
+            localStorage.setItem("auth", 1);
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("email", values.email);
+            localStorage.setItem("password", values.password);
+            localStorage.setItem("name", `${res.data.first_name} ${res.data.last_name}`);
+
+            navigate('/');
         })
         setShowVerify(true);
           authController.getAuth(values).then(res => {
@@ -30,6 +49,7 @@ export const AuthPage = () => {
               window.location.href = "/";
           })
     }
+    
     const {errors, handleChange, isValid, handleSubmit} = useFormik({
         initialValues: {
             email: "",
