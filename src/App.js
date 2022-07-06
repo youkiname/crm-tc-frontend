@@ -21,7 +21,7 @@ import { RequireAuth } from "./Components";
 export const App = () => {
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/admin-tc">
             <MainLayout>
                 <Routes>
                     <Route path="/" exact element={
@@ -76,7 +76,7 @@ export const App = () => {
                         </RequireAuth>
                     } />
                     <Route path="/auth" element={<AuthPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/*" element={<NotFoundPage />} />
                 </Routes>
             </MainLayout>
         </BrowserRouter>

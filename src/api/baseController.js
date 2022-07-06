@@ -9,20 +9,13 @@ function getCookie(name) {
 
 // Create axios instance with base url and credentials support
 export const axiosInstance = axios.create({
-    baseURL: "https://api.top-sistem.ru/api/",
+    baseURL: "https://top-sistem.ru/api/",
     withCredentials: true,
     credentials: true,
     headers: {
         common: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
-            email: `${localStorage.getItem('email')}`,
-            password: `${localStorage.getItem('password')}`,
-            // "X-XSRF-TOKEN": `${getCookie('XSRF-TOKEN')}`,
-            // "X-Requested-With": 'XMLHttpRequest',
             Accept: 'application/json',
-            // enctype: "multipart/form-data",
-            // "Content-Type": "multipart/form-data"
-            // "Content-Type": "application/x-www-form-urlencoded"
         }
     }
 });
