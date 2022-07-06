@@ -12,7 +12,10 @@ import {
     Typography,
     InputNumber,
     Upload,
-    message, Checkbox
+    message,
+    Checkbox,
+    Spin,
+    Image
 } from "antd";
 import styled from "styled-components";
 import { InboxOutlined } from "@ant-design/icons";
@@ -31,23 +34,40 @@ const TableDiv = styled.div`
 `;
 
 const EditAdsBanner = () => {
+    const { id } = useParams();
+    const [loading, setLoading] = React.useState(true);
     const [form] = Form.useForm();
     const [name, setName] = React.useState('')
     const [dateRange, setDateRange] = React.useState()
-    const [gender, setGender] = React.useState('male')
-    const [ageRange, setAgeRange] = React.useState('18-24')
+    const [gender, setGender] = React.useState(null)
+    const [ageRange, setAgeRange] = React.useState("18-24")
     const [minBalance, setMinBalance] = React.useState()
+    const [bannerImageLink, setBannerImageLink] = React.useState('')
     const [selectedImage, setSelectedImage] = React.useState(null)
     const [active, setActive] = React.useState()
-    let { id } = useParams();
+
+    const ageRanges = [
+        "18-24",
+        "25-30",
+        "31-35",
+        "36-40",
+        "41-45",
+        "46-50",
+        "51-55",
+        "56-60",
+    ];
+
     React.useEffect(() => {
         apiController.getBanner(id).then(res => {
             setName(res.data.name)
             setGender(res.data.gender)
-            setAgeRange(res.data.ageRange)
+            setAgeRange(res.data.age_range)
             setMinBalance(res.data.min_balance)
             setDateRange([moment(res.data.start_date), moment(res.data.end_date)])
             setActive(res.data.is_active)
+            setBannerImageLink(res.data.image_link)
+            setLoading(false)
+            console.log(res.data)
         })
     }, [id])
 
@@ -69,18 +89,23 @@ const EditAdsBanner = () => {
     };
 
     const onSubmit = () => {
+        setLoading(true);
         const [startDate, endDate] = dateRange;
         let imageForm = new FormData();
         imageForm.append('image', selectedImage);
-
-        apiController.editBanner({
+        apiController.editBanner(id, {
+            is_active: Number(active),
             name: name,
+            gender: gender,
             start_date: startDate.toISOString().split('T')[0],
             end_date: endDate.toISOString().split('T')[0],
             min_age: ageRange.split('-')[0],
             max_age: ageRange.split('-')[1],
-            min_balance: minBalance,
-        }, imageForm);
+            min_balance: minBalance
+        }, imageForm).then(res => {
+            setLoading(false)
+            message.success("Баннер успешно изменён")
+        });
     }
 
     return (
@@ -89,120 +114,131 @@ const EditAdsBanner = () => {
                 style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24, paddingBottom: 24, paddingLeft: 24 }}>
                 <HeaderPage title="Редактировать рекламный баннер" />
             </div>
+            <Spin spinning={loading}>
+                <TableDiv style={{ marginTop: 24 }}>
+                    <Title level={5}>Данные для системы</Title>
+                    <Divider />
+                    <Form layout="vertical" form={form}>
+                        <Row gutter={24}>
 
-            <TableDiv style={{ marginTop: 24 }}>
-                <Title level={5}>Данные для системы</Title>
-                <Divider />
-                <Form layout="vertical" form={form}>
-                    <Row gutter={24}>
-
-                        <Col span={8}>
-                            <Form.Item label="Наименование рекламного баннера">
-                                <Input placeholder="Наименование" value={name} onChange={e => setName(e.target.value)} />
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item label="Комментарий">
-                                <Input placeholder="Комментарий" />
-                            </Form.Item>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col span={8}>
-                            <Form.Item label="Период публикации">
-                                <RangePicker value={dateRange}
-                                    onChange={dates => setDateRange(dates)} />
-                            </Form.Item>
-                            <Col span={16}>
-                                <Checkbox checked={active} onChange={e => setActive(e)}> Активен</Checkbox>
+                            <Col span={8}>
+                                <Form.Item label="Наименование рекламного баннера">
+                                    <Input placeholder="Наименование" value={name} onChange={e => setName(e.target.value)} />
+                                </Form.Item>
                             </Col>
-                        </Col>
+                            <Col span={8}>
+                                <Form.Item label="Комментарий">
+                                    <Input placeholder="Комментарий" />
+                                </Form.Item>
+                            </Col>
 
-                    </Row>
-                </Form>
-            </TableDiv>
+                        </Row>
+                        <Row>
+                            <Col span={8}>
+                                <Form.Item label="Период публикации">
+                                    <RangePicker value={dateRange}
+                                        onChange={dates => setDateRange(dates)} />
+                                </Form.Item>
+                                <Col span={16}>
+                                    <Checkbox checked={active} onChange={e => setActive(e.target.checked)}>Активен</Checkbox>
+                                </Col>
+                            </Col>
+
+                        </Row>
+                    </Form>
+                </TableDiv>
 
 
-            <TableDiv style={{ marginTop: 24 }}>
-                <Title level={5}>Аудитория</Title>
-                <Divider />
-                <Form layout="vertical" form={form}>
+                <TableDiv style={{ marginTop: 24 }}>
+                    <Title level={5}>Аудитория</Title>
+                    <Divider />
+                    <Form layout="vertical" form={form}>
+                        <Row gutter={24}>
+                            <Col span={8}>
+                                <Form.Item label="Пол">
+                                    <Select
+                                        defaultValue={gender}
+                                        value={gender}
+                                        onChange={e => setGender(e)}
+                                    >
+                                        <Option value={null}>Любой</Option>
+                                        <Option value="male">Мужской</Option>
+                                        <Option value="female">Женский</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            <Col span={8}>
+                                <Form.Item label="Возраст">
+                                    <Select defaultValue={ageRange}
+                                        value={ageRange}
+                                        onChange={e => setAgeRange(e)}
+                                    >
+                                        <Option value={ageRange} key={ageRange}>{ageRange}</Option>
+                                        {
+                                            ageRanges.map((age, idx) => (
+                                                <Option value={age} key={idx}>{age}</Option>
+                                            ))
+                                        }
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            <Col span={8}>
+                                <Form.Item label="Баланс">
+                                    <InputNumber style={{ width: '100%' }} min={0} addonBefore="от" placeholder="1000"
+                                        defaultValue={minBalance}
+                                        value={minBalance}
+                                        onInput={e => setMinBalance(e)}
+                                    />
+                                </Form.Item>
+                            </Col>
+
+                        </Row>
+                    </Form>
+                </TableDiv>
+                <TableDiv style={{ marginTop: 24, paddingBottom: 24 }}>
+                    <Title level={5}>Текущее изображение</Title>
+                    <Divider />
                     <Row gutter={24}>
-                        <Col span={8}>
-                            <Form.Item label="Пол">
-                                <Select
-                                    defaultValue="male"
-                                    value={gender} onChange={e => setGender(e)}
-                                >
-                                    <Option value="male">Мужской</Option>
-                                    <Option value="female">Женский</Option>
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item label="Возраст">
-                                <Select defaultValue="18-24" value={ageRange} onChange={e => setAgeRange(e)}>
-                                    <Option value="18-24">18-24</Option>
-                                    <Option value="25-30">25-30</Option>
-                                    <Option value="31-35">31-35</Option>
-                                    <Option value="36-40">36-40</Option>
-                                    <Option value="41-45">41-45</Option>
-                                    <Option value="46-50">46-50</Option>
-                                    <Option value="51-55">51-55</Option>
-                                    <Option value="56-60">56-60</Option>
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item label="Баланс">
-                                <InputNumber style={{ width: '100%' }} min={0} addonBefore="от" placeholder="1000"
-                                    value={minBalance}
-                                    onInput={e => setMinBalance(e)}
-                                />
-                            </Form.Item>
-                        </Col>
-
+                        <Image src={bannerImageLink}></Image>
                     </Row>
-                </Form>
-            </TableDiv>
+                </TableDiv>
+                <TableDiv style={{ marginTop: 24, paddingBottom: 24 }}>
+                    <Title level={5}>Заменить изображение</Title>
+                    <Divider />
+                    <Row gutter={24}>
+                        <Col span={12}>
+                            <Dragger {...propsUpload}>
+                                <p className="ant-upload-drag-icon">
+                                    <InboxOutlined />
+                                </p>
+                                <p className="ant-upload-text">Нажмите или перетащите сюда файлы для загрузки</p>
+                            </Dragger>
+                        </Col>
+                        <Col span={12}>
+                            <Title level={5}>Требования к изображению</Title>
+                            <ul>
+                                <li>
+                                    <Text>Разрешение изображения не должен превышать 205х108 пикселей</Text>
+                                </li>
+                                <li>
+                                    <Text>Размер файла не должен быть больше 0.5Мб</Text>
+                                </li>
+                                <li>
+                                    <Text>Текст на изображении не должен занимать более 25%</Text>
+                                </li>
+                            </ul>
+                        </Col>
+                    </Row>
+                </TableDiv>
 
-            <TableDiv style={{ marginTop: 24, paddingBottom: 24 }}>
-                <Title level={5}>Рекламные материалы</Title>
-                <Divider />
-                <Row gutter={24}>
-                    <Col span={12}>
-                        <Dragger {...propsUpload}>
-                            <p className="ant-upload-drag-icon">
-                                <InboxOutlined />
-                            </p>
-                            <p className="ant-upload-text">Нажмите или перетащите сюда файлы для загрузки</p>
-                        </Dragger>
-                    </Col>
-                    <Col span={12}>
-                        <Title level={5}>Требования к изображению</Title>
-                        <ul>
-                            <li>
-                                <Text>Разрешение изображения не должен превышать 205х108 пикселей</Text>
-                            </li>
-                            <li>
-                                <Text>Размер файла не должен быть больше 0.5Мб</Text>
-                            </li>
-                            <li>
-                                <Text>Текст на изображении не должен занимать более 25%</Text>
-                            </li>
-                        </ul>
+                <Row justify="center" style={{ marginTop: 24 }}>
+                    <Col>
+                        <Button type="primary" onClick={onSubmit}>
+                            Редактировать
+                        </Button>
                     </Col>
                 </Row>
-            </TableDiv>
-
-            <Row justify="center" style={{ marginTop: 24 }}>
-                <Col>
-                    <Button type="primary" onClick={onSubmit}>
-                        Редактировать
-                    </Button>
-                </Col>
-            </Row>
+            </Spin>
         </>
     );
 };
