@@ -1,6 +1,6 @@
 import React from 'react';
 import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
-import { Button, Col, Row, Typography, Table, Badge } from "antd";
+import { Button, Col, Row, Typography, Table, Badge, Spin } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -13,67 +13,87 @@ const TableDiv = styled.div`
   background-color: #fff;
 `;
 
-const columns = [
-    {
-        title: '№',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: 'Имя',
-        dataIndex: 'title',
-        key: 'title',
-    },
-    {
-        title: 'Описание',
-        dataIndex: 'description',
-        key: 'description',
-    },
-    {
-        title: 'Статус',
-        dataIndex: 'is_active',
-        key: 'is_active',
-        width: '15%',
-
-        render: is_active => {
-            return (
-                <Badge status={is_active ? 'success' : 'error'}
-                    text={is_active ? 'Активен' : 'Неактивен'}
-                />
-            )
-        }
-    },
-    {
-        title: 'Дата создания',
-        dataIndex: 'created_at',
-        key: 'created_at',
-        render: created_at => {
-            return (
-                <div>{created_at.split('T')[0]}</div>
-            )
-        }
-    },
-    {
-        title: 'Действия',
-        dataIndex: 'is_active',
-        key: 'is_active',
-        width: '10%',
-
-        render: (is_active,banner) => (
-            <>
-                <Link to={`../edit-polls/${banner.id}`} type="link">Редактировать</Link>
-                <Button danger type="link">{is_active ? 'Остановить' : 'Запустить'}</Button>
-            </>
-        )
-    },
-]
-
-
 const AdsPollsPage = () => {
+    const [loading, setLoading] = React.useState(true);
     const [polls, setPolls] = React.useState([])
     React.useEffect(() => {
-        apiController.getPolls().then(res => setPolls(res.data))
+        apiController.getPolls().then(res => {
+            setPolls(res.data)
+            setLoading(false)
+        })
     }, [])
+
+    const handleActivateButton = (poll) => {
+        setLoading(true)
+        apiController.toggleActivePollState(poll.id, poll.is_active).then(res => {
+            const updatedPolls = polls.map(item => {
+                if (item.id == poll.id) {
+                    item.is_active = !item.is_active
+                }
+                return item
+            })
+            setPolls(updatedPolls)
+            setLoading(false)
+        })
+    }
+
+    const columns = [
+        {
+            title: '№',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: 'Имя',
+            dataIndex: 'title',
+            key: 'title',
+        },
+        {
+            title: 'Описание',
+            dataIndex: 'description',
+            key: 'description',
+        },
+        {
+            title: 'Статус',
+            dataIndex: 'is_active',
+            key: 'is_active',
+            width: '15%',
+
+            render: is_active => {
+                return (
+                    <Badge status={is_active ? 'success' : 'error'}
+                        text={is_active ? 'Активен' : 'Неактивен'}
+                    />
+                )
+            }
+        },
+        {
+            title: 'Дата создания',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: created_at => {
+                return (
+                    <div>{created_at.split('T')[0]}</div>
+                )
+            }
+        },
+        {
+            title: 'Действия',
+            dataIndex: 'is_active',
+            key: 'is_active',
+            width: '10%',
+
+            render: (is_active, poll) => (
+                <>
+                    <Link to={`../edit-poll/${poll.id}`} type="link">Редактировать</Link>
+                    <Button danger type="link"
+                        onClick={() => handleActivateButton(poll)}
+                    >{is_active ? 'Остановить' : 'Запустить'}</Button>
+                </>
+            )
+        },
+    ]
+
     return (
         <>
             <div style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24 }}>
@@ -82,7 +102,7 @@ const AdsPollsPage = () => {
             <TableDiv>
                 <Row style={{ width: '100%', marginBottom: 16 }} justify="space-between" align="middle">
                     <Col>
-                        <Title level={5} style={{ margin: 0 }}>Баннеры</Title>
+                        <Title level={5} style={{ margin: 0 }}>Опросы</Title>
                     </Col>
                     <Col>
                         <Link to="/add-polls">
@@ -93,7 +113,9 @@ const AdsPollsPage = () => {
                 </Row>
                 <Row >
                     <Col span={24}>
-                        <Table columns={columns} dataSource={polls} />
+                        <Spin spinning={loading}>
+                            <Table columns={columns} dataSource={polls} />
+                        </Spin>
                     </Col>
                 </Row>
             </TableDiv>
