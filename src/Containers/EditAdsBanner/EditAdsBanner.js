@@ -19,13 +19,12 @@ import {
 } from "antd";
 import styled from "styled-components";
 import { InboxOutlined } from "@ant-design/icons";
-import { apiController } from "../../api";
+import { bannersController } from "../../api";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 
 const { Dragger } = Upload;
 const { Text, Title } = Typography
-const { RangePicker } = DatePicker
 const { Option } = Select
 
 const TableDiv = styled.div`
@@ -33,18 +32,34 @@ const TableDiv = styled.div`
   backgroun1d-color: #fff;
 `;
 
+function convertDateToMoment(date) {
+    if (!date) {
+        return null
+    }
+    return moment(date)
+}
+
+function convertDateToIso(date) {
+    if (!date) {
+        return null
+    }
+    return date.toISOString().split('T')[0]
+}
+
 const EditAdsBanner = () => {
     const { id } = useParams();
     const [loading, setLoading] = React.useState(true);
     const [form] = Form.useForm();
     const [name, setName] = React.useState('')
-    const [dateRange, setDateRange] = React.useState()
+    const [startDate, setStartDate] = React.useState()
+    const [endDate, setEndDate] = React.useState()
     const [gender, setGender] = React.useState(null)
     const [ageRange, setAgeRange] = React.useState("18-24")
     const [minBalance, setMinBalance] = React.useState()
     const [bannerImageLink, setBannerImageLink] = React.useState('')
     const [selectedImage, setSelectedImage] = React.useState(null)
     const [active, setActive] = React.useState()
+    const [comment, setComment] = React.useState('')
 
     const ageRanges = [
         "18-24",
@@ -58,14 +73,16 @@ const EditAdsBanner = () => {
     ];
 
     React.useEffect(() => {
-        apiController.getBanner(id).then(res => {
+        bannersController.getBanner(id).then(res => {
             setName(res.data.name)
             setGender(res.data.gender)
             setAgeRange(res.data.age_range)
             setMinBalance(res.data.min_balance)
-            setDateRange([moment(res.data.start_date), moment(res.data.end_date)])
+            setStartDate(convertDateToMoment(res.data.start_date))
+            setEndDate(convertDateToMoment(res.data.end_date))
             setActive(res.data.is_active)
             setBannerImageLink(res.data.image_link)
+            setComment(res.data.comment)
             setLoading(false)
             console.log(res.data)
         })
@@ -90,15 +107,16 @@ const EditAdsBanner = () => {
 
     const onSubmit = () => {
         setLoading(true);
-        const [startDate, endDate] = dateRange;
         let imageForm = new FormData();
         imageForm.append('image', selectedImage);
-        apiController.editBanner(id, {
+        console.log(startDate, endDate)
+        bannersController.editBanner(id, {
             is_active: Number(active),
             name: name,
             gender: gender,
-            start_date: startDate.toISOString().split('T')[0],
-            end_date: endDate.toISOString().split('T')[0],
+            comment: comment,
+            start_date: convertDateToIso(startDate),
+            end_date: convertDateToIso(endDate),
             min_age: ageRange.split('-')[0],
             max_age: ageRange.split('-')[1],
             min_balance: minBalance
@@ -128,7 +146,7 @@ const EditAdsBanner = () => {
                             </Col>
                             <Col span={8}>
                                 <Form.Item label="Комментарий">
-                                    <Input placeholder="Комментарий" />
+                                    <Input value={comment} onChange={e => setComment(e.target.value)} placeholder="Комментарий" />
                                 </Form.Item>
                             </Col>
 
@@ -136,8 +154,8 @@ const EditAdsBanner = () => {
                         <Row>
                             <Col span={8}>
                                 <Form.Item label="Период публикации">
-                                    <RangePicker value={dateRange}
-                                        onChange={dates => setDateRange(dates)} />
+                                    <DatePicker value={startDate} onChange={date => setStartDate(date)} />
+                                    <DatePicker value={endDate} onChange={date => setEndDate(date)} />
                                 </Form.Item>
                                 <Col span={16}>
                                     <Checkbox checked={active} onChange={e => setActive(e.target.checked)}>Активен</Checkbox>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Table, Badge, Spin } from "antd";
-import { apiController } from "../../api";
+import { bannersController } from "../../api";
 import { Link } from "react-router-dom";
 
 
@@ -9,7 +9,7 @@ const AdsBannersTable = () => {
     const [loading, setLoading] = React.useState(true);
     const [banners, setBanners] = React.useState([])
     React.useEffect(() => {
-        apiController.getBanners().then(res => {
+        bannersController.getBanners().then(res => {
             setBanners(res.data)
             setLoading(false);
         })
@@ -17,7 +17,7 @@ const AdsBannersTable = () => {
 
     const handleActivateButton = (banner) => {
         setLoading(true)
-        apiController.toggleActiveBannerState(banner.id, banner.is_active).then(res => {
+        bannersController.toggleActiveBannerState(banner.id, banner.is_active).then(res => {
             const updatedBanners = banners.map(item => {
                 if (item.id == banner.id) {
                     item.is_active = !item.is_active

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, Radio, Table, Typography } from "antd";
-import { apiController } from "../../api";
+import { shopsController } from "../../api";
 
 const { Title } = Typography
 
@@ -21,7 +21,7 @@ const RevenueTenant = () => {
     const [shopStatistic, setShopStatistic] = React.useState([])
     const [data, setData] = React.useState([])
     React.useEffect(() => {
-        apiController.getShopsIncomeStatistics().then(res => {
+        shopsController.getShopsIncomeStatistics().then(res => {
             setShopStatistic(res.data)
             setData(res.data.map((item) => {
                 item['income'] = item['income_per_week']
@@ -42,7 +42,7 @@ const RevenueTenant = () => {
         if (type === "year") {
             incomeField = 'income_per_year';
         }
-        apiController.getShopsIncomeStatistics().then(res => {
+        shopsController.getShopsIncomeStatistics().then(res => {
             setData(res.data.map((item) => {
                 item['income'] = item[incomeField]
                 return item

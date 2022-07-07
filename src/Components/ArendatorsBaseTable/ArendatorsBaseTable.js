@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, Col, Row, Table, Typography, Spin } from "antd";
 import Search from "antd/es/input/Search";
 import { FileExcelOutlined, PlusOutlined } from "@ant-design/icons";
-import { apiController } from "../../api";
+import { shopsController } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography
 
@@ -40,10 +41,11 @@ const columns = [
 ]
 
 const ArendatorsBaseTable = () => {
+    const navigate = useNavigate()
     const [loading, setLoading] = React.useState(true)
     const [data, setData] = React.useState([])
     React.useEffect(() => {
-        apiController.getShopsIncomeStatistics().then(res => {
+        shopsController.getShopsIncomeStatistics().then(res => {
             setData(res.data)
             setLoading(false)
         })
@@ -66,7 +68,9 @@ const ArendatorsBaseTable = () => {
                         }}
                     />
                     <Button icon={<FileExcelOutlined />}>Выгрузить в Excel</Button>
-                    <Button type="primary" icon={<PlusOutlined />}>Добавить арендатора</Button>
+                    <Button type="primary" icon={<PlusOutlined />}
+                        onClick={() => { navigate('/add-arendator') }}
+                    >Добавить арендатора</Button>
                 </Col>
             </Row>
             <Spin spinning={loading}>

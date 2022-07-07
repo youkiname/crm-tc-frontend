@@ -4,7 +4,7 @@ import { Button, Col, Row, Typography, Table, Badge, Spin } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { apiController } from "../../api";
+import { pollsController } from "../../api";
 
 const { Title } = Typography
 
@@ -17,7 +17,7 @@ const AdsPollsPage = () => {
     const [loading, setLoading] = React.useState(true);
     const [polls, setPolls] = React.useState([])
     React.useEffect(() => {
-        apiController.getPolls().then(res => {
+        pollsController.getPolls().then(res => {
             setPolls(res.data)
             setLoading(false)
         })
@@ -25,7 +25,7 @@ const AdsPollsPage = () => {
 
     const handleActivateButton = (poll) => {
         setLoading(true)
-        apiController.toggleActivePollState(poll.id, poll.is_active).then(res => {
+        pollsController.toggleActivePollState(poll.id, poll.is_active).then(res => {
             const updatedPolls = polls.map(item => {
                 if (item.id == poll.id) {
                     item.is_active = !item.is_active

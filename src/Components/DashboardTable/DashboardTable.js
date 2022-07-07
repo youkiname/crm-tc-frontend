@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Table, Tabs, Radio, Col, DatePicker, Typography, Divider } from "antd";
-import { apiController } from "../..//api";
+import { apiController, transactionsController, visitorsController } from "../..//api";
 import { Column } from "@ant-design/plots";
 
 const { Text } = Typography
@@ -80,17 +80,17 @@ export const DashboardTable = () => {
             dates
         }))
         if (startDate || endDate) {
-            apiController.getTransactionsSumGraph(startDate?.format(), endDate?.format()).then(({ data }) =>
+            transactionsController.getTransactionsSumGraph(startDate?.format(), endDate?.format()).then(({ data }) =>
                 setAverageTable({ ...averageTable, data }))
         }
 
     }
 
     React.useEffect(() => {
-        apiController.getLastTransaction(7).then(res => setData(res.data))
+        transactionsController.getLastTransaction(7).then(res => setData(res.data))
         const current = new Date()
         const month = new Date(current.setDate(current.getDate() - 30))
-        apiController.getColumnPlot(month).then(({ data }) =>
+        visitorsController.getVisitorsGraph(month).then(({ data }) =>
             setVisitorTable({ ...visitorTable, data }))
     }, [])
     const handleVisitorRadioButton = (event) => {
@@ -101,15 +101,15 @@ export const DashboardTable = () => {
         const year = new Date(current.setDate(current.getDate() - 365))
 
         if (type === "week") {
-            apiController.getColumnPlot(week).then(({ data }) =>
+            visitorsController.getVisitorsGraph(week).then(({ data }) =>
                 setVisitorTable({ ...visitorTable, data }))
         }
         if (type === "month") {
-            apiController.getColumnPlot(month).then(({ data }) =>
+            visitorsController.getVisitorsGraph(month).then(({ data }) =>
                 setVisitorTable({ ...visitorTable, data }))
         }
         if (type === "year") {
-            apiController.getColumnPlnot(year).then(({ data }) =>
+            visitorsController.getColumnPlnot(year).then(({ data }) =>
                 setVisitorTable({ ...visitorTable, data }))
         }
         if (type !== visitorTable.type) {
@@ -125,15 +125,15 @@ export const DashboardTable = () => {
         const year = new Date(current.setDate(current.getDate() - 365))
 
         if (type === "week") {
-            apiController.getTransactionsSumGraph(week).then(({ data }) =>
+            transactionsController.getTransactionsSumGraph(week).then(({ data }) =>
                 setVisitorTable({ ...visitorTable, data }))
         }
         if (type === "month") {
-            apiController.getTransactionsSumGraph(month).then(({ data }) =>
+            transactionsController.getTransactionsSumGraph(month).then(({ data }) =>
                 setVisitorTable({ ...visitorTable, data }))
         }
         if (type === "year") {
-            apiController.getTransactionsSumGraph(year).then(({ data }) =>
+            transactionsController.getTransactionsSumGraph(year).then(({ data }) =>
                 setVisitorTable({ ...visitorTable, data }))
         }
         if (type !== visitorTable.type) {
@@ -148,7 +148,7 @@ export const DashboardTable = () => {
             dates
         }))
         if (startDate || endDate) {
-            apiController.getColumnPlot(startDate?.format(), endDate?.format()).then(({ data }) =>
+            visitorsController.getVisitorsGraph(startDate?.format(), endDate?.format()).then(({ data }) =>
                 setVisitorTable({ ...visitorTable, data }))
         }
 

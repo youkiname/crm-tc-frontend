@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Divider, Table, Badge } from "antd";
-import { apiController } from "../../api";
+import { bannersController } from "../../api";
 
 const { Title } = Typography
 
@@ -40,7 +40,7 @@ const columns = [
 const AdsDashboardModule = () => {
     const [data, setData] = React.useState([])
     React.useEffect(() => {
-        apiController.getBanners().then(res => setData(res.data))
+        bannersController.getBanners().then(res => setData(res.data))
     }, [])
     return (
         <div style={{ width: '100%' }}>

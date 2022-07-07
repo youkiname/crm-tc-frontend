@@ -6,12 +6,12 @@ import {
     Divider,
     Form,
     Input,
+    message,
     Row,
     Typography,
 } from "antd";
 import styled from "styled-components";
-import { MinusCircleOutlined } from "@ant-design/icons";
-import { apiController } from "../../api";
+import { pollsController } from "../../api";
 import { useParams } from "react-router-dom";
 
 const { Title } = Typography
@@ -23,49 +23,38 @@ const TableDiv = styled.div`
 
 const EditPollPage = () => {
     const [form] = Form.useForm();
-    const [shoppingCenterId] = React.useState()
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
     const [choices, setChoices] = React.useState([])
-    let { id } = useParams();
+    const { id } = useParams();
+
     React.useEffect(() => {
-        apiController.getPolls(id).then(res => {
+        pollsController.getPoll(id).then(res => {
             setTitle(res.data.title)
             setDescription(res.data.description)
             setChoices(res.data.choices)
-
         })
     }, [id])
 
-    const removeChoice = (index) => {
-        setChoices(choices.filter((el, i) => i !== index))
-    }
-
-    const addChoice = (value) => {
-        setChoices([...choices, value])
-    }
-
-    const onChangeChoice = (e, index) => {
+    const onChangeChoice = (e, choiceId) => {
         const value = e.target.value
-        if (choices.length <= index) {
-            return addChoice(value)
-        }
-        setChoices(choices.map((el, i) => {
-            if (i !== index) {
-                return el
+        setChoices(choices.map(choice => {
+            if (choice.id == choiceId) {
+                choice.title = value
             }
-            return value
+            return choice
         }))
 
     }
 
-    const onSubmit = async () => {
-        await apiController.savePoll({
+    const onSubmit = () => {
+        pollsController.editPoll(id, {
             title,
             description,
-            shopping_center_id: shoppingCenterId,
-            choices
-        });
+            choices: choices.map(el => el.title)
+        }).then(() => {
+            message.success("Данные успешно сохранены.")
+        })
     }
 
     return (
@@ -100,62 +89,20 @@ const EditPollPage = () => {
                     </Row>
                     <Row>
                         <Col span={12}>
-                            <Form name="dynamic_form_item">
-                                <Form.List
-                                    name="names"
-                                    rules={[
-                                        {
-                                            validator: async (_, names) => {
-                                                if (!names || names.length < 2) {
-                                                    return Promise.reject(new Error('Должно быть минимум 2 варианта ответа'));
-                                                }
-                                            },
-                                        },
-                                    ]}
-                                >
-                                    {(fields, { add, remove }, { errors }) => (
-                                        <>
-                                            {fields.map((field, index) => (
-                                                <Form.Item
-                                                    label={index === 0 ? 'Вариант ответа' : ''}
-                                                    required={false}
-                                                    key={field.key}
-                                                >
-                                                    <Form.Item
-                                                        {...field}
-                                                        validateTrigger={['onChange', 'onBlur']}
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                whitespace: true,
-                                                                message: "Введите вариант ответа или удалите поле",
-                                                            },
-                                                        ]}
-                                                        noStyle
-                                                    >
-                                                        <Input
-                                                            placeholder="Вариант ответа"
-                                                            style={{
-                                                                width: '60%',
-                                                            }}
-                                                            onChange={e => onChangeChoice(e, index)}
-                                                        />
-                                                    </Form.Item>
-                                                    {fields.length > 1 ? (
-                                                        <MinusCircleOutlined
-                                                            className="dynamic-delete-button"
-                                                            onClick={() => {
-                                                                remove(field.name)
-                                                            }}
-                                                        />
-                                                    ) : null}
-                                                </Form.Item>
-                                            ))}
-
-                                        </>
-                                    )}
-                                </Form.List>
-                            </Form>
+                            <Form.Item label="Варианты ответа">
+                                {
+                                    choices.map((choice) => (
+                                        <Input
+                                            placeholder="Вариант ответа"
+                                            style={{
+                                                width: '60%',
+                                            }}
+                                            value={choice.title}
+                                            onChange={e => onChangeChoice(e, choice.id)}
+                                        />
+                                    ))
+                                }
+                            </Form.Item>
                         </Col>
                     </Row>
                 </Form>

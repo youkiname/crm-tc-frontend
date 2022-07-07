@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Divider, Radio, Row, Typography } from "antd";
 import { BasicDonutPlot } from "./BasicDonutPlot";
-import { apiController } from "../..//api";
+import { visitorsController } from "../..//api";
 
 const { Title, Text } = Typography
 
@@ -9,7 +9,7 @@ const VisitorsDashboardModule = () => {
     const [data, setData] = React.useState([])
     const [ageRate, setAgeRate] = React.useState([])
     React.useEffect(() => {
-        apiController.getVisitorsAgePlot().then(res => {
+        visitorsController.getVisitorsAgePlot().then(res => {
             setData(res.data['plot'])
             setAgeRate(res.data)
         })
@@ -17,7 +17,7 @@ const VisitorsDashboardModule = () => {
 
     const handleRadioButton = (moment) => {
         const range = moment.target.value
-        apiController.getVisitorsAgePlot(range).then(res => {
+        visitorsController.getVisitorsAgePlot(range).then(res => {
             setData(res.data['plot'])
             setAgeRate(res.data)
         })

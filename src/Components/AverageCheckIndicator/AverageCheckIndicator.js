@@ -2,7 +2,7 @@ import React from 'react';
 import { TinyArea } from '@ant-design/plots';
 import { Divider, Statistic } from "antd";
 import { Typography } from "antd";
-import { apiController } from "../../api";
+import { transactionsController } from "../../api";
 
 
 const { Text } = Typography
@@ -14,9 +14,9 @@ const AverageCheckIndicator = () => {
 
 
     React.useEffect(() => {
-        apiController.getStatisticAverageSumMonth().then(res => setData(res.data))
-        apiController.getStatisticAverageSumToday().then(res => setDay(res.data))
-        apiController.getStatisticAverageGraph().then(res => setAverage(res.data))
+        transactionsController.getStatisticAverageSumMonth().then(res => setData(res.data))
+        transactionsController.getStatisticAverageSumToday().then(res => setDay(res.data))
+        transactionsController.getStatisticAverageGraph().then(res => setAverage(res.data))
     }, [])
 
     const averageAmounts = average.map(item => parseInt(item?.amount))

@@ -1,5 +1,5 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {apiController} from "../../api";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { apiController, visitorsController } from "../../api";
 
 
 const initialState = {
@@ -12,10 +12,10 @@ const initialState = {
 }
 
 export const getVisitorCountIndicator = createAsyncThunk("mainPage/visitorCountIndicator", async (_, thunkAPI) => {
-    const [month,day,graph] = await Promise.all([
-        apiController.getVisitorsCountIndicatorMounth(),
-        apiController.getVisitorCountIndicatorToday(),
-        apiController.getStatisticUsersGraphMonth()
+    const [month, day, graph] = await Promise.all([
+        visitorsController.getVisitorsCountIndicatorMonth(),
+        visitorsController.getVisitorCountIndicatorToday(),
+        visitorsController.getVisitorsGraphMonth()
     ])
     return {
         month: month.data,
@@ -30,7 +30,7 @@ export const mainPageSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getVisitorCountIndicator.pending, (state) => {
             state.loading = "pending"
-        }).addCase(getVisitorCountIndicator.fulfilled,(state,action) =>{
+        }).addCase(getVisitorCountIndicator.fulfilled, (state, action) => {
             state.visitorCountIndicator = action.payload
             state.loading = "fulfilled"
         }).addCase(getVisitorCountIndicator.rejected, (state) => {
@@ -39,5 +39,5 @@ export const mainPageSlice = createSlice({
     }
 })
 
-export const {} = mainPageSlice.actions
+export const { } = mainPageSlice.actions
 

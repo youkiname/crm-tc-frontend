@@ -43,6 +43,16 @@ const ClientBaseTable = () => {
             setLoading(false)
         })
     }, [])
+
+    const onSearch = (e) => {
+        setLoading(true)
+        const query = e.target.value
+        apiController.getCustomerStatistics(query).then(res => {
+            setData(res.data)
+            setLoading(false)
+        })
+    }
+
     return (
         <>
             <Row justify="space-between">
@@ -55,13 +65,12 @@ const ClientBaseTable = () => {
                 }}>
                     <Search
                         placeholder="Найти"
-                        onSearch={() => { }}
+                        onChange={onSearch}
                         style={{
                             width: 300,
                         }}
                     />
                     <Button icon={<FileExcelOutlined />}>Выгрузить в Excel</Button>
-                    {/*<Button type="primary" icon={<PlusOutlined />}>Добавить арендатора</Button>*/}
                 </Col>
             </Row>
             <Spin spinning={loading}>

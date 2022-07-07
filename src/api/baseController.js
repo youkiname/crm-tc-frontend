@@ -1,4 +1,5 @@
 import axios from "axios";
+import { message } from 'antd';
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -9,7 +10,8 @@ function getCookie(name) {
 
 // Create axios instance with base url and credentials support
 export const axiosInstance = axios.create({
-    baseURL: "https://top-sistem.ru/api/",
+    // baseURL: "https://top-sistem.ru/api/",
+    baseURL: "http://127.0.0.1:8000/api/",
     withCredentials: true,
     credentials: true,
     headers: {
@@ -39,6 +41,10 @@ const onRequest = (config) => {
 }
 
 axiosInstance.interceptors.request.use(onRequest, null);
+axiosInstance.interceptors.response.use((response) => response, (error) => {
+    message.error("Произошла ошибка при выполнении запроса.")
+    throw error;
+});
 
 export class BaseController {
     instance = axiosInstance

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Button, Col, Form, Input, Row, Select, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { apiController } from "../..//api";
+import { shopsController } from "../..//api";
 
 const { Option } = Select
 
@@ -26,7 +26,7 @@ const AddArendatorPage = () => {
     const [renterPassword, setRenterPassword] = React.useState()
     const [avatar, setAvatar] = React.useState(null)
     React.useEffect(() => {
-        apiController.getShopCategories().then(res => {
+        shopsController.getShopCategories().then(res => {
             setCategories(res.data)
         })
     }, [])
@@ -52,7 +52,7 @@ const AddArendatorPage = () => {
         let imageForm = new FormData();
         imageForm.append('avatar', avatar);
 
-        apiController.saveShop({
+        shopsController.saveShop({
             name,
             category_id: categoryId,
             renter_name: renterName,
@@ -61,6 +61,7 @@ const AddArendatorPage = () => {
             renter_password: renterPassword,
         }, imageForm).then(res => {
             navigate("/base-tc")
+            message.success("Арендатор успешно добавлен")
         });
 
     }

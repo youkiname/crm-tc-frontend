@@ -13,11 +13,23 @@ const TableDiv = styled.div`
 `;
 
 const ProfilePage = () => {
-    const [currentUser, setCurrentUser] = React.useState({})
+    const [currentUser, setCurrentUser] = React.useState({ shopping_center: {} })
     const [cities, setCities] = React.useState([])
-    const [shoppingCenterName, setShoppingCenterName] = React.useState('')
-    const [address, setAddress] = React.useState('')
-    const [description, setDescription] = React.useState('')
+    const [cityId, setCityId] = React.useState()
+
+    const setUserData = (value, field) => {
+        setCurrentUser({
+            ...currentUser,
+            [field]: value
+        })
+    }
+
+    const setShoppingCenterData = (value, field) => {
+        setCurrentUser({
+            ...currentUser,
+            shopping_center: { ...currentUser.shopping_center, [field]: value }
+        })
+    }
 
     React.useEffect(() => {
         apiController.getCities().then(res => {
@@ -25,17 +37,21 @@ const ProfilePage = () => {
         })
         authController.getMe().then(res => {
             setCurrentUser(res.data)
+            setCityId(res.data.shopping_center.city.id)
         })
     }, [])
 
     const onSubmit = () => {
         apiController.updateProfile({
-            first_name: currentUser.first_name,
-            phone: currentUser.phone,
-            shopping_center_name: shoppingCenterName,
-            address: address,
-            description: description,
+            first_name: currentUser.full_name.split(' ')[0],
+            last_name: currentUser.full_name.split(' ')[1],
+            phone: currentUser.mobile,
+            shopping_center_name: currentUser.shopping_center.name,
+            address: currentUser.shopping_center.address,
+            description: currentUser.shopping_center.description,
+            city_id: cityId,
         }).then(res => {
+            localStorage.setItem('name', res.data.full_name)
             message.success('Данные успешно обновлены.');
         })
     }
@@ -61,43 +77,18 @@ const ProfilePage = () => {
                     }}
                 >
 
-                    <Form.Item
-                        label="Название организации"
-                        name="organizationName"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Введите название организации',
-                            },
-                        ]}
-                    >
-                        <Input placeholder="ООО “Иванов”" value={shoppingCenterName} onChange={e => setShoppingCenterName(e.target.value)} />
+                    <Form.Item label="Название организации">
+                        <Input placeholder="ООО “Иванов”"
+                            value={currentUser.shopping_center.name}
+                            onChange={e => setShoppingCenterData(e.target.value, 'name')} />
                     </Form.Item>
 
-                    <Form.Item
-                        label="Руководитель"
-                        name="director"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Введите ФИО руководителя',
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Иванов Иван Иванович" value={currentUser.first_name} onChange={e => setCurrentUser({ ...currentUser, first_name: e.target.value })} />
+                    <Form.Item label="Руководитель">
+                        <Input placeholder="Иван Иванов Иванович" value={currentUser.full_name} onChange={e => setUserData(e.target.value, 'full_name')} />
                     </Form.Item>
 
-                    <Form.Item
-                        label="Телефон для связи"
-                        name="phone"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Введите номер телефона для связи',
-                            },
-                        ]}
-                    >
-                        <Input placeholder="+7 999 999 99 99" value={currentUser.phone} onChange={e => setCurrentUser({ ...currentUser, phone: e.target.value })} />
+                    <Form.Item label="Телефон для связи" >
+                        <Input placeholder="+7 999 999 99 99" value={currentUser.mobile} onChange={e => setUserData(e.target.value, 'mobile')} />
                     </Form.Item>
 
                     {/* <Form.Item
@@ -115,12 +106,11 @@ const ProfilePage = () => {
                         </Upload>
                     </Form.Item> */}
 
-                    <Form.Item
-                        label="Город"
-                        name="city"
-                    >
+                    <Form.Item label="Город">
                         <Select
                             style={{ width: 250 }}
+                            value={cityId}
+                            onChange={(e) => setCityId(e)}
                         >
                             {
                                 cities.map(city => (
@@ -130,34 +120,16 @@ const ProfilePage = () => {
                         </Select>
                     </Form.Item>
 
-                    <Form.Item
-                        label="Адрес"
-                        name="address"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Введите адрес',
-                            },
-                        ]}
-                    >
+                    <Form.Item label="Адрес">
                         <Input placeholder="г. Москва, ул. Ленина, 123, корп. 2"
-                            value={address}
-                            onChange={e => setAddress(e.target.value)} />
+                            value={currentUser.shopping_center.address}
+                            onChange={e => setShoppingCenterData(e.target.value, 'address')} />
                     </Form.Item>
 
-                    <Form.Item
-                        label="Описание"
-                        name="description"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Введите описание торгового центра',
-                            },
-                        ]}
-                    >
+                    <Form.Item label="Описание">
                         <Input.TextArea rows={4}
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
+                            value={currentUser.shopping_center.description}
+                            onChange={e => setShoppingCenterData(e.target.value, 'description')}
                         />
                     </Form.Item>
 
