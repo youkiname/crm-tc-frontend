@@ -36,7 +36,7 @@ const BonusCardEditItem = ({ item }) => {
             />
             <InputNumber min={0} value={card?.threshold} onChange={handleThreshold} placeholder="Требуемая сумма накоплений"
                 style={{ width: '100%' }} />
-            <TextArea rows={4} maxLength={6} value={card?.description} onChange={handleDescription} placeholder="Описание" />
+            <TextArea rows={4} value={card?.description} onChange={handleDescription} placeholder="Описание" />
             <Button onClick={onSave} type="primary" icon={<SaveOutlined />}>Сохранить</Button>
         </div>
     );

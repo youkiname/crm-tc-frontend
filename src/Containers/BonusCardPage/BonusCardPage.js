@@ -3,7 +3,7 @@ import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import { Spin } from "antd";
 import styled from "styled-components";
 import { BonusCardEditItem } from "./BonusCardEditItem";
-import { apiController } from "../../api";
+import { cardLoyaltyController } from "../../api";
 
 const CardsWrapper = styled.div`
   width: 100%;
@@ -16,7 +16,7 @@ const BonusCardPage = () => {
     const [loading, setLoading] = React.useState(true)
     const [statuses, setStatuses] = React.useState([])
     React.useEffect(() => {
-        apiController.getCardStatuses().then(res => {
+        cardLoyaltyController.getCardStatuses().then(res => {
             setStatuses(res.data)
             setLoading(false)
         })

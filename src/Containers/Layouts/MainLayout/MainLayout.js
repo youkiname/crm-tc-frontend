@@ -16,6 +16,7 @@ export const MainLayout = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('auth');
+        localStorage.removeItem('token');
         authController.logout();
         navigate('/auth');
     }

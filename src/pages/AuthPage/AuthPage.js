@@ -19,8 +19,6 @@ export const AuthPage = () => {
         authController.getAuth(values).then(res => {
             localStorage.setItem("auth", 1);
             localStorage.setItem("token", res.data.token);
-            localStorage.setItem("email", values.email);
-            localStorage.setItem("password", values.password);
             localStorage.setItem("name", `${res.data.first_name} ${res.data.last_name}`);
             setShowVerify(true);
         }).catch((error) => {
@@ -29,7 +27,7 @@ export const AuthPage = () => {
     }
 
     const onVerifySubmit = (values, formik) => {
-        navigate('/');
+        navigate('/')
     }
 
     const onSubmit = (values, formik) => {
