@@ -3,6 +3,7 @@ import { Typography, Col, Row, Button, Table, Spin } from "antd";
 import Search from "antd/es/input/Search";
 import { FileExcelOutlined } from "@ant-design/icons";
 import { apiController } from "../../api";
+import { CSV } from 'csv/csv';
 
 const { Title } = Typography
 
@@ -46,11 +47,15 @@ const ClientBaseTable = () => {
 
     const onSearch = (e) => {
         setLoading(true)
-        const query = e.target.value
+        const query = e
         apiController.getCustomerStatistics(query).then(res => {
             setData(res.data)
             setLoading(false)
         })
+    }
+
+    const downloadExcel = () => {
+        CSV.download(columns, data)
     }
 
     return (
@@ -65,12 +70,14 @@ const ClientBaseTable = () => {
                 }}>
                     <Search
                         placeholder="Найти"
-                        onChange={onSearch}
+                        onSearch={onSearch}
                         style={{
                             width: 300,
                         }}
                     />
-                    <Button icon={<FileExcelOutlined />}>Выгрузить в Excel</Button>
+                    <Button icon={<FileExcelOutlined />}
+                        onClick={downloadExcel}
+                    >Выгрузить в Excel</Button>
                 </Col>
             </Row>
             <Spin spinning={loading}>

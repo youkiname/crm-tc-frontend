@@ -15,8 +15,10 @@ export class ShopsController extends BaseController {
         return this.instance.get(`shops/categories`)
     }
 
-    getShopsIncomeStatistics() {
-        return this.instance.get(`statistic/shops`)
+    getShopsIncomeStatistics(searchQuery = null) {
+        return this.instance.get(`statistic/shops`, {
+            params: { q: searchQuery }
+        })
     }
 }
 

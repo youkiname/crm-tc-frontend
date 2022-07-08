@@ -4,6 +4,7 @@ import Search from "antd/es/input/Search";
 import { FileExcelOutlined, PlusOutlined } from "@ant-design/icons";
 import { shopsController } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { CSV } from 'csv/csv';
 
 const { Title } = Typography
 
@@ -50,6 +51,20 @@ const ArendatorsBaseTable = () => {
             setLoading(false)
         })
     }, [])
+
+    const onSearch = (e) => {
+        setLoading(true)
+        const query = e
+        shopsController.getShopsIncomeStatistics(query).then(res => {
+            setData(res.data)
+            setLoading(false)
+        })
+    }
+
+    const downloadExcel = () => {
+        CSV.download(columns, data)
+    }
+
     return (
         <>
             <Row justify="space-between">
@@ -62,12 +77,12 @@ const ArendatorsBaseTable = () => {
                 }}>
                     <Search
                         placeholder="Найти"
-                        onSearch={() => { }}
+                        onSearch={onSearch}
                         style={{
                             width: 300,
                         }}
                     />
-                    <Button icon={<FileExcelOutlined />}>Выгрузить в Excel</Button>
+                    <Button icon={<FileExcelOutlined />} onClick={downloadExcel}>Выгрузить в Excel</Button>
                     <Button type="primary" icon={<PlusOutlined />}
                         onClick={() => { navigate('/add-arendator') }}
                     >Добавить арендатора</Button>
