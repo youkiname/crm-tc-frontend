@@ -130,7 +130,7 @@ const EditAdsBanner = () => {
         <>
             <div
                 style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24, paddingBottom: 24, paddingLeft: 24 }}>
-                <HeaderPage title="Редактировать рекламный баннер" />
+                <HeaderPage title="Редактировать рекламный баннер" backRoute='/ads' />
             </div>
             <Spin spinning={loading}>
                 <TableDiv style={{ marginTop: 24 }}>
