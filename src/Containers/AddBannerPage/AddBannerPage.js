@@ -100,14 +100,23 @@ export const AddBannerPage = () => {
                 <Text>Для того, чтобы создать рекламный баннер вам потребуется картинка формата .png и размером 205х108
                     пикселей</Text>
             </div>
+            <Form layout="vertical" onFinish={onSubmit}>
+                <TableDiv style={{ marginTop: 24 }}>
+                    <Title level={5}>Данные для системы</Title>
+                    <Divider />
 
-            <TableDiv style={{ marginTop: 24 }}>
-                <Title level={5}>Данные для системы</Title>
-                <Divider />
-                <Form layout="vertical">
                     <Row gutter={24}>
                         <Col span={8}>
-                            <Form.Item label="Арендатор">
+                            <Form.Item
+                                label="Арендатор"
+                                name="shop_id"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Выберите арендатора',
+                                    },
+                                ]}
+                            >
                                 <Select value={shopId} onChange={e => setShopId(e)}>
                                     {
                                         shops.map(shop => (
@@ -118,7 +127,16 @@ export const AddBannerPage = () => {
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item label="Наименование рекламного баннера">
+                            <Form.Item
+                                label="Наименование рекламного баннера"
+                                name="name"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Введите название',
+                                    },
+                                ]}
+                            >
                                 <Input placeholder="Наименование"
                                     value={name}
                                     onChange={e => setName(e.target.value)} />
@@ -126,7 +144,16 @@ export const AddBannerPage = () => {
                         </Col>
 
                         <Col span={8}>
-                            <Form.Item label="Комментарий">
+                            <Form.Item
+                                label="Комментарий"
+                                name="comment"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Введите Комментарий',
+                                    },
+                                ]}
+                            >
                                 <Input placeholder="Комментарий"
                                     value={comment}
                                     onChange={e => setComment(e.target.value)}
@@ -136,18 +163,18 @@ export const AddBannerPage = () => {
                     </Row>
                     <Row>
                         <Col span={8}>
-                            <Form.Item label="Период публикации">
+                            <Form.Item
+                                label="Период публикации"
+                            >
                                 <RangePicker value={dateRange}
                                     onChange={dates => setDateRange(dates)} />
                             </Form.Item>
                         </Col>
                     </Row>
-                </Form>
-            </TableDiv>
-            <TableDiv style={{ marginTop: 24 }}>
-                <Title level={5}>Аудитория</Title>
-                <Divider />
-                <Form layout="vertical">
+                </TableDiv>
+                <TableDiv style={{ marginTop: 24 }}>
+                    <Title level={5}>Аудитория</Title>
+                    <Divider />
                     <Row gutter={24}>
                         <Col span={8}>
                             <Form.Item label="Пол">
@@ -188,44 +215,55 @@ export const AddBannerPage = () => {
                             </Form.Item>
                         </Col>
                     </Row>
-                </Form>
-            </TableDiv>
-            <TableDiv style={{ marginTop: 24, paddingBottom: 24 }}>
-                <Title level={5}>Рекламные материалы</Title>
-                <Divider />
-                <Row gutter={24}>
-                    <Col span={12}>
-                        <Dragger {...propsUpload}>
-                            <p className="ant-upload-drag-icon">
-                                <InboxOutlined />
-                            </p>
-                            <p className="ant-upload-text">Нажмите или перетащите сюда файлы для загрузки</p>
-                        </Dragger>
-                    </Col>
-                    <Col span={12}>
-                        <Title level={5}>Требования к изображению</Title>
-                        <ul>
-                            <li>
-                                <Text>Разрешение изображения не должен превышать 205х108 пикселей</Text>
-                            </li>
-                            <li>
-                                <Text>Размер файла не должен быть больше 0.5Мб</Text>
-                            </li>
-                            <li>
-                                <Text>Текст на изображении не должен занимать более 25%</Text>
-                            </li>
-                        </ul>
+
+                </TableDiv>
+                <TableDiv style={{ marginTop: 24, paddingBottom: 24 }}>
+                    <Title level={5}>Рекламные материалы</Title>
+                    <Divider />
+                    <Row gutter={24}>
+                        <Col span={12}>
+                            <Form.Item
+                                name="image"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Выберите изображение',
+                                    },
+                                ]}
+                            >
+                                <Dragger {...propsUpload}>
+                                    <p className="ant-upload-drag-icon">
+                                        <InboxOutlined />
+                                    </p>
+                                    <p className="ant-upload-text">Нажмите или перетащите сюда файлы для загрузки</p>
+                                </Dragger>
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Title level={5}>Требования к изображению</Title>
+                            <ul>
+                                <li>
+                                    <Text>Разрешение изображения не должен превышать 205х108 пикселей</Text>
+                                </li>
+                                <li>
+                                    <Text>Размер файла не должен быть больше 0.5Мб</Text>
+                                </li>
+                                <li>
+                                    <Text>Текст на изображении не должен занимать более 25%</Text>
+                                </li>
+                            </ul>
+                        </Col>
+                    </Row>
+                </TableDiv>
+
+                <Row justify="center" style={{ marginTop: 24 }}>
+                    <Col>
+                        <Button type="primary" htmlType="submit">
+                            Создать
+                        </Button>
                     </Col>
                 </Row>
-            </TableDiv>
-
-            <Row justify="center" style={{ marginTop: 24 }}>
-                <Col>
-                    <Button type="primary" onClick={onSubmit}>
-                        Создать
-                    </Button>
-                </Col>
-            </Row>
+            </Form>
         </>
     );
 };
