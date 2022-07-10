@@ -71,23 +71,44 @@ const ProfilePage = () => {
                     wrapperCol={{
                         span: 12,
                     }}
-                    onFinish={() => {
-                    }}
-                    onFinishFailed={() => {
-                    }}
+                    onFinish={onSubmit}
                 >
 
-                    <Form.Item label="Название организации">
+                    <Form.Item
+                        label="Название организации"
+                        name="shopping_center_name"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Введите Название организации',
+                            },
+                        ]}>
                         <Input placeholder="ООО “Иванов”"
                             value={currentUser.shopping_center.name}
                             onChange={e => setShoppingCenterData(e.target.value, 'name')} />
                     </Form.Item>
 
-                    <Form.Item label="Руководитель">
+                    <Form.Item
+                        label="Руководитель"
+                        name="fio"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Введите ФИО',
+                            },
+                        ]}>
                         <Input placeholder="Иван Иванов Иванович" value={currentUser.full_name} onChange={e => setUserData(e.target.value, 'full_name')} />
                     </Form.Item>
 
-                    <Form.Item label="Телефон для связи" >
+                    <Form.Item
+                        label="Телефон для связи"
+                        name="phone"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Введите телефон',
+                            },
+                        ]}>
                         <Input placeholder="+7 999 999 99 99" value={currentUser.mobile} onChange={e => setUserData(e.target.value, 'mobile')} />
                     </Form.Item>
 
@@ -106,7 +127,15 @@ const ProfilePage = () => {
                         </Upload>
                     </Form.Item> */}
 
-                    <Form.Item label="Город">
+                    <Form.Item
+                        label="Город"
+                        name="city"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Выберите город',
+                            },
+                        ]}>
                         <Select
                             style={{ width: 250 }}
                             value={cityId}
@@ -120,13 +149,29 @@ const ProfilePage = () => {
                         </Select>
                     </Form.Item>
 
-                    <Form.Item label="Адрес">
+                    <Form.Item
+                        label="Адрес"
+                        name="address"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Введите адрес',
+                            },
+                        ]}>
                         <Input placeholder="г. Москва, ул. Ленина, 123, корп. 2"
                             value={currentUser.shopping_center.address}
                             onChange={e => setShoppingCenterData(e.target.value, 'address')} />
                     </Form.Item>
 
-                    <Form.Item label="Описание">
+                    <Form.Item
+                        label="Описание"
+                        name="description"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Введите Описание',
+                            },
+                        ]}>
                         <Input.TextArea rows={4}
                             value={currentUser.shopping_center.description}
                             onChange={e => setShoppingCenterData(e.target.value, 'description')}
@@ -137,7 +182,6 @@ const ProfilePage = () => {
                         <Col span={24}>
                             <Form.Item style={{ margin: '0 auto' }}>
                                 <Button type="primary" htmlType="submit"
-                                    onClick={onSubmit}
                                 >
                                     Сохранить
                                 </Button>

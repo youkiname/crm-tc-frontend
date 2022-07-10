@@ -122,10 +122,12 @@ const AddArendatorPage = () => {
                     <Form.Item
                         label="Телефон для связи"
                         name="phone"
+                        hasFeedback
                         rules={[
                             {
                                 required: true,
-                                message: 'Введите номер телефона для связи',
+                                pattern: new RegExp("^[\\+]?[1-9]{1}[0-9]{3,12}$"),
+                                message: "Неверный номер телефона"
                             },
                         ]}
                     >
