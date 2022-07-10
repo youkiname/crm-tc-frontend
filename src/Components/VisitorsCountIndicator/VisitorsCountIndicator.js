@@ -4,7 +4,6 @@ import {CaretUpOutlined} from "@ant-design/icons";
 import {Typography} from "antd";
 import {TinyArea} from '@ant-design/plots';
 import {useDispatch,useSelector} from "react-redux";
-import {getVisitorCountIndicator} from "../../store/slices";
 import {selectVisitorCountIndicator} from "./selectors";
 
 const {Text} = Typography

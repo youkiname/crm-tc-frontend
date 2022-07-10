@@ -7,9 +7,7 @@ import {
 } from "@ant-design/icons";
 import React from "react";
 
-export const menuListData = [
-12,12
-]
+
 
 export const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
     const key = String(index + 1);
