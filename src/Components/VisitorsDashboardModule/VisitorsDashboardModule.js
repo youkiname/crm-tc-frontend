@@ -23,6 +23,10 @@ const VisitorsDashboardModule = () => {
         })
     }
 
+    const formatPercentRate = (rate) => {
+        return (rate * 100).toFixed(1)
+    }
+
     return (
         <div style={{ width: '100%' }}>
             <Title level={5}>Посетители</Title>
@@ -38,10 +42,10 @@ const VisitorsDashboardModule = () => {
                     <Text strong>Пол посетителей</Text>
                 </Col>
                 <Col>
-                    <Text>Женщины – {ageRate['female_rate'] * 100}%</Text>
+                    <Text>Женщины – {formatPercentRate(ageRate['female_rate'])}%</Text>
                 </Col>
                 <Col>
-                    <Text>Мужчины – {ageRate['male_rate'] * 100}%</Text>
+                    <Text>Мужчины – {formatPercentRate(ageRate['male_rate'])}%</Text>
                 </Col>
             </Row>
             <Row style={{ marginTop: 15 }} gutter={[20, 20]} >
