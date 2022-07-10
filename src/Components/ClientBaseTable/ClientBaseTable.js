@@ -86,7 +86,11 @@ const ClientBaseTable = () => {
                 </Col>
             </Row>
             <Spin spinning={loading}>
-                <Table columns={columns} dataSource={searchedCustomers} style={{ marginTop: 30 }} />
+                <Table
+                    locale={{ emptyText: 'Ничего не найдено' }}
+                    columns={columns}
+                    dataSource={searchedCustomers}
+                    style={{ marginTop: 30 }} />
             </Spin>
         </>
     );

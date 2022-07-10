@@ -99,7 +99,11 @@ const ArendatorsBaseTable = () => {
                 </Col>
             </Row>
             <Spin spinning={loading}>
-                <Table columns={columns} dataSource={searchedShops} style={{ marginTop: 30 }} />
+                <Table
+                    locale={{ emptyText: 'Ничего не найдено' }}
+                    columns={columns}
+                    dataSource={searchedShops}
+                    style={{ marginTop: 30 }} />
             </Spin>
         </>
     );

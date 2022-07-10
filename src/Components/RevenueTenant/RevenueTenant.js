@@ -58,7 +58,12 @@ const RevenueTenant = () => {
                 <Radio.Button value="year" onClick={handleRadioButton}>Год</Radio.Button>
             </Radio.Group>
             <Divider style={{ margin: '10px 0' }} />
-            <Table size='small' pagination={{ defaultPageSize: 5 }} dataSource={data} columns={columns} />
+            <Table
+                locale={{ emptyText: 'Ничего не найдено' }}
+                size='small'
+                pagination={{ defaultPageSize: 5 }}
+                dataSource={data}
+                columns={columns} />
         </div>
     );
 };

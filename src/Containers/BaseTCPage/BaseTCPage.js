@@ -1,11 +1,11 @@
 import React from 'react';
-import {HeaderPage} from "../../Components/HeaderPage/HeaderPage";
+import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
-import {Tabs} from "antd";
-import {ClientBaseTable} from "../../Components/ClientBaseTable/ClientBaseTable";
-import {ArendatorsBaseTable} from "../../Components/ArendatorsBaseTable/ArendatorsBaseTable";
+import { Tabs } from "antd";
+import { ClientBaseTable } from "../../Components/ClientBaseTable/ClientBaseTable";
+import { ArendatorsBaseTable } from "../../Components/ArendatorsBaseTable/ArendatorsBaseTable";
 
-const {TabPane} = Tabs
+const { TabPane } = Tabs
 
 const TableDiv = styled.div`
   padding: 24px;
@@ -15,8 +15,8 @@ const TableDiv = styled.div`
 const BaseTCPage = () => {
     return (
         <>
-            <div style={{backgroundColor: "#FFF", marginTop: -48, marginBottom: 24}}>
-                <HeaderPage title="База ТЦ"/>
+            <div style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24 }}>
+                <HeaderPage title="База ТЦ" />
             </div>
 
             <TableDiv>
@@ -40,4 +40,4 @@ const BaseTCPage = () => {
     );
 };
 
-export {BaseTCPage};
+export { BaseTCPage };

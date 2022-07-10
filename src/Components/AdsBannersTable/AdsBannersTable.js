@@ -92,7 +92,10 @@ const AdsBannersTable = () => {
     return (
         <>
             <Spin spinning={loading}>
-                <Table columns={columns} dataSource={banners} />
+                <Table
+                    locale={{ emptyText: 'Ничего не найдено' }}
+                    columns={columns}
+                    dataSource={banners} />
             </Spin>
         </>
     );

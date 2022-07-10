@@ -114,7 +114,10 @@ const AdsPollsPage = () => {
                 <Row >
                     <Col span={24}>
                         <Spin spinning={loading}>
-                            <Table columns={columns} dataSource={polls} />
+                            <Table
+                                locale={{ emptyText: 'Ничего не найдено' }}
+                                columns={columns}
+                                dataSource={polls} />
                         </Spin>
                     </Col>
                 </Row>

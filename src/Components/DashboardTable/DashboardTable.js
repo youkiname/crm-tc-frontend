@@ -265,7 +265,11 @@ export const DashboardTable = () => {
             <Col span={8}>
                 <Text>Последние транзакции</Text>
                 <Divider />
-                <Table pagination={false} showHeader={false} columns={transactionsColumns}
+                <Table
+                    locale={{ emptyText: 'Ничего не найдено' }}
+                    pagination={false}
+                    showHeader={false}
+                    columns={transactionsColumns}
                     dataSource={data} />
             </Col>
         </Row>

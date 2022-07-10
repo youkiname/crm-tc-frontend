@@ -46,7 +46,12 @@ const AdsDashboardModule = () => {
         <div style={{ width: '100%' }}>
             <Title level={5}>Реклама</Title>
             <Divider style={{ margin: '10px 0' }} />
-            <Table size='small' pagination={{ defaultPageSize: 5 }} dataSource={data} columns={columns} />
+            <Table
+                locale={{ emptyText: 'Ничего не найдено' }}
+                size='small'
+                pagination={{ defaultPageSize: 5 }}
+                dataSource={data}
+                columns={columns} />
         </div>
     );
 };
