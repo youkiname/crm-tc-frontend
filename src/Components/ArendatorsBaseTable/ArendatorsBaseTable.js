@@ -10,9 +10,14 @@ const { Title } = Typography
 
 const columns = [
     {
-        title: '#',
+        title: 'Номер',
         dataIndex: 'id',
         key: 'id'
+    },
+    {
+        title: 'Фирма',
+        dataIndex: 'name',
+        key: 'name'
     },
     {
         title: 'Фамилия Имя Отчество',
@@ -44,10 +49,13 @@ const columns = [
 const ArendatorsBaseTable = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = React.useState(true)
-    const [data, setData] = React.useState([])
+    const [allShops, setAllShops] = React.useState([])
+    const [searchedShops, setSearchedShops] = React.useState([])
+
     React.useEffect(() => {
         shopsController.getShopsIncomeStatistics().then(res => {
-            setData(res.data)
+            setAllShops(res.data)
+            setSearchedShops(res.data)
             setLoading(false)
         })
     }, [])
@@ -55,14 +63,16 @@ const ArendatorsBaseTable = () => {
     const onSearch = (e) => {
         setLoading(true)
         const query = e
-        shopsController.getShopsIncomeStatistics(query).then(res => {
-            setData(res.data)
-            setLoading(false)
-        })
+        function isIncludes(shop) {
+            return shop.renter_name.toLowerCase().includes(query) ||
+                shop.name.toLowerCase().includes(query)
+        }
+        setSearchedShops(allShops.filter(isIncludes))
+        setLoading(false)
     }
 
     const downloadExcel = () => {
-        CSV.download(columns, data)
+        CSV.download(columns, searchedShops)
     }
 
     return (
@@ -89,7 +99,7 @@ const ArendatorsBaseTable = () => {
                 </Col>
             </Row>
             <Spin spinning={loading}>
-                <Table columns={columns} dataSource={data} style={{ marginTop: 30 }} />
+                <Table columns={columns} dataSource={searchedShops} style={{ marginTop: 30 }} />
             </Spin>
         </>
     );

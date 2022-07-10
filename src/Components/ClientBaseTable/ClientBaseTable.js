@@ -37,10 +37,13 @@ const columns = [
 
 const ClientBaseTable = () => {
     const [loading, setLoading] = React.useState(true)
-    const [data, setData] = React.useState([])
+    const [allCustomers, setAllCustomers] = React.useState([])
+    const [searchedCustomers, setSearchedCustomers] = React.useState([])
+
     React.useEffect(() => {
         apiController.getCustomerStatistics().then(res => {
-            setData(res.data)
+            setAllCustomers(res.data)
+            setSearchedCustomers(res.data)
             setLoading(false)
         })
     }, [])
@@ -48,14 +51,16 @@ const ClientBaseTable = () => {
     const onSearch = (e) => {
         setLoading(true)
         const query = e
-        apiController.getCustomerStatistics(query).then(res => {
-            setData(res.data)
-            setLoading(false)
-        })
+        function isIncludes(customer) {
+            return customer.card_number.toLowerCase().includes(query) ||
+                customer.name.toLowerCase().includes(query)
+        }
+        setSearchedCustomers(allCustomers.filter(isIncludes))
+        setLoading(false)
     }
 
     const downloadExcel = () => {
-        CSV.download(columns, data)
+        CSV.download(columns, searchedCustomers)
     }
 
     return (
@@ -81,7 +86,7 @@ const ClientBaseTable = () => {
                 </Col>
             </Row>
             <Spin spinning={loading}>
-                <Table columns={columns} dataSource={data} style={{ marginTop: 30 }} />
+                <Table columns={columns} dataSource={searchedCustomers} style={{ marginTop: 30 }} />
             </Spin>
         </>
     );
