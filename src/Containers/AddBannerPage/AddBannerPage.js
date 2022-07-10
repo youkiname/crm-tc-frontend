@@ -96,7 +96,7 @@ export const AddBannerPage = () => {
     return (
         <>
             <div style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24, paddingBottom: 24, paddingLeft: 24 }}>
-                <HeaderPage title="Создать рекламный баннер" />
+                <HeaderPage title="Создать рекламный баннер" backRoute='/ads' />
                 <Text>Для того, чтобы создать рекламный баннер вам потребуется картинка формата .png и размером 205х108
                     пикселей</Text>
             </div>

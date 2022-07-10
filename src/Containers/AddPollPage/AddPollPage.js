@@ -83,7 +83,7 @@ export const AddPollPage = () => {
         <>
             <div
                 style={{ backgroundColor: "#FFF", marginTop: -48, marginBottom: 24, paddingBottom: 24, paddingLeft: 24 }}>
-                <HeaderPage title="Создать опрос" />
+                <HeaderPage title="Создать опрос" backRoute='/polls' />
             </div>
 
             <TableDiv style={{ marginTop: 24, paddingBottom: 24 }}>
