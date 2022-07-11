@@ -10,6 +10,7 @@ const { TextArea } = Input
 const BonusCardEditItem = ({ item }) => {
     const { name, created_at, updated_at, id, ...props } = item
     const [card, setCard] = React.useState(props)
+    const [disabledThreshold, setDisabledThreshold] = React.useState(item.id === 1);
     const handleCashback = (cashback) => setCard({ ...card, cashback })
     const handleThreshold = (threshold) => setCard({ ...card, threshold })
     const handleDescription = (e) => setCard({ ...card, description: e.target.value })
@@ -35,7 +36,7 @@ const BonusCardEditItem = ({ item }) => {
                 parser={(value) => value.replace('%', '')}
             />
             <InputNumber min={0} value={card?.threshold} onChange={handleThreshold} placeholder="Требуемая сумма накоплений"
-                style={{ width: '100%' }} />
+                style={{ width: '100%' }} disabled={disabledThreshold} />
             <TextArea rows={4} value={card?.description} onChange={handleDescription} placeholder="Описание" />
             <Button onClick={onSave} type="primary" icon={<SaveOutlined />}>Сохранить</Button>
         </div>
