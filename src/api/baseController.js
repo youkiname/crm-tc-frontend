@@ -23,6 +23,10 @@ const onRequest = (config) => {
 axiosInstance.interceptors.request.use(onRequest, null);
 
 axiosInstance.interceptors.response.use((response) => response, (error) => {
+    if (error.response.status == 401) {
+        localStorage.removeItem('auth');
+        window.location.href = '/admin-tc/auth'
+    }
     message.error("Произошла ошибка при выполнении запроса.")
     throw error;
 });
