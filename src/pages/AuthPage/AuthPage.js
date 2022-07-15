@@ -17,8 +17,7 @@ export const AuthPage = () => {
     const onLoginSubmit = (values, formik) => {
         authController.applyCsrfCookie()
         authController.getAuth(values).then(res => {
-            localStorage.setItem("auth", 1);
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("token-admin", res.data.token);
             localStorage.setItem("name", `${res.data.first_name} ${res.data.last_name}`);
             setShowVerify(true);
         }).catch((error) => {
