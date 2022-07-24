@@ -6,15 +6,19 @@ export class AuthController extends BaseController {
             params
         })
     }
+
     applyCsrfCookie() {
         return this.instance.get('csrf-cookie')
     }
+
     getAuth(params) {
-        return this.instance.get(`auth/admin`, { params })
+        return this.instance.get(`admin/auth`, { params })
     }
+
     getMe() {
         return this.instance.get(`get_me`)
     }
+
     logout() {
         return this.instance.post(`logout`)
     }

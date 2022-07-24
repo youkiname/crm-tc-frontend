@@ -2,11 +2,11 @@ import { BaseController } from "./baseController";
 
 export class TransactionsController extends BaseController {
     getSalesRate() {
-        return this.instance.get(`statistic/transactions/sales_rate`)
+        return this.instance.get(`admin/statistic/transactions/sales_rate`)
     }
 
     getTransactionsSumGraph(startDate, endDate) {
-        return this.instance.get(`statistic/transactions/average_sum/graph`, {
+        return this.instance.get(`admin/statistic/transactions/average_sum/graph`, {
             params: {
                 "start_date": startDate,
                 "end_date": endDate
@@ -15,27 +15,27 @@ export class TransactionsController extends BaseController {
     }
 
     getStatisticAverageSumMonth() {
-        return this.instance.get("statistic/transactions/average_sum/month")
+        return this.instance.get("admin/statistic/transactions/average_sum/month")
     }
 
     getStatisticAverageSumToday() {
-        return this.instance.get("statistic/transactions/average_sum/today")
+        return this.instance.get("admin/statistic/transactions/average_sum/today")
     }
 
     getStatisticAverageGraph() {
-        return this.instance.get("statistic/transactions/average_sum/graph")
+        return this.instance.get("admin/statistic/transactions/average_sum/graph")
     }
 
     getLastTransaction(limit = 10) {
-        return this.instance.get(`transactions?limit=${limit}`)
+        return this.instance.get(`admin/transactions?limit=${limit}`)
     }
 
     getTransactionsSum() {
-        return this.instance.get("statistic/transactions/sum")
+        return this.instance.get("admin/statistic/transactions/sum")
     }
 
     getStatisticTransactionToday() {
-        return this.instance.get("statistic/transactions/sum/today")
+        return this.instance.get("admin/statistic/transactions/sum/today")
     }
 }
 

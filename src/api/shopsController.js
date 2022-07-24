@@ -2,13 +2,13 @@ import { BaseController } from "./baseController";
 
 export class ShopsController extends BaseController {
     saveShop(data, avatarForm) {
-        return this.instance.post(`shops`, avatarForm, {
+        return this.instance.post(`admin/shops`, avatarForm, {
             params: data
         })
     }
 
     getShops() {
-        return this.instance.get(`shops`)
+        return this.instance.get(`admin/shops`)
     }
 
     getShopCategories() {
@@ -16,7 +16,7 @@ export class ShopsController extends BaseController {
     }
 
     getShopsIncomeStatistics(searchQuery = null) {
-        return this.instance.get(`statistic/shops`, {
+        return this.instance.get(`admin/statistic/shops`, {
             params: { q: searchQuery }
         })
     }
