@@ -122,10 +122,16 @@ const ProfilePage = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Введите телефон',
+                                    pattern: new RegExp("^[\+]?[1-9]{1}[0-9]{10,10}$"),
+                                    message: "Неверный номер телефона"
                                 },
-                            ]}>
-                            <Input placeholder="+7 999 999 99 99" value={currentUser.mobile} onChange={e => setUserData(e.target.value, 'mobile')} />
+                            ]}
+                        >
+                            <Input
+                                placeholder="+7 999 999 99 99"
+                                maxLength={12}
+                                value={currentUser.mobile}
+                                onChange={e => setUserData(e.target.value, 'mobile')} />
                         </Form.Item>
 
                         {/* <Form.Item

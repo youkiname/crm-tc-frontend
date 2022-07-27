@@ -1,17 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import {App} from './App';
+import { App } from './App';
 import reportWebVitals from './reportWebVitals';
-import {Provider} from "react-redux";
-import {store} from "store";
+import { Provider } from "react-redux";
+import { store } from "store";
 import './firebase'
+import { ConfigProvider } from 'antd';
+import 'moment/locale/ru';
+import locale from 'antd/es/locale/ru_RU';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
+        <ConfigProvider locale={locale}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </ConfigProvider>
     </React.StrictMode>
 );
 

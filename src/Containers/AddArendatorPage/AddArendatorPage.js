@@ -126,13 +126,14 @@ const AddArendatorPage = () => {
                         rules={[
                             {
                                 required: true,
-                                pattern: new RegExp("^[\\+]?[1-9]{1}[0-9]{3,12}$"),
+                                pattern: new RegExp("^[\+]?[1-9]{1}[0-9]{10,10}$"),
                                 message: "Неверный номер телефона"
                             },
                         ]}
                     >
                         <Input placeholder="+7 999 999 99 99"
                             value={renterPhone}
+                            maxLength={12}
                             onChange={e => setRenterPhone(e.target.value)}
                         />
                     </Form.Item>
