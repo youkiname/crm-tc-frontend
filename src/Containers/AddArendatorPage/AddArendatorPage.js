@@ -62,8 +62,11 @@ const AddArendatorPage = () => {
         }, imageForm).then(res => {
             navigate("/base-tc")
             message.success("Арендатор успешно добавлен")
+        }).catch(function (error) {
+            if (error.response.status === 409) {
+                message.error("Email уже занят.")
+            }
         });
-
     }
 
     return (
