@@ -84,10 +84,7 @@ const AddArendatorPage = () => {
                     wrapperCol={{
                         span: 12,
                     }}
-                    onFinish={() => {
-                    }}
-                    onFinishFailed={() => {
-                    }}
+                    onFinish={onSubmit}
                 >
 
                     <Form.Item
@@ -209,7 +206,7 @@ const AddArendatorPage = () => {
                     <Row justify="center">
                         <Col span={24}>
                             <Form.Item style={{ margin: '0 auto' }}>
-                                <Button type="primary" htmlType="submit" onClick={onSubmit}>
+                                <Button type="primary" htmlType="submit">
                                     Создать арендатора
                                 </Button>
                             </Form.Item>

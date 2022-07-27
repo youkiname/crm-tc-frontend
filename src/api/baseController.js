@@ -1,5 +1,4 @@
 import axios from "axios";
-import { message } from 'antd';
 
 // Create axios instance with base url and credentials support
 export const axiosInstance = axios.create({
@@ -21,17 +20,6 @@ const onRequest = (config) => {
     return config;
 }
 axiosInstance.interceptors.request.use(onRequest, null);
-
-axiosInstance.interceptors.response.use((response) => response, (error) => {
-    if (error.response.status === 401) {
-        localStorage.removeItem('token-admin');
-        window.location.href = '/admin-tc/auth'
-    }
-    if (error.response.status !== 409) {
-        message.error("Произошла ошибка при выполнении запроса.")
-    }
-    throw error;
-});
 
 export class BaseController {
     instance = axiosInstance
