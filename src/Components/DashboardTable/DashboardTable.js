@@ -266,6 +266,7 @@ export const DashboardTable = () => {
                 <Text>Последние транзакции</Text>
                 <Divider />
                 <Table
+                    rowKey="created_at"
                     locale={{ emptyText: 'Ничего не найдено' }}
                     pagination={false}
                     showHeader={false}

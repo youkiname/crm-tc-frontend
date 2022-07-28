@@ -87,6 +87,7 @@ const ClientBaseTable = () => {
             </Row>
             <Spin spinning={loading}>
                 <Table
+                    rowKey="card_number"
                     locale={{ emptyText: 'Ничего не найдено' }}
                     columns={columns}
                     dataSource={searchedCustomers}

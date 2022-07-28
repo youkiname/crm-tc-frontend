@@ -47,6 +47,7 @@ const AdsDashboardModule = () => {
             <Title level={5}>Реклама</Title>
             <Divider style={{ margin: '10px 0' }} />
             <Table
+                rowKey="id"
                 locale={{ emptyText: 'Ничего не найдено' }}
                 size='small'
                 pagination={{ defaultPageSize: 5 }}

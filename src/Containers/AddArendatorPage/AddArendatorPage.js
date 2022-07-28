@@ -85,6 +85,9 @@ const AddArendatorPage = () => {
                         span: 12,
                     }}
                     onFinish={onSubmit}
+                    initialValues={{
+                        phone: '+7',
+                    }}
                 >
 
                     <Form.Item

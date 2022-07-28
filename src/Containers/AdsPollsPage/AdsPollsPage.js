@@ -27,7 +27,7 @@ const AdsPollsPage = () => {
         setLoading(true)
         pollsController.toggleActivePollState(poll.id, poll.is_active).then(res => {
             const updatedPolls = polls.map(item => {
-                if (item.id == poll.id) {
+                if (item.id === poll.id) {
                     item.is_active = !item.is_active
                 }
                 return item
@@ -115,6 +115,7 @@ const AdsPollsPage = () => {
                     <Col span={24}>
                         <Spin spinning={loading}>
                             <Table
+                                rowKey="id"
                                 locale={{ emptyText: 'Ничего не найдено' }}
                                 columns={columns}
                                 dataSource={polls} />

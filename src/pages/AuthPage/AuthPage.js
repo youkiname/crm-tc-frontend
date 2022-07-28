@@ -6,6 +6,7 @@ import { validationSchema } from "./validationSchema";
 import { Title, Text, Wrapper, WrapperForm, WrapperTitle } from "./style";
 import { useNavigate } from 'react-router-dom';
 import { authController } from "../../api";
+import { setGlobalState } from '../../GlobalState';
 import img1 from "../../images/login-page-1.svg";
 import img2 from "../../images/login-page-2.svg";
 import img4 from "../../images/login-page-4.svg";
@@ -14,18 +15,26 @@ export const AuthPage = () => {
     const navigate = useNavigate();
     const [showVerify, setShowVerify] = React.useState(false);
 
+    const setAuthState = (username, token) => {
+        localStorage.setItem('token-admin', token);
+        localStorage.setItem("name", username);
+        setGlobalState('username', username)
+        setGlobalState('loggedIn', true)
+    }
+
     const onSubmit = (values, formik) => {
         if (showVerify) {
             console.log(values)
             return
         }
+
         authController.getAuth(values).then(res => {
             if (res.data.two_factor_auth) {
                 setShowVerify(true);
                 return
             }
-            localStorage.setItem("token-admin", res.data.token);
-            localStorage.setItem("name", `${res.data.first_name} ${res.data.last_name}`);
+            setAuthState(res.data.full_name, res.data.token);
+
             navigate('/');
         }).catch((error) => {
             formik.setErrors({ email: "Неправильный логин или пароль" })

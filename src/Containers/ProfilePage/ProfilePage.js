@@ -1,7 +1,8 @@
 import React from 'react';
 import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
-import { Button, Col, Form, Input, Row, Select, Upload, message, Spin } from "antd";
+import { Button, Col, Form, Input, Row, Select, message, Spin } from "antd";
+import { setGlobalState } from '../../GlobalState';
 import { authController } from "../../api";
 import { apiController } from "../../api";
 
@@ -52,7 +53,7 @@ const ProfilePage = () => {
             setCityId(res.data.shopping_center.city.id)
             setLoading(false)
         })
-    }, [])
+    }, [form])
 
     const onSubmit = () => {
         setLoading(true)
@@ -65,6 +66,7 @@ const ProfilePage = () => {
             description: currentUser.shopping_center.description,
             city_id: cityId,
         }).then(res => {
+            setGlobalState('username', res.data.full_name)
             localStorage.setItem('name', res.data.full_name)
             message.success('Данные успешно обновлены.');
             setLoading(false)
@@ -89,6 +91,9 @@ const ProfilePage = () => {
                             span: 12,
                         }}
                         onFinish={onSubmit}
+                        initialValues={{
+                            phone: '+7',
+                        }}
                     >
 
                         <Form.Item

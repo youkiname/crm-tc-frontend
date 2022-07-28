@@ -59,6 +59,7 @@ const RevenueTenant = () => {
             </Radio.Group>
             <Divider style={{ margin: '10px 0' }} />
             <Table
+                rowKey="id"
                 locale={{ emptyText: 'Ничего не найдено' }}
                 size='small'
                 pagination={{ defaultPageSize: 5 }}

@@ -19,7 +19,6 @@ import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import { RequireAuth } from "./Components";
 
 export const App = () => {
-
     return (
         <BrowserRouter basename="/admin-tc">
             <MainLayout>
@@ -82,5 +81,3 @@ export const App = () => {
         </BrowserRouter>
     );
 };
-
-;
