@@ -39,7 +39,7 @@ const EditPollPage = () => {
     const onChangeChoice = (e, choiceId) => {
         const value = e.target.value
         setChoices(choices.map(choice => {
-            if (choice.id == choiceId) {
+            if (choice.id === choiceId) {
                 choice.title = value
             }
             return choice
@@ -91,8 +91,9 @@ const EditPollPage = () => {
                         <Col span={12}>
                             <Form.Item label="Варианты ответа">
                                 {
-                                    choices.map((choice) => (
+                                    choices.map((choice, idx) => (
                                         <Input
+                                            key={idx}
                                             placeholder="Вариант ответа"
                                             style={{
                                                 width: '60%',

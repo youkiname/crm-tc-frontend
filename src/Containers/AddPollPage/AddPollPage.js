@@ -124,78 +124,76 @@ export const AddPollPage = () => {
                     </Row>
                     <Row>
                         <Col span={12}>
-                            <Form name="dynamic_form_item">
-                                <Form.List
-                                    name="names"
-                                    rules={[
-                                        {
-                                            validator: async (_, names) => {
-                                                if (!names || names.length < 2) {
-                                                    return Promise.reject(new Error('Должно быть минимум 2 варианта ответа'));
-                                                }
-                                            },
+                            <Form.List
+                                name="names"
+                                rules={[
+                                    {
+                                        validator: async (_, names) => {
+                                            if (!names || names.length < 2) {
+                                                return Promise.reject(new Error('Должно быть минимум 2 варианта ответа'));
+                                            }
                                         },
-                                    ]}
-                                >
-                                    {(fields, { add, remove }, { errors }) => (
-                                        <>
-                                            {fields.map((field, index) => (
+                                    },
+                                ]}
+                            >
+                                {(fields, { add, remove }, { errors }) => (
+                                    <>
+                                        {fields.map((field, index) => (
+                                            <Form.Item
+                                                label={index === 0 ? 'Вариант ответа' : ''}
+                                                required={false}
+                                                key={field.key}
+                                            >
                                                 <Form.Item
-                                                    label={index === 0 ? 'Вариант ответа' : ''}
-                                                    required={false}
-                                                    key={field.key}
+                                                    {...field}
+                                                    validateTrigger={['onChange', 'onBlur']}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            whitespace: true,
+                                                            message: "Введите вариант ответа или удалите поле",
+                                                        },
+                                                    ]}
+                                                    noStyle
                                                 >
-                                                    <Form.Item
-                                                        {...field}
-                                                        validateTrigger={['onChange', 'onBlur']}
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                whitespace: true,
-                                                                message: "Введите вариант ответа или удалите поле",
-                                                            },
-                                                        ]}
-                                                        noStyle
-                                                    >
-                                                        <Input
-                                                            placeholder="Вариант ответа"
-                                                            style={{
-                                                                width: '60%',
-                                                            }}
-                                                            onChange={e => onChangeChoice(e, index)}
-                                                        />
-                                                    </Form.Item>
-                                                    {fields.length > 1 ? (
-                                                        <MinusCircleOutlined
-                                                            className="dynamic-delete-button"
-                                                            onClick={() => {
-                                                                remove(field.name)
-                                                                removeChoice(index)
-                                                            }}
-                                                        />
-                                                    ) : null}
+                                                    <Input
+                                                        placeholder="Вариант ответа"
+                                                        style={{
+                                                            width: '60%',
+                                                        }}
+                                                        onChange={e => onChangeChoice(e, index)}
+                                                    />
                                                 </Form.Item>
-                                            ))}
-                                            <Form.Item>
-                                                <Button
-                                                    type="dashed"
-                                                    onClick={() => {
-                                                        add()
-                                                        addChoice()
-                                                    }}
-                                                    style={{
-                                                        width: '60%',
-                                                    }}
-                                                    icon={<PlusOutlined />}
-                                                >
-                                                    Добавить вариант ответа
-                                                </Button>
-                                                <Form.ErrorList errors={errors} />
+                                                {fields.length > 1 ? (
+                                                    <MinusCircleOutlined
+                                                        className="dynamic-delete-button"
+                                                        onClick={() => {
+                                                            remove(field.name)
+                                                            removeChoice(index)
+                                                        }}
+                                                    />
+                                                ) : null}
                                             </Form.Item>
-                                        </>
-                                    )}
-                                </Form.List>
-                            </Form>
+                                        ))}
+                                        <Form.Item>
+                                            <Button
+                                                type="dashed"
+                                                onClick={() => {
+                                                    add()
+                                                    addChoice()
+                                                }}
+                                                style={{
+                                                    width: '60%',
+                                                }}
+                                                icon={<PlusOutlined />}
+                                            >
+                                                Добавить вариант ответа
+                                            </Button>
+                                            <Form.ErrorList errors={errors} />
+                                        </Form.Item>
+                                    </>
+                                )}
+                            </Form.List>
                         </Col>
                     </Row>
                 </Form>

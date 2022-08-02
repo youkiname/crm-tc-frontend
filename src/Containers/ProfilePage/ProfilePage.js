@@ -1,11 +1,11 @@
 import React from 'react';
 import { HeaderPage } from "../../Components/HeaderPage/HeaderPage";
 import styled from "styled-components";
-import {Button, Col, Form, Input, Row, Select, message, Spin, Upload} from "antd";
+import { Button, Col, Form, Input, Row, Select, message, Spin, Upload, Image } from "antd";
 import { setGlobalState } from '../../GlobalState';
 import { authController } from "../../api";
 import { apiController } from "../../api";
-import {UploadOutlined} from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 
 const { Option } = Select
 
@@ -18,9 +18,11 @@ const ProfilePage = () => {
     const [loading, setLoading] = React.useState(true);
     const [form] = Form.useForm()
     const [currentUser, setCurrentUser] = React.useState({ shopping_center: {} })
+    const [currentLogoLink, setCurrentLogoLink] = React.useState()
     const [cities, setCities] = React.useState([])
     const [cityId, setCityId] = React.useState()
     const [logo, setLogo] = React.useState(null)
+    const [avatar, setAvatar] = React.useState(null)
 
     const propsAvatarUpload = {
         name: 'image',
@@ -34,12 +36,12 @@ const ProfilePage = () => {
                 message.error('Вы можете загрузить только jpg или png файл.');
                 return false;
             }
-            setLogo(file)
+            setAvatar(file)
             return false;
         }
     };
 
-    const propsUpload = {
+    const propsLogoUpload = {
         name: 'image',
         multiple: false,
         onDrop(e) {
@@ -87,6 +89,7 @@ const ProfilePage = () => {
             })
             setCurrentUser(res.data)
             setCityId(res.data.shopping_center.city.id)
+            setCurrentLogoLink(res.data.shopping_center.avatar_link)
             setLoading(false)
         })
     }, [form])
@@ -94,6 +97,7 @@ const ProfilePage = () => {
     const onSubmit = () => {
         let imageForm = new FormData();
         imageForm.append('logo', logo);
+        imageForm.append('avatar', avatar);
         setLoading(true)
         apiController.updateProfile({
             first_name: currentUser.full_name.split(' ')[0],
@@ -104,11 +108,10 @@ const ProfilePage = () => {
             description: currentUser.shopping_center.description,
             city_id: cityId,
 
-        },
-        imageForm
-        ).then(res => {
+        }, imageForm).then(res => {
             setGlobalState('username', res.data.full_name)
-            localStorage.setItem('name', res.data.full_name)
+            setGlobalState('avatarLink', res.data.avatar_link)
+            setCurrentLogoLink(res.data.shopping_center.avatar_link)
             message.success('Данные успешно обновлены.');
             setLoading(false)
         })
@@ -182,34 +185,26 @@ const ProfilePage = () => {
                         </Form.Item>
 
                         <Form.Item
-                        label="Логотип"
-                        name="logo"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Добавьте ваш логотип',
-                            },
-                        ]}
-                    >
-                        <Upload {...propsUpload}>
-                            <Button icon={<UploadOutlined />}>Добавить логотип</Button>
-                        </Upload>
-                    </Form.Item>
-                        <Form.Item
                             label="Аватарка"
                             name="avatar"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Измените аватарку',
-                                },
-                            ]}
                         >
                             <Upload {...propsAvatarUpload}>
                                 <Button icon={<UploadOutlined />}>Изменить аватарку</Button>
                             </Upload>
                         </Form.Item>
 
+                        <Form.Item
+                            label="Логотип"
+                            name="logo"
+                        >
+                            <Upload {...propsLogoUpload}>
+                                <Button icon={<UploadOutlined />}>Изменить логотип</Button>
+                            </Upload>
+                            <Image
+                                width={150}
+                                src={currentLogoLink}
+                            />
+                        </Form.Item>
 
                         <Form.Item
                             label="Город"

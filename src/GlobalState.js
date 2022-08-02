@@ -1,9 +1,14 @@
 import { createGlobalState } from 'react-hooks-global-state';
 
 const { setGlobalState, useGlobalState } = createGlobalState({
-    username: "",
-    loggedIn: false,
-    avatarLink:"",
+    username: '',
+    loggedIn: !!localStorage.getItem('token-admin'),
+    avatarLink: '',
 });
 
-export { setGlobalState, useGlobalState }
+const setLogoutState = () => {
+    setGlobalState('username', '')
+    setGlobalState('loggedIn', false)
+}
+
+export { setGlobalState, useGlobalState, setLogoutState }

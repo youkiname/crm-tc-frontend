@@ -15,11 +15,11 @@ export const AuthPage = () => {
     const navigate = useNavigate();
     const [showVerify, setShowVerify] = React.useState(false);
 
-    const setAuthState = (username, token) => {
+    const setAuthState = (username, token, avatarLink) => {
         localStorage.setItem('token-admin', token);
-        localStorage.setItem("name", username);
         setGlobalState('username', username)
         setGlobalState('loggedIn', true)
+        setGlobalState('avatarLink', avatarLink)
     }
 
     const onSubmit = (values, formik) => {
@@ -27,14 +27,13 @@ export const AuthPage = () => {
             console.log(values)
             return
         }
-
         authController.getAuth(values).then(res => {
             if (res.data.two_factor_auth) {
                 setShowVerify(true);
                 return
             }
-            setAuthState(res.data.full_name, res.data.token);
-
+            const user = res.data
+            setAuthState(user.full_name, user.token, user.avatar_link);
             navigate('/');
         }).catch((error) => {
             formik.setErrors({ email: "Неправильный логин или пароль" })

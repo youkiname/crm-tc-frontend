@@ -15,8 +15,11 @@ export class ApiController extends BaseController {
         return this.instance.get(`admin/cities`)
     }
 
-    updateProfile(data, avatarForm) {
-        return this.instance.put(`admin/update_profile`, avatarForm, {
+    updateProfile(data, formData) {
+        // actually this route uses put method, but we need to use post:
+        // https://stackoverflow.com/questions/50691938/patch-and-put-request-does-not-working-with-form-data
+        data['_method'] = 'put'
+        return this.instance.post(`admin/update_profile`, formData, {
             params: data
         })
     }

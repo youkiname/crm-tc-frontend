@@ -60,7 +60,10 @@ const AddArendatorPage = () => {
             renter_email: renterEmail,
             renter_password: renterPassword,
         }, imageForm).then(res => {
-            navigate("/base-tc")
+            navigate({
+                pathname: '/base-tc',
+                search: '?active_tab=arendators',
+            });
             message.success("Арендатор успешно добавлен")
         }).catch(function (error) {
             if (error.response.status === 409) {

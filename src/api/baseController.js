@@ -1,9 +1,10 @@
 import axios from "axios";
+import { setLogoutState } from "GlobalState";
 
 // Create axios instance with base url and credentials support
 export const axiosInstance = axios.create({
-    baseURL: "https://top-sistem.ru/api/",
-    // baseURL: "http://127.0.0.1:8000/api/",
+    // baseURL: "https://top-sistem.ru/api/",
+    baseURL: "http://127.0.0.1:8000/api/",
     withCredentials: true,
     credentials: true,
     headers: {
@@ -19,7 +20,20 @@ const onRequest = (config) => {
     config.params['token'] = localStorage.getItem('token-admin');
     return config;
 }
+
+const onError = (error) => {
+    if (error.response.status === 401) {
+        setLogoutState()
+        localStorage.removeItem('token-admin')
+        return
+    }
+    return Promise.reject(error);
+}
+
 axiosInstance.interceptors.request.use(onRequest, null);
+axiosInstance.interceptors.response.use(function (response) {
+    return response;
+}, onError);
 
 export class BaseController {
     instance = axiosInstance

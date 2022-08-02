@@ -84,7 +84,6 @@ const EditAdsBanner = () => {
             setBannerImageLink(res.data.image_link)
             setComment(res.data.comment)
             setLoading(false)
-            console.log(res.data)
         })
     }, [id])
 
@@ -109,7 +108,6 @@ const EditAdsBanner = () => {
         setLoading(true);
         let imageForm = new FormData();
         imageForm.append('image', selectedImage);
-        console.log(startDate, endDate)
         bannersController.editBanner(id, {
             is_active: Number(active),
             name: name,
@@ -121,6 +119,7 @@ const EditAdsBanner = () => {
             max_age: ageRange.split('-')[1],
             min_balance: minBalance
         }, imageForm).then(res => {
+            setBannerImageLink(res.data.image_link)
             setLoading(false)
             message.success("Баннер успешно изменён")
         });
@@ -217,7 +216,7 @@ const EditAdsBanner = () => {
                     <Title level={5}>Текущее изображение</Title>
                     <Divider />
                     <Row gutter={24}>
-                        <Image src={bannerImageLink}></Image>
+                        <Image src={bannerImageLink} width={200}></Image>
                     </Row>
                 </TableDiv>
                 <TableDiv style={{ marginTop: 24, paddingBottom: 24 }}>

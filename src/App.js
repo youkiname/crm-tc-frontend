@@ -17,8 +17,18 @@ import {
 import './App.css'
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import { RequireAuth } from "./Components";
+import { setGlobalState } from 'GlobalState';
+import { authController } from 'api';
 
 export const App = () => {
+    React.useEffect(() => {
+        authController.getMe().then(res => {
+            const user = res.data
+            setGlobalState('username', user.full_name)
+            setGlobalState('avatarLink', user.avatar_link)
+        })
+    }, [])
+
     return (
         <BrowserRouter basename="/admin-tc">
             <MainLayout>
