@@ -82,9 +82,14 @@ export const AddBannerPage = () => {
             console.log('Dropped files', e.dataTransfer.files);
         },
         async beforeUpload(file) {
-            const isAllowed = file.type === 'image/jpeg' || file.type === 'image/png';
-            if (!isAllowed) {
+            const isAllowedType = file.type === 'image/jpeg' || file.type === 'image/png';
+            const isAllowedSize = file.size <= 1024000 // 1MB
+            if (!isAllowedType) {
                 await message.error('Вы можете загрузить только jpg или png файл.');
+                return false;
+            }
+            if (!isAllowedSize) {
+                await message.error('Изображение превышает 1МБ');
                 return false;
             }
             setSelectedImage(file)
@@ -243,10 +248,10 @@ export const AddBannerPage = () => {
                             <Title level={5}>Требования к изображению</Title>
                             <ul>
                                 <li>
-                                    <Text>Разрешение изображения не должен превышать 205х108 пикселей</Text>
+                                    <Text>Разрешение изображения должно быть 205х108 пикселей. В ином случае его размер будет изменен автоматически.</Text>
                                 </li>
                                 <li>
-                                    <Text>Размер файла не должен быть больше 0.5Мб</Text>
+                                    <Text>Размер файла не должен быть больше 1Мб</Text>
                                 </li>
                                 <li>
                                     <Text>Текст на изображении не должен занимать более 25%</Text>
