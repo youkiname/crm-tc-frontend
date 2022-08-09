@@ -5,7 +5,15 @@ import { Link } from "react-router-dom";
 
 
 
-const AdsBannersTable = () => {
+const AdsBannersTable = (props) => {
+    const {data, selectType} = props
+
+    const selectorsKeys = {
+        all: data,
+        male: data.filter(item => item.gender !== "female"),
+        female: data.filter(item => item.gender !== "male"),
+
+    }
     const [loading, setLoading] = React.useState(true);
     const [banners, setBanners] = React.useState([])
     React.useEffect(() => {
@@ -93,10 +101,11 @@ const AdsBannersTable = () => {
         <>
             <Spin spinning={loading}>
                 <Table
+
                     rowKey="id"
                     locale={{ emptyText: 'Ничего не найдено' }}
                     columns={columns}
-                    dataSource={banners} />
+                    dataSource={selectorsKeys[selectType]} />
             </Spin>
         </>
     );

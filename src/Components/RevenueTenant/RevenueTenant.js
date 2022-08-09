@@ -33,7 +33,7 @@ const RevenueTenant = () => {
     const handleRadioButton = (moment) => {
         const type = moment.target.value
         let incomeField = 'income_per_week';
-        if (type === "week") {
+            if (type === "week") {
             incomeField = 'income_per_week';
         }
         if (type === "month") {

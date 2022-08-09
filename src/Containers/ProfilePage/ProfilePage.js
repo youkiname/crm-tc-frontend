@@ -180,7 +180,7 @@ const ProfilePage = () => {
                             <Input
                                 placeholder="+7 999 999 99 99"
                                 maxLength={12}
-                                value={currentUser.mobile}
+                                        value={currentUser.mobile}
                                 onChange={e => setUserData(e.target.value, 'mobile')} />
                         </Form.Item>
 
