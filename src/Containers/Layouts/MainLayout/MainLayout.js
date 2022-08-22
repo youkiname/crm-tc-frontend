@@ -51,6 +51,18 @@ export const MainLayout = ({ children }) => {
             path: 'base-tc'
         },
         {
+            icon: React.createElement(TableOutlined),
+            key:'/rate-arendator',
+            label: 'Рейтинг ареднаторов',
+            path: 'rate-arendator',
+        },
+        {
+            icon: React.createElement(TableOutlined),
+            key:'/check-display',
+            label: 'Покупки',
+            path: 'check-display',
+        },
+        {
             icon: React.createElement(UnorderedListOutlined),
             key: '/bonus-card',
             label: 'Карты лояльности',

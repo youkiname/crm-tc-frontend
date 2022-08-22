@@ -15,6 +15,11 @@ const columns = [
         dataIndex: 'income',
         key: 'income',
     },
+    {
+        title: 'Кол-во покупок',
+        dataIndex: 'income',
+        key: 'income',
+    },
 ];
 
 const RevenueTenant = () => {

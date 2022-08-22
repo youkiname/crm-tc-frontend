@@ -13,12 +13,14 @@ import {
     ProfilePage, AuthPage,
     EditPollPage,
     EditAdsBanner,
+    ArendatorRate,
 } from "./Containers";
 import './App.css'
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import { RequireAuth } from "./Components";
 import { setGlobalState } from 'GlobalState';
 import { authController } from 'api';
+import {CheckDisplay} from "./Containers/CheckDisplay/CheckDisplay";
 
 export const App = () => {
     React.useEffect(() => {
@@ -49,6 +51,16 @@ export const App = () => {
                     <Route path="/base-tc" element={
                         <RequireAuth>
                             <BaseTCPage />
+                        </RequireAuth>
+                    } />
+                    <Route path="/rate-arendator" element={
+                        <RequireAuth>
+                            <ArendatorRate />
+                        </RequireAuth>
+                    } />
+                    <Route path="/check-display" element={
+                        <RequireAuth>
+                            <CheckDisplay />
                         </RequireAuth>
                     } />
                     <Route path="/bonus-card" element={
